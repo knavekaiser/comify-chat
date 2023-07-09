@@ -1,0 +1,132 @@
+.main {
+  display: grid;
+  grid-gap: 1rem;
+  grid-auto-rows: max-content;
+  header {
+    h1 {
+      color: var(--text-color-1);
+      margin-bottom: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      line-height: 1.6em;
+      color: var(--text-color-2);
+    }
+  }
+  .searchForm {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr max-content max-content;
+    grid-gap: 0.75rem;
+    .searchIcon {
+      margin-left: 0.55rem;
+      color: var(--text-color-2);
+      transform: translateY(2px);
+    }
+  }
+  .topics {
+    thead,
+    tbody {
+      tr {
+        grid-template-columns: 1fr 1fr 1fr 3.5rem;
+      }
+    }
+  }
+}
+
+.fullChatModal {
+  width: 100%;
+  max-width: 55rem;
+}
+
+.chatContext {
+  padding: 1.5rem;
+  max-width: 65rem;
+  & > p {
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+  }
+}
+
+.fullChat {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  .details {
+    color: var(--text-color-1);
+    display: grid;
+    padding: 1.5rem;
+    grid-gap: 2rem;
+    grid-auto-rows: min-content;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    .other {
+      display: grid;
+      grid-gap: 1.5rem;
+    }
+    .detail {
+      h5 {
+        margin-bottom: 0.3rem;
+      }
+      p {
+        color: var(--text-color-2);
+      }
+    }
+  }
+  .messages {
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-direction: column;
+    grid-gap: 6px;
+    padding: 1rem;
+    .placeholder {
+      margin: auto;
+      opacity: 0.7;
+      font-style: italic;
+    }
+    .date {
+      margin: auto;
+      margin-top: 0.5rem;
+      font-size: 0.9em;
+    }
+    .msg {
+      height: min-content;
+      padding: 0.5rem 0.8rem;
+      background: rgb(235, 234, 234);
+      max-width: 85%;
+      border-radius: 0.75rem 0.75rem 0.75rem 0;
+      display: grid;
+      &.user {
+        color: white;
+        background: rgb(var(--primary-color-rgb));
+        margin: 0 auto;
+        margin-right: 0;
+        border-radius: 0.75rem 0.75rem 0 0.75rem;
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        grid-gap: 0.5rem;
+        .btn {
+          padding: 0;
+          cursor: pointer;
+          border: none;
+          background: none;
+          font-size: 1.2rem;
+          opacity: 0.75;
+          margin-bottom: 0.5rem;
+        }
+      }
+      .content {
+        // margin: 0;
+        background: none;
+      }
+      time {
+        font-size: 0.9em;
+        margin: auto;
+        margin-top: 0.5rem;
+        margin-right: 0;
+      }
+    }
+  }
+}

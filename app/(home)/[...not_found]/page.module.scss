@@ -1,0 +1,15 @@
+.main {
+  display: grid;
+  place-items: center;
+  min-height: 25rem;
+  .innerWrapper {
+    text-align: center;
+    h1 {
+      color: var(--text-color-1);
+      font-size: 6rem;
+    }
+    p {
+      color: var(--text-color-2);
+    }
+  }
+}

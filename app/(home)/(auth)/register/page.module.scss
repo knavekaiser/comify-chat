@@ -1,0 +1,56 @@
+.main {
+  display: grid;
+  .innerWrapper {
+    margin: auto;
+    padding: 6rem 2rem;
+    width: 100%;
+    max-width: 28rem;
+    form {
+      display: grid;
+      grid-gap: 1.5rem;
+      .head {
+        p {
+          color: rgb(var(--primary-color-rgb));
+          font-weight: 500;
+          margin-bottom: 0.3rem;
+        }
+        h1 {
+          color: var(--text-color-1);
+        }
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      .eye {
+        display: grid;
+        font-size: 1.1rem;
+        background: none;
+        border: none;
+        color: var(--text-color-2);
+        cursor: pointer;
+        padding: 0.7rem;
+        &:hover {
+          opacity: 0.8;
+        }
+        &:active {
+          opacity: 0.6;
+        }
+      }
+      .policyAggrement,
+      .signupLink {
+        color: var(--text-color-2);
+        text-align: center;
+        font-size: 0.9rem;
+        line-height: 1.6em;
+        a {
+          color: rgb(var(--primary-color-rgb));
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      .policyAggrement {
+        text-align: left;
+      }
+    }
+  }
+}

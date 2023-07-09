@@ -1,0 +1,102 @@
+.table {
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-template-rows: max-content 1fr max-content;
+  overflow-x: auto !important;
+  width: 100%;
+  border: 1px solid #b7b7b7;
+  position: relative;
+  border-radius: 0.5rem;
+  tr {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    align-items: center;
+    color: #363843;
+    grid-gap: 20px;
+    padding: 0 1rem;
+    td,
+    th {
+      padding: 8px 0;
+    }
+    &.placeholder {
+      text-align: center;
+      td {
+        grid-column: 1 / -1;
+        padding: 2rem;
+        font-style: italic;
+      }
+    }
+  }
+  thead {
+    background: rgb(var(--primary-color-rgb));
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    tr {
+      background: inherit;
+      font-weight: bold;
+      th {
+        padding: 0.75rem 0;
+        color: white;
+        text-align: left;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        margin: 1rem 0;
+        padding: 0;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid #e7e7e7;
+      }
+    }
+    .loading {
+      padding: 2rem;
+      border: none;
+      grid-template-columns: 1fr !important;
+      td {
+        justify-content: center;
+        border: none !important;
+        display: flex;
+        align-items: center;
+        grid-gap: 6px;
+        color: rgb(var(--primary-color-rgb));
+        .icon {
+          font-size: 1.7rem;
+        }
+        svg {
+          animation: spin 1s infinite linear;
+        }
+      }
+    }
+  }
+  tfoot {
+    margin-top: 0.5rem;
+    border-top: 1px solid #b7b7b7;
+    .pagination {
+      position: sticky;
+      right: 0;
+      padding: 0 1rem;
+      width: max-content;
+      margin: auto;
+      margin-right: 0;
+      td {
+        .perPage {
+          width: 7rem;
+          display: flex;
+          align-items: center;
+          grid-gap: 0.5rem;
+        }
+        justify-content: flex-end;
+        align-items: center;
+        display: flex;
+        grid-gap: 1rem;
+        button {
+          padding: 0.5rem;
+        }
+      }
+    }
+  }
+}
