@@ -48,7 +48,15 @@ export default function Home() {
                 ],
                 currentValues: { chatbotDomain: user?.chatbot?.domain || "" },
                 schema: yup.object({
-                  chatbotDomain: yup.string().required("Field is required"),
+                  chatbotDomain: yup
+                    .string()
+                    .required("Field is required")
+                    .transform((v, original) => {
+                      return v.replace(
+                        /^(?:https?:\/\/)?(?:www\.)?([^\/?]+)(?:\/[^?]+)?.*/,
+                        "$1"
+                      );
+                    }),
                 }),
                 submit: {
                   url: endpoints.profile,
