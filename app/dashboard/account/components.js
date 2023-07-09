@@ -19,7 +19,7 @@ export const DynamicForm = ({
     formState: { errors },
     setError,
   } = useForm({
-    ...(schema && { resolver: useYup(schema) }),
+    resolver: useYup(schema || {}),
   });
   useEffect(() => {
     reset({ ...currentValues });

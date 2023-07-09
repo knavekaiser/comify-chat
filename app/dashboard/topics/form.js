@@ -11,6 +11,7 @@ import { Table } from "@/components/table";
 import { FileInput, Input, Textarea } from "@/components/formElements";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { FaCheck, FaPlus, FaTimes } from "react-icons/fa";
+import { Prompt } from "@/components/modal";
 
 const docSchema = yup.object({
   topic: yup.string().required("Field is required"),

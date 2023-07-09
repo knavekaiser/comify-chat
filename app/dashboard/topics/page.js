@@ -25,8 +25,8 @@ export default function Home() {
       <header>
         <h1 className={space_grotesk.className}>Topics</h1>
         <p className={s.description}>
-          Efficiently organize and customize your chatbot's knowledge with
-          Comify Chat's intuitive topic management system.
+          Efficiently organize and customize your chatbot&apos;s knowledge with
+          Comify Chat&apos;s intuitive topic management system.
         </p>
       </header>
 

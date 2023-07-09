@@ -17,7 +17,7 @@ export default function Home() {
             </h1>
             <p>
               Revolutionize customer engagement and supercharge your business
-              with Comify Chat's AI-powered chatbot service. Enhance sales,
+              with Comify Chat&apos;s AI-powered chatbot service. Enhance sales,
               streamline support, and maximize growth with our cutting-edge
               technology. Get started now!
             </p>

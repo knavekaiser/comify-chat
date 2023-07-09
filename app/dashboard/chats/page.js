@@ -28,7 +28,7 @@ export default function Home() {
       <header>
         <h1 className={space_grotesk.className}>Chats</h1>
         <p className={s.description}>
-          Take full control of your chatbot interactions with Comify Chat's
+          Take full control of your chatbot interactions with Comify Chat&apos;s
           comprehensive chat management tools.
         </p>
       </header>

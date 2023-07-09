@@ -9,12 +9,6 @@ import paths from "@/utils/paths";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-export const metadata = {
-  title: "Comify Chat",
-  description:
-    "Comify Chat provides AI powered ChatBot that can be depoloyed on any site with minimal code.",
-};
-
 export default function RootLayout({ children }) {
   return (
     <>

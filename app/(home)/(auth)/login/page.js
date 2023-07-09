@@ -103,7 +103,7 @@ export default function Login() {
           </section>
           <section className={s.signupLink}>
             <p>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href={paths.register}>Sign Up for Free</Link>
             </p>
           </section>
