@@ -1,7 +1,7 @@
 "use client";
 
 import { SiteContext } from "@/app/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import s from "./page.module.scss";
 import { AiFillLock, AiOutlineLock, AiTwotoneLock } from "react-icons/ai";
 import { FiLock } from "react-icons/fi";
@@ -11,6 +11,7 @@ import { LuLock } from "react-icons/lu";
 import { PiLockKeyFill } from "react-icons/pi";
 import { Sidebar } from "./components";
 import Link from "next/link";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 import { Space_Grotesk } from "next/font/google";
 import { UserOptions } from "../(home)/components";
@@ -19,6 +20,7 @@ const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function DashboardLayout({ children }) {
   const { user } = useContext(SiteContext);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (!user) {
     return (
@@ -45,6 +47,12 @@ export default function DashboardLayout({ children }) {
       <header className={s.header}>
         <div className={s.innerWrapper}>
           <div className={s.left}>
+            <button
+              className={`${s.menuBtn} btn clear small white`}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              <GiHamburgerMenu />
+            </button>
             <Link href="/">
               <div className={s.logo}>
                 <img src="/assets/logo_big_eyes_white.png" />
@@ -57,8 +65,13 @@ export default function DashboardLayout({ children }) {
           </div>
         </div>
       </header>
-      <div className={`${s.container} body-min-1fr-min`}>
-        <Sidebar />
+      <div
+        className={`${s.container} ${
+          sidebarOpen ? s.sidebarOpen : ""
+        } body-min-1fr-min`}
+      >
+        <Sidebar closeSidebar={setSidebarOpen} />
+        <div className={s.backdrop} onClick={() => setSidebarOpen(false)} />
         <div className={s.content}>
           {children}
           <Footer />

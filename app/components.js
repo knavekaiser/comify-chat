@@ -9,6 +9,7 @@ import s from "./components.module.scss";
 
 import { RouterEvents } from "../components/pageLoader";
 import { Space_Grotesk } from "next/font/google";
+import Link from "next/link";
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 function resizeWindow() {
@@ -136,6 +137,19 @@ export const Footer = () => {
             <a href="#" className={s.number}>
               +2858 62359 32159
             </a>
+          </div>
+        </div>
+
+        <div className={s.bottom_section}>
+          <div className={s.left}>
+            <Link href={paths.home}>
+              <strong>Comify Chat</strong>
+            </Link>{" "}
+            {new Date().getFullYear()}. All Rights Reserved.
+          </div>
+          <div className={s.right}>
+            <Link href={paths.tnc}>Terms & Conditions</Link>
+            <Link href={paths.privacyPolicy}>Privacy Policy</Link>
           </div>
         </div>
       </div>

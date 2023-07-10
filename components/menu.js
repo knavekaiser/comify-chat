@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import s from "./menu.module.scss";
 import Link from "next/link";
 
-export default function Menu({ button, options }) {
+export default function Menu({ className, button, options }) {
   const [open, setOpen] = useState(false);
   const menu = useRef();
   const btn = useRef();
@@ -20,6 +20,7 @@ export default function Menu({ button, options }) {
   return (
     <>
       <span
+        className={className}
         ref={btn}
         onClick={() => {
           if (open) {

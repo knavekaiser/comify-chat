@@ -30,9 +30,14 @@ export default function Home() {
             </div>
           </div>
           <div className={s.bennerWrapper}>
-            <span className={s.box1} />
+            {/* <span className={s.box1} /> */}
             <span className={s.box2} />
-            <img alt="benner" src="/assets/chat_ui.png" />
+            <img
+              alt="benner"
+              className={s.avatarFull}
+              src="/assets/avatar_full.png"
+            />
+            <img alt="benner" src="/assets/chat_ui.png" className={s.chatUi} />
           </div>
         </div>
       </div>

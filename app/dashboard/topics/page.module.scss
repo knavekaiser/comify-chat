@@ -27,6 +27,7 @@
   .topics {
     thead,
     tbody {
+      min-width: 30rem;
       tr {
         grid-template-columns: 1fr 1fr 1fr 3.5rem;
       }
@@ -63,6 +64,14 @@
       tr {
         grid-template-columns: 1fr 3.5rem;
       }
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .main {
+    .searchForm {
+      grid-template-columns: 1fr;
     }
   }
 }

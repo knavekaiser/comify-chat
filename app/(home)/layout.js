@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
-import { UserOptions } from "./components";
+import { RightSection } from "./components";
 import { Footer } from "../components";
 import paths from "@/utils/paths";
 
@@ -22,9 +22,7 @@ export default function RootLayout({ children }) {
               </div>
             </Link>
           </div>
-          <div className={s.right}>
-            <UserOptions />
-          </div>
+          <RightSection />
         </div>
       </header>
       {children}

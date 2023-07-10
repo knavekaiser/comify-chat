@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SiteContext } from "@/app/context";
 
-export const Sidebar = () => {
+export const Sidebar = ({ closeSidebar }) => {
   const { user } = useContext(SiteContext);
   const sidebarItems = useRef([
     { label: user?.email || "Account", path: paths.account },
@@ -29,7 +29,13 @@ export const Sidebar = () => {
     <div className={s.sidebar}>
       <ul className={s.nav}>
         {sidebarItems.current.map((item) => (
-          <Link href={item.path} key={item.label}>
+          <Link
+            href={item.path}
+            key={item.label}
+            onClick={() => {
+              closeSidebar();
+            }}
+          >
             <li className={item.path === pathname ? s.active : ""}>
               {item.label}
             </li>

@@ -37,3 +37,14 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .main {
+    .innerWrapper {
+      padding: 1.5rem;
+      .section {
+        margin: 2rem 0;
+      }
+    }
+  }
+}

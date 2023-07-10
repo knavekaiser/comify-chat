@@ -28,7 +28,8 @@
   --bg-1: white;
   --bg-2: #f2f8fd;
 
-  --primary-color-rgb: 63, 62, 237;
+  // --primary-color-rgb: 63, 62, 237;
+  --primary-color-rgb: 0, 180, 216;
   --blue-color-rgb: 6, 119, 249;
   --green-color-rgb: 4, 218, 96;
   --red-color-rgb: 255, 0, 85;
@@ -122,8 +123,13 @@ li {
 }
 
 a {
-  color: inherit;
+  color: rgb(var(--primary-color-rgb));
   text-decoration: none;
+  &:not(:has(button)) {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 #portal,

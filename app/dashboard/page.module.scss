@@ -13,6 +13,12 @@
     justify-content: space-between;
     width: 100%;
     max-width: 110rem;
+    .menuBtn {
+      display: none;
+      padding: 0.2rem;
+      font-size: 1.2rem;
+      color: white;
+    }
     .logo {
       display: grid;
       grid-template-columns: 2.25rem 1fr;
@@ -91,7 +97,6 @@ $animation-duration: 3s;
 }
 
 .container {
-  max-width: 110rem;
   display: grid;
   grid-template-columns: 18rem 1fr;
   max-height: calc((var(--vh) * 100) - 100);
@@ -105,6 +110,9 @@ $animation-duration: 3s;
         display: block;
         padding: 1rem 1.5rem;
         &:hover {
+          a {
+            text-decoration: none !important;
+          }
           background: rgb(var(--hover-light-bg-color-rgb));
         }
         &.active {
@@ -113,6 +121,9 @@ $animation-duration: 3s;
         }
       }
     }
+  }
+  .backdrop {
+    display: none;
   }
   .content {
     overflow: auto;
@@ -139,5 +150,42 @@ $animation-duration: 3s;
   }
   100% {
     opacity: 0.8;
+  }
+}
+
+@media (max-width: 990px) {
+  .header {
+    .innerWrapper {
+      .menuBtn {
+        display: grid;
+      }
+    }
+  }
+  .container {
+    position: relative;
+    grid-template-columns: 1fr;
+    z-index: 1;
+    .sidebar {
+      overflow: hidden;
+      position: absolute;
+      width: 0;
+      height: 100%;
+      background: var(--bg-2);
+      z-index: 100;
+      display: block;
+    }
+    &.sidebarOpen {
+      .sidebar {
+        width: 18rem;
+      }
+      .backdrop {
+        z-index: 15;
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.4);
+      }
+    }
   }
 }

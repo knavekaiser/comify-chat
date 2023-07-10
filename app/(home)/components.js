@@ -12,6 +12,7 @@ import { useFetch } from "@/utils/hooks";
 import endpoints from "@/utils/endpoints";
 import { Prompt } from "@/components/modal";
 import { useRouter } from "next/navigation";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
@@ -183,6 +184,7 @@ export const UserOptions = () => {
     </>
   ) : (
     <Menu
+      className={s.avatar}
       button={
         <button className={`btn clear small white ${s.avatar}`}>
           {/* <span>{user?.name}</span> */}
@@ -218,5 +220,33 @@ export const UserOptions = () => {
         },
       ]}
     />
+  );
+};
+
+export const RightSection = () => {
+  const { user } = useContext(SiteContext);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  return (
+    <>
+      <div className={`${s.right} ${sidebarOpen ? s.open : ""}`}>
+        {user ? (
+          <UserOptions />
+        ) : (
+          <button
+            className={`${s.menuBtn} btn clear small white`}
+            onClick={() => setSidebarOpen(true)}
+          >
+            <GiHamburgerMenu />
+          </button>
+        )}
+        <div className={s.nav} onClick={() => setSidebarOpen(false)}>
+          <UserOptions />
+        </div>
+      </div>
+      <div
+        className={`${s.backdrop} ${sidebarOpen ? s.open : ""}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+    </>
   );
 };
