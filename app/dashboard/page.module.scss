@@ -104,15 +104,15 @@ $animation-duration: 3s;
   .sidebar {
     border-right: 1px solid #d9e5f0;
     .nav {
+      a {
+        text-decoration: none !important;
+      }
       li {
         color: var(--text-color-2);
         font-weight: 500;
         display: block;
         padding: 1rem 1.5rem;
         &:hover {
-          a {
-            text-decoration: none !important;
-          }
           background: rgb(var(--hover-light-bg-color-rgb));
         }
         &.active {
@@ -173,19 +173,20 @@ $animation-duration: 3s;
       background: var(--bg-2);
       z-index: 100;
       display: block;
+      transition: width 0.3s cubic-bezier(0.03, 0.49, 0.58, 1);
     }
     &.sidebarOpen {
       .sidebar {
         width: 18rem;
       }
-      .backdrop {
-        z-index: 15;
-        position: absolute;
-        display: block;
-        height: 100%;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.4);
-      }
+    }
+    .backdrop {
+      z-index: 15;
+      position: absolute;
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
     }
   }
 }

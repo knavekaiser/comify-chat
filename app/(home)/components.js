@@ -13,8 +13,22 @@ import endpoints from "@/utils/endpoints";
 import { Prompt } from "@/components/modal";
 import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { motion, AnimatePresence } from "framer-motion";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
+
+const inViewFadeIn = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { ease: [0.61, 1, 0.88, 1], duration: 0.75 },
+  viewport: { once: true, margin: "-100px" },
+};
+const featureCardsFadeIn = {
+  initial: { opacity: 0 },
+  whileInView: { opacity: 1 },
+  transition: { ease: [0.61, 1, 0.88, 1], duration: 0.75 },
+  viewport: { once: true, margin: "-100px" },
+};
 
 export const CoreFeatures = () => {
   const [features, setFeatures] = useState([
@@ -38,16 +52,26 @@ export const CoreFeatures = () => {
 
   return (
     <div className={s.content}>
-      <div className={s.imageWrapper}>
+      <motion.div key="avatar" {...inViewFadeIn} className={s.imageWrapper}>
         <img src="/assets/avatar_1.png" />
-      </div>
-      <div className={s.featureDetail}>
+      </motion.div>
+      <motion.div
+        key="view"
+        className={s.featureDetail}
+        {...inViewFadeIn}
+        transition={{ ...featureCardsFadeIn.transition, delay: 0.2 }}
+      >
         {active && <img src={active.image} />}
-      </div>
+      </motion.div>
       <ul className={s.cards}>
-        {features.map((item) => (
-          <li
+        {features.map((item, i) => (
+          <motion.li
             key={item.title}
+            {...featureCardsFadeIn}
+            transition={{
+              ...featureCardsFadeIn.transition,
+              delay: 0.4 + 0.2 * i,
+            }}
             className={`${s.card} ${
               active?.title === item.title ? s.active : ""
             }`}
@@ -55,7 +79,7 @@ export const CoreFeatures = () => {
           >
             <h4 className={space_grotesk.className}>{item.title}</h4>
             <p>{item.description}</p>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </div>
@@ -108,7 +132,7 @@ export const Testimonials = () => {
   const [active, setActive] = useState(features[0]);
 
   return (
-    <ul className={s.cards}>
+    <motion.ul {...inViewFadeIn} className={s.cards}>
       {features.map((item) => (
         <li
           key={item.title}
@@ -121,7 +145,7 @@ export const Testimonials = () => {
           <p>{item.description}</p>
         </li>
       ))}
-    </ul>
+    </motion.ul>
   );
 };
 
@@ -169,25 +193,15 @@ export const Blogs = () => {
   );
 };
 
-export const UserOptions = () => {
-  const { user, setUser } = useContext(SiteContext);
+export const Avatar = () => {
+  const { setUser } = useContext(SiteContext);
   const { post: logout, loading } = useFetch(endpoints.logout);
   const router = useRouter();
-  return !user ? (
-    <>
-      <Link href={paths.login}>
-        <button className="btn clear white">Sign in</button>
-      </Link>
-      <Link href={paths.register}>
-        <button className="btn secondary">Get Started</button>
-      </Link>
-    </>
-  ) : (
+  return (
     <Menu
       className={s.avatar}
       button={
         <button className={`btn clear small white ${s.avatar}`}>
-          {/* <span>{user?.name}</span> */}
           <HiUserCircle />
         </button>
       }
@@ -230,7 +244,7 @@ export const RightSection = () => {
     <>
       <div className={`${s.right} ${sidebarOpen ? s.open : ""}`}>
         {user ? (
-          <UserOptions />
+          <Avatar />
         ) : (
           <button
             className={`${s.menuBtn} btn clear small white`}
@@ -240,13 +254,29 @@ export const RightSection = () => {
           </button>
         )}
         <div className={s.nav} onClick={() => setSidebarOpen(false)}>
-          <UserOptions />
+          {!user && (
+            <>
+              <Link href={paths.login}>
+                <button className="btn secondary white">Sign in</button>
+              </Link>
+              <Link href={paths.register}>
+                <button className="btn primary">Get Started</button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
-      <div
-        className={`${s.backdrop} ${sidebarOpen ? s.open : ""}`}
-        onClick={() => setSidebarOpen(false)}
-      />
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={s.backdrop}
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

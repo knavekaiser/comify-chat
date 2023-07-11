@@ -38,16 +38,8 @@ export default function Menu({ className, button, options }) {
         ref={menu}
         className={s.menu}
         onClick={(e) => {
-          // let rect = e.target.getBoundingClientRect();
-          // if (
-          //   rect.left > e.clientX ||
-          //   rect.right < e.clientX ||
-          //   rect.top > e.clientY ||
-          //   rect.bottom < e.clientY
-          // ) {
           menu.current.close();
           setOpen(false);
-          // }
         }}
       >
         <div className={s.innerWrapper}>

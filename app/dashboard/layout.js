@@ -12,10 +12,11 @@ import { PiLockKeyFill } from "react-icons/pi";
 import { Sidebar } from "./components";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
-
 import { Space_Grotesk } from "next/font/google";
-import { UserOptions } from "../(home)/components";
+import { Avatar } from "../(home)/components";
 import { Footer } from "../components";
+import { motion, AnimatePresence } from "framer-motion";
+
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function DashboardLayout({ children }) {
@@ -61,7 +62,7 @@ export default function DashboardLayout({ children }) {
             </Link>
           </div>
           <div className={s.right}>
-            <UserOptions />
+            <Avatar />
           </div>
         </div>
       </header>
@@ -71,7 +72,17 @@ export default function DashboardLayout({ children }) {
         } body-min-1fr-min`}
       >
         <Sidebar closeSidebar={setSidebarOpen} />
-        <div className={s.backdrop} onClick={() => setSidebarOpen(false)} />
+        <AnimatePresence>
+          {sidebarOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={s.backdrop}
+              onClick={() => setSidebarOpen(false)}
+            />
+          )}
+        </AnimatePresence>
         <div className={s.content}>
           {children}
           <Footer />
