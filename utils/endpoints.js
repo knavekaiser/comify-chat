@@ -12,4 +12,6 @@ export default {
 
   topics: baseUrl + "/api/faq-documents",
   chats: baseUrl + "/api/chats",
+
+  comifyChatSdk: `${baseUrl}/assets/sdk/comify-chat-sdk-v0.9.0.js`,
 };

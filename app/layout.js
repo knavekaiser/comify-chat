@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import ClientLayout from "./components";
 import { Provider } from "./context";
 import "./globals.scss";
-import "./nprogress.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

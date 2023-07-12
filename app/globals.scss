@@ -96,6 +96,16 @@ button {
       &:active {
         background: rgba(var(--comp-color-rgb), 0.8);
       }
+      &.white {
+        background: white;
+        color: rgb(var(--primary-color-rgb));
+        &:hover {
+          background: rgba(#fff, 0.9);
+        }
+        &:active {
+          background: rgba(#fff, 0.8);
+        }
+      }
     }
     &.clear {
       color: rgb(var(--comp-color-rgb));

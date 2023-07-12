@@ -6,6 +6,7 @@ import endpoints from "@/utils/endpoints";
 import { usePathname, useRouter } from "next/navigation";
 import paths from "@/utils/paths";
 import s from "./components.module.scss";
+import Script from "next/script";
 
 import { RouterEvents } from "../components/pageLoader";
 import { Space_Grotesk } from "next/font/google";
@@ -61,6 +62,16 @@ export default function ClientLayout(params) {
 
   return (
     <>
+      <Script
+        src={endpoints.comifyChatSdk}
+        strategy="lazyOnload"
+        onLoad={() => {
+          const { default: mountComifyChat } = ComifyChat;
+          mountComifyChat({
+            defaultUrl: "techgenixbd.com",
+          });
+        }}
+      />
       <RouterEvents />
     </>
   );

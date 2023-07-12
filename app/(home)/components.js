@@ -257,10 +257,10 @@ export const RightSection = () => {
           {!user && (
             <>
               <Link href={paths.login}>
-                <button className="btn secondary white">Sign in</button>
+                <button className="btn clear white">Sign in</button>
               </Link>
               <Link href={paths.register}>
-                <button className="btn primary">Get Started</button>
+                <button className="btn primary white">Get Started</button>
               </Link>
             </>
           )}
