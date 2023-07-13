@@ -33,19 +33,19 @@ const featureCardsFadeIn = {
 export const CoreFeatures = () => {
   const [features, setFeatures] = useState([
     {
-      title: "Welcome screen",
-      description: `Say "Hi" and get the Toking started in a creative way.`,
-      image: "/assets/feature-prevew.svg",
+      title: "Easy Implementation",
+      description: `Streamlined Documentation for Simple Integration`,
+      image: "/assets/code.png",
     },
     {
-      title: "One-click management",
-      description: `Say "Hi" and get the Toking started in a creative way.`,
-      image: "/assets/feature-prevew.svg",
+      title: "Topic Management",
+      description: `Simplified UI for Effective Topic Organization`,
+      image: "/assets/topic_management.png",
     },
     {
-      title: "Custom greetings",
-      description: `Say "Hi" and get the Toking started in a creative way.`,
-      image: "/assets/feature-prevew.svg",
+      title: "Chat Management",
+      description: `Efficiently Oversee AI-Driven Customer Interactions`,
+      image: "/assets/chat_management.png",
     },
   ]);
   const [active, setActive] = useState(features[0]);

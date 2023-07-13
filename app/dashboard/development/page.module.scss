@@ -1,0 +1,48 @@
+.main {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-auto-rows: max-content;
+  header {
+    h1 {
+      color: var(--text-color-1);
+      margin-bottom: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      line-height: 1.6em;
+      color: var(--text-color-2);
+    }
+  }
+
+  .section {
+    color: var(--text-color-1);
+    margin: 0.5rem 0;
+    .head {
+      margin-bottom: 0.75rem;
+    }
+    .content {
+      font-size: 1rem;
+      line-height: 1.6em;
+      ol {
+        li {
+          margin-left: 1rem;
+          list-style: unset;
+          margin-bottom: 0.5rem;
+        }
+      }
+      pre {
+        max-width: 85vw;
+        line-height: 1.4em;
+        border: 1px solid rgba(63, 86, 92, 0.1);
+        border-radius: 1rem;
+        margin: 0.5rem 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .main {
+    //
+  }
+}

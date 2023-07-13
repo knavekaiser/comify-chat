@@ -9,5 +9,5 @@ export default {
   chats: "/dashboard/chats",
   tnc: "/terms-and-conditions",
   privacyPolicy: "/privacy-policy",
-  // settings: "/dashboard/settings",
+  development: "/dashboard/development",
 };

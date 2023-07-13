@@ -14,7 +14,7 @@ export const Sidebar = ({ closeSidebar }) => {
     { label: user?.email || "Account", path: paths.account },
     { label: "Topic", path: paths.topics },
     { label: "Chats", path: paths.chats },
-    // {label: "Settings", path: ""},
+    { label: "Development", path: paths.development },
     // {label: "Accounts", path: ""},
     // {label: "Payments", path: ""},
   ]);

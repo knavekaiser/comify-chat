@@ -6,6 +6,7 @@ import endpoints from "@/utils/endpoints";
 import { usePathname, useRouter } from "next/navigation";
 import paths from "@/utils/paths";
 import s from "./components.module.scss";
+
 import Script from "next/script";
 
 import { RouterEvents } from "../components/pageLoader";
@@ -67,8 +68,9 @@ export default function ClientLayout(params) {
         strategy="lazyOnload"
         onLoad={() => {
           const { default: mountComifyChat } = ComifyChat;
+
           mountComifyChat({
-            defaultUrl: "techgenixbd.com",
+            defaultUrl: "infinai.in",
           });
         }}
       />
