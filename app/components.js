@@ -51,6 +51,7 @@ export default function ClientLayout(params) {
         .catch((err) => console.log(err));
     } else {
       if (dashboard) {
+        sessionStorage.setItem("destination_after_login", pathname);
         router.replace(paths.login);
       }
     }

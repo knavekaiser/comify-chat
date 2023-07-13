@@ -47,6 +47,13 @@ export default function Register() {
                 if (data.success) {
                   setUser(data.data);
                   localStorage.setItem("access_token", data.token);
+                  const destinaiton = sessionStorage.getItem(
+                    "destination_after_login"
+                  );
+                  if (destinaiton) {
+                    sessionStorage.removeItem("destination_after_login");
+                    return router.replace(destinaiton);
+                  }
                   return router.replace(paths.topics);
                 }
                 if (data.error?.type === "field_validation") {

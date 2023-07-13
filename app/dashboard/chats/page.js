@@ -64,7 +64,7 @@ export default function Home() {
             <td>
               <Moment format="DD MMM YYYY hh:mma">{row.createdAt}</Moment>
             </td>
-            <td>{row.user?.name}</td>
+            <td className="ellepsis line-2">{row.user?.name}</td>
             <td>{row.topic}</td>
             <td className="tableActions">
               <Menu

@@ -383,3 +383,15 @@ form {
     background-position: 0% 45%;
   }
 }
+
+.ellepsis {
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1;
+  &.line-2 {
+    -webkit-line-clamp: 2;
+  }
+}

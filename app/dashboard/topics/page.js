@@ -65,7 +65,7 @@ export default function Home() {
         ]}
         renderRow={(row, i) => (
           <tr key={row._id}>
-            <td>{row.topic}</td>
+            <td className="ellepsis line-2">{row.topic}</td>
             <td>{row.files.length}</td>
             <td>{row.urls.length}</td>
             <td className="tableActions">

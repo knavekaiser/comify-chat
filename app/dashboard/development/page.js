@@ -15,7 +15,6 @@ export default function Home() {
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const { default: mountComifyChat } = ComifyChat;
-
     mountComifyChat({
       openAtStart: false,         // optional
       defaultUrl: "infinai.in",   // optional
@@ -95,7 +94,6 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     const mountComifyChat = ComifyChat.default;
-
     mountComifyChat({
       openAtStart: false,         // optional
       defaultUrl: "infinai.in",   // optional
@@ -108,7 +106,6 @@ export class AppComponent implements AfterViewInit {
 Vue.prototype.$comifyChat = require('${sdkUrl}');`;
   const vue = `mounted() {
   const mountComifyChat = this.$comifyChat.default;
-
   mountComifyChat({
     openAtStart: false,         // optional
     defaultUrl: "infinai.in",   // optional
@@ -122,7 +119,7 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
           This documentation provides step-by-step instructions on how to
           implement the Comify Chatbot into your website. By following these
           guidelines, you can seamlessly integrate the chatbot functionality and
-          enhance your customer engagement. Let's get started!
+          enhance your customer engagement. Let&apos;s get started!
         </p>
       </header>
 
@@ -142,7 +139,7 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
               section:
               <CodeBlock code={js} language="javascript" />
             </li>
-            <li>Save the changes to your website's source code.</li>
+            <li>Save the changes to your website&apos;s source code.</li>
           </ol>
         </div>
       </section>
@@ -185,8 +182,8 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
           <ol>
             <li>In your Angular application, open the angular.json file.</li>
             <li>
-              Locate the "scripts" array within the "architect" section and add
-              the following script URL:
+              Locate the &quot;scripts&quot; array within the
+              &quot;architect&quot; section and add the following script URL:
               <CodeBlock code={angularScript} language="javascript" />
             </li>
             <li>Save the changes to the angular.json file.</li>

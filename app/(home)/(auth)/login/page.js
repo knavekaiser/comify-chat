@@ -46,7 +46,13 @@ export default function Login() {
                 if (data.success) {
                   setUser(data.data);
                   localStorage.setItem("access_token", data.token);
-                  // push to initial page
+                  const destinaiton = sessionStorage.getItem(
+                    "destination_after_login"
+                  );
+                  if (destinaiton) {
+                    sessionStorage.removeItem("destination_after_login");
+                    return router.replace(destinaiton);
+                  }
                   return router.replace(paths.topics);
                 } else if (data.error.type === "cred_error") {
                   setErr(data.message);

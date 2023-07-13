@@ -28,7 +28,7 @@ export default function Home() {
       <section className={s.email}>
         <div className={s.content}>
           <h3 className={space_grotesk.className}>Domain</h3>
-          <p>
+          <p className="ellepsis line-2">
             {user?.chatbot?.domain ||
               "The website domain where the chatbot will be deployed"}
           </p>
@@ -81,7 +81,7 @@ export default function Home() {
       <section className={s.email}>
         <div className={s.content}>
           <h3 className={space_grotesk.className}>Email Address</h3>
-          <p>{user?.email}</p>
+          <p className="ellepsis line-2">{user?.email}</p>
         </div>
         <div className={s.action}>
           <button

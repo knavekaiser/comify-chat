@@ -36,8 +36,11 @@ export const Sidebar = ({ closeSidebar }) => {
               closeSidebar();
             }}
           >
-            <li className={item.path === pathname ? s.active : ""}>
-              {item.label}
+            <li
+              className={`${item.path === pathname ? s.active : ""}`}
+              title={item.label}
+            >
+              <span className="ellepsis">{item.label}</span>
             </li>
           </Link>
         ))}
