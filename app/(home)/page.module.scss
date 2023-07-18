@@ -400,6 +400,9 @@
           grid-gap: 1rem;
           img {
             width: 100%;
+            aspect-ratio: 1.64;
+            object-fit: cover;
+            border-radius: 0.75rem;
           }
           .metadata {
             font-size: 0.9rem;

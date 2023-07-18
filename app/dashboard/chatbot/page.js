@@ -12,8 +12,6 @@ import endpoints from "@/utils/endpoints";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-
-
 export default function Home() {
   const { user, setUser } = useContext(SiteContext);
   const [form, setForm] = useState(null);
@@ -22,7 +20,8 @@ export default function Home() {
       <header>
         <h1 className={space_grotesk.className}>Chatbot</h1>
         <p className={s.description}>
-          Tailor your chatbot's look to match your site and brand seamlessly.
+          Tailor your chatbot&apos;s look to match your site and brand
+          seamlessly.
         </p>
       </header>
 

@@ -251,9 +251,7 @@ export default function Home() {
         <div className={s.innerWrapper}>
           <h2 className={space_grotesk.className}>Latest updates</h2>
           <p className={s.dscr}>
-            Transforming the way customers
-            <br />
-            contact brands online.
+            Transforming the way customers contact brands online.
           </p>
 
           <Blogs />
