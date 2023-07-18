@@ -10,12 +10,6 @@ import { SiteContext } from "@/app/context";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-export const metadata = {
-  title: "Infin AI | Dashboard | Development",
-  description:
-    "Implementation and Integration Guidelines for the Chatbot. Enhance Customer Engagement with Ease.",
-};
-
 export default function Home() {
   const { user } = useContext(SiteContext);
   const sdkUrl = endpoints.infinAIChatSdk;

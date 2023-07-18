@@ -16,12 +16,6 @@ import Form from "./form";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-export const metadata = {
-  title: "Infin AI | Dashboard | Topics",
-  description:
-    "Efficiently organize and customize your chatbot's knowledge with Infin AI's intuitive topic management system. Simplify content management and deliver tailored experiences effortlessly.",
-};
-
 export default function Home() {
   const { control, handleSubmit } = useForm();
   const [filters, setFilters] = useState({});

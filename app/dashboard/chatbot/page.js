@@ -12,11 +12,7 @@ import endpoints from "@/utils/endpoints";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-export const metadata = {
-  title: "Infin AI | Dashboard | Chatbot",
-  description:
-    "Tailor your chatbot's look to match your site and brand seamlessly. Effortlessly personalize the chatbot's appearance to reflect your business style.",
-};
+
 
 export default function Home() {
   const { user, setUser } = useContext(SiteContext);

@@ -12,12 +12,6 @@ import endpoints from "@/utils/endpoints";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-export const metadata = {
-  title: "Infin AI | Dashboard | Account",
-  description:
-    "Personalize your Infin AI experience and manage your account settings with ease. Update your profile information and preferences to enhance your chatbot interactions.",
-};
-
 export default function Home() {
   const { user, setUser } = useContext(SiteContext);
   const [form, setForm] = useState(null);
