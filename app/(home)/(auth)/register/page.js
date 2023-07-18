@@ -28,6 +28,12 @@ const validationSchema = yup.object({
     .required("Field is Required"),
 });
 
+export const metadata = {
+  title: "Infin AI | Register",
+  description:
+    "Join the growing community of businesses benefiting from Infin AI. Create your account today and unlock the potential of advanced AI-powered chatbots for your website. Accelerate growth and drive customer satisfaction.",
+};
+
 export default function Register() {
   const { user, setUser } = useContext(SiteContext);
   const router = useRouter();
@@ -79,7 +85,7 @@ export default function Register() {
           })}
         >
           <section className={s.head}>
-            <p>Welcome to Comify Chat</p>
+            <p>Welcome to Infin AI</p>
             <h1 className={space_grotesk.className}>Register to get started</h1>
           </section>
           <Input control={control} name="name" placeholder="Name" />

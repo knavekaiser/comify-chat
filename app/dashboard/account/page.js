@@ -12,6 +12,12 @@ import endpoints from "@/utils/endpoints";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
+export const metadata = {
+  title: "Infin AI | Dashboard | Account",
+  description:
+    "Personalize your Infin AI experience and manage your account settings with ease. Update your profile information and preferences to enhance your chatbot interactions.",
+};
+
 export default function Home() {
   const { user, setUser } = useContext(SiteContext);
   const [form, setForm] = useState(null);
@@ -20,63 +26,10 @@ export default function Home() {
       <header>
         <h1 className={space_grotesk.className}>Account</h1>
         <p className={s.description}>
-          Personalize your Comify Chat experience and manage your account
-          settings with ease.
+          Personalize your Infin AI experience and manage your account settings
+          with ease.
         </p>
       </header>
-
-      <section className={s.email}>
-        <div className={s.content}>
-          <h3 className={space_grotesk.className}>Domain</h3>
-          <p className="ellepsis line-2">
-            {user?.chatbot?.domain ||
-              "The website domain where the chatbot will be deployed"}
-          </p>
-        </div>
-        <div className={s.action}>
-          <button
-            className="btn primary"
-            onClick={() =>
-              setForm({
-                title: "Website Domain",
-                fields: [
-                  {
-                    inputType: "input",
-                    name: "chatbotDomain",
-                    placeholder: "Website Domain",
-                  },
-                ],
-                currentValues: { chatbotDomain: user?.chatbot?.domain || "" },
-                schema: yup.object({
-                  chatbotDomain: yup
-                    .string()
-                    .required("Field is required")
-                    .transform((v, original) => {
-                      return v.replace(
-                        /^(?:https?:\/\/)?(?:www\.)?([^\/?]+)(?:\/[^?]+)?.*/,
-                        "$1"
-                      );
-                    }),
-                }),
-                submit: {
-                  url: endpoints.profile,
-                  method: "put",
-                },
-                onSuccess: (newProfile) => {
-                  setForm(null);
-                  setUser((prev) => ({ ...prev, chatbot: newProfile.chatbot }));
-                  Prompt({
-                    type: "success",
-                    message: "Domain updated successfully",
-                  });
-                },
-              })
-            }
-          >
-            {user?.domain ? "Update Domain" : "Add Domain"}
-          </button>
-        </div>
-      </section>
 
       <section className={s.email}>
         <div className={s.content}>

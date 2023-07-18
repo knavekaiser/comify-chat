@@ -23,14 +23,14 @@ export default function Home() {
         <div className={s.innerWrapper}>
           <div className={s.content}>
             <motion.h1 {...inViewFadeIn} className={space_grotesk.className}>
-              Empower Your Business with AI-Powered Comify Chat Today!
+              Empower Your Business with AI-Powered Infin AI Today!
             </motion.h1>
             <motion.p
               {...inViewFadeIn}
               transition={{ ...inViewFadeIn.transition, delay: 0.5 }}
             >
               Revolutionize customer engagement and supercharge your business
-              with Comify Chat&apos;s AI-powered chatbot service. Enhance sales,
+              with Infin AI&apos;s AI-powered chatbot service. Enhance sales,
               streamline support, and maximize growth with our cutting-edge
               technology. Get started now!
             </motion.p>
@@ -159,11 +159,11 @@ export default function Home() {
       <div className={s.section_two}>
         <div className={s.innerWrapper}>
           <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
-            Unlock the Power of Comify Chat: <br />
+            Unlock the Power of Infin AI: <br />
             Key Features at a Glance
           </motion.h2>
           <motion.p {...inViewFadeIn} className={s.dscr}>
-            Discover the exceptional features that set Comify Chat apart. From
+            Discover the exceptional features that set Infin AI apart. From
             automation and personalization to knowledge and seamless
             integration, experience the full potential of our chatbot service in
             just a glance.
@@ -236,8 +236,8 @@ export default function Home() {
       <div className={s.section_four}>
         <div className={s.innerWrapper}>
           <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
-            See why 500,000+ professionals <br />
-            like you have chosen OpenUp
+            See why other businesses <br />
+            like you have chosen InfinAI
           </motion.h2>
           <motion.p {...inViewFadeIn} className={s.dscr}>
             Top-rated on Trustpilot, G2, and AppSumo
@@ -251,9 +251,9 @@ export default function Home() {
         <div className={s.innerWrapper}>
           <h2 className={space_grotesk.className}>Latest updates</h2>
           <p className={s.dscr}>
-            Since 2003, we have been transforming the way
+            Transforming the way customers
             <br />
-            customers contact brands online.
+            contact brands online.
           </p>
 
           <Blogs />

@@ -1,0 +1,38 @@
+.main {
+  display: grid;
+  place-items: center;
+  .innerWrapper {
+    padding: 2rem;
+    min-height: 25rem;
+    display: grid;
+    grid-gap: 1rem;
+    max-width: 110rem;
+    color: var(--text-color-1);
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 0.5rem;
+    }
+  }
+  .not_found {
+    text-align: center;
+    h1 {
+      color: var(--text-color-1);
+      font-size: 6rem;
+    }
+    p {
+      color: var(--text-color-2);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    .innerWrapper {
+      padding: 1rem;
+    }
+  }
+}

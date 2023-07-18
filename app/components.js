@@ -65,12 +65,14 @@ export default function ClientLayout(params) {
   return (
     <>
       <Script
-        src={endpoints.comifyChatSdk}
+        src={endpoints.infinAIChatSdk}
         strategy="lazyOnload"
         onLoad={() => {
-          const { default: mountComifyChat } = ComifyChat;
+          const { default: mountInfinAIChat } = InfinAI;
 
-          mountComifyChat({
+          mountInfinAIChat({
+            baseUrl: endpoints.baseUrl,
+            chatbotId: process.env.NEXT_PUBLIC_INFINAI_CHATBOT_ID,
             defaultUrl: "infinai.in",
           });
         }}
@@ -87,7 +89,7 @@ export const Footer = () => {
         <div className={s.section_one}>
           <div className={s.logo}>
             <img src="/assets/logo_big_eyes.png" />
-            <h2 className={space_grotesk.className}>Comify Chat</h2>
+            <h2 className={space_grotesk.className}>Infin AI</h2>
           </div>
         </div>
 
@@ -140,24 +142,24 @@ export const Footer = () => {
             <h6>Contact Info</h6>
           </div>
           <div className={s.body}>
-            <p>
+            {/* <p>
               Maxuel Street, Frankfurt
               <br />
               2589 Germany.
-            </p>
-            <a href="mailto:chat@comify.in">
-              <h6 className={s.email}>chat@comify.in</h6>
+            </p> */}
+            <a href="mailto:support@infinai.in">
+              <h6 className={s.email}>chat@infinai.in</h6>
             </a>
-            <a href="#" className={s.number}>
+            {/* <a href="#" className={s.number}>
               +2858 62359 32159
-            </a>
+            </a> */}
           </div>
         </div>
 
         <div className={s.bottom_section}>
           <div className={s.left}>
             <Link href={paths.home}>
-              <strong>Comify Chat</strong>
+              <strong>Infin AI</strong>
             </Link>{" "}
             {new Date().getFullYear()}. All Rights Reserved.
           </div>

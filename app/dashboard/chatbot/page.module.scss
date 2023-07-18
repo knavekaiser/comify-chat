@@ -1,0 +1,71 @@
+.main {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-auto-rows: max-content;
+  header {
+    h1 {
+      color: var(--text-color-1);
+      margin-bottom: 0.5rem;
+    }
+    .description {
+      font-size: 0.9rem;
+      line-height: 1.6em;
+      color: var(--text-color-2);
+    }
+  }
+
+  .section {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 16rem;
+    .content {
+      padding: 1rem 2rem;
+      border-right: 1px solid rgba(0, 0, 0, 0.2);
+      display: grid;
+      grid-gap: 0.5rem;
+      color: var(--text-color-1);
+      .colorPreview {
+        display: inline-block;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        outline: 4px solid white;
+        box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+      }
+      p {
+        font-size: 0.9rem;
+        line-height: 1.6em;
+      }
+    }
+    .action {
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+    }
+  }
+}
+
+.dynamicFormModal {
+  width: 100%;
+  max-width: 30rem;
+}
+.dynamicForm {
+  padding: 1.5rem;
+  display: grid;
+  grid-gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  .main {
+    .email,
+    .password {
+      grid-template-columns: 1fr;
+      .content {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        border-right: none;
+      }
+    }
+  }
+}

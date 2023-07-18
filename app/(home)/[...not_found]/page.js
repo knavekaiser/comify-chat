@@ -7,7 +7,7 @@ export default function NotFound() {
     <main className={`${s.main} body-min-1fr-min`}>
       <div className={s.innerWrapper}>
         <h1 className={space_grotesk.className}>404</h1>
-        <p>Some instruction maybe...</p>
+        <p>Some instructions maybe...</p>
       </div>
     </main>
   );

@@ -31,12 +31,12 @@ const policies = [
   {
     title: "Third-Party Links",
     description:
-      "Our services may contain links to third-party websites or services that are not operated or controlled by Comify Chat. This Privacy Policy does not apply to those third-party websites, and we are not responsible for their privacy practices. We encourage you to review the privacy policies of any third-party sites you visit.",
+      "Our services may contain links to third-party websites or services that are not operated or controlled by Infin AI. This Privacy Policy does not apply to those third-party websites, and we are not responsible for their privacy practices. We encourage you to review the privacy policies of any third-party sites you visit.",
   },
   {
     title: "Children's Privacy",
     description:
-      "Comify Chat does not knowingly collect or solicit personal information from children under the age of 13. If you believe that we have inadvertently collected personal information from a child, please contact us, and we will take immediate steps to delete the information.",
+      "Infin AI does not knowingly collect or solicit personal information from children under the age of 13. If you believe that we have inadvertently collected personal information from a child, please contact us, and we will take immediate steps to delete the information.",
   },
   {
     title: "Changes to the Privacy Policy",
@@ -46,9 +46,15 @@ const policies = [
   {
     title: "Contact Us",
     description:
-      "If you have any questions, concerns, or requests regarding this Privacy Policy or the privacy practices of Comify Chat, please contact us using the provided contact information. We will respond to your inquiries as soon as possible.",
+      "If you have any questions, concerns, or requests regarding this Privacy Policy or the privacy practices of Infin AI, please contact us using the provided contact information. We will respond to your inquiries as soon as possible.",
   },
 ];
+
+export const metadata = {
+  title: "Infin AI | Privacy Policy",
+  description:
+    "Our privacy policy explains how we collect, use, and protect your personal information. Please review and understand our practices regarding data privacy and security.",
+};
 
 export default function Login() {
   return (

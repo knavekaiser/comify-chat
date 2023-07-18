@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
             <Link href={paths.home}>
               <div className={s.logo}>
                 <img src="/assets/logo_big_eyes_white.png" />
-                <h2 className={space_grotesk.className}>Comify Chat</h2>
+                <h2 className={space_grotesk.className}>Infin AI</h2>
               </div>
             </Link>
           </div>

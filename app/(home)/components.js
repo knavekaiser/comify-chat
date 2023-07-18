@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
 import Link from "next/link";
@@ -150,41 +150,33 @@ export const Testimonials = () => {
 };
 
 export const Blogs = () => {
-  const [blogs, setBlogs] = useState([
-    {
-      id: "asdfasd",
-      author: "Comify Chat",
-      title: "Chatbot vs. Live Chat – Which is Better for Customer Service?",
-      createdAt: new Date(),
-      thumbnail: "/assets/blog-1.jpg",
-    },
-    {
-      id: "asdgfasdgasdg",
-      author: "Comify Chat",
-      title: "10 Best Sales Chatbots to Boost Your Revenue in 2023",
-      createdAt: new Date(),
-      thumbnail: "/assets/blog-2.jpg",
-    },
-    {
-      id: "gfhkfgjdfg",
-      author: "Comify Chat",
-      title: "12 Essential Performance Metrics for Customer Service",
-      createdAt: new Date(),
-      thumbnail: "/assets/blog-3.jpg",
-    },
-  ]);
+  const [blogs, setBlogs] = useState([]);
+  const { get: getBlogs, loading } = useFetch(endpoints.blogs);
+  useEffect(() => {
+    getBlogs()
+      .then(({ data }) => {
+        if (data.success) {
+          setBlogs(data.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <ul className={s.cards}>
       {blogs.map((blog) => (
-        <li key={blog.id} className={s.card}>
-          <Link href="/">
-            <img src={blog.thumbnail} />
+        <li key={blog._id} className={s.card}>
+          <Link href={"/blogs" + blog.path}>
+            {blog.thumbnail ? (
+              <img src={endpoints.baseUrl + blog.thumbnail.url} />
+            ) : (
+              <img src={"/assets/blog_fallback.jpg"} />
+            )}
           </Link>
           <div className={s.metadata}>
-            {blog.author} |{" "}
+            {/* {blog.author} |{" "} */}
             <Moment format="MMM DD, YYYY">{blog.createdAt}</Moment>
           </div>
-          <Link href="/">
+          <Link href={"/blogs" + blog.path}>
             <h3 className={space_grotesk.className}>{blog.title}</h3>
           </Link>
         </li>

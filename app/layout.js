@@ -1,20 +1,27 @@
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import ClientLayout from "./components";
 import { Provider } from "./context";
 import "./globals.scss";
 import "./nprogress.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
 
 export const metadata = {
-  title: "Comify Chat",
+  title: "Infin AI",
   description:
-    "Supercharge your website effortlessly with Comify Chat's AI-powered chatbot. Implement in minutes with minimal code, revolutionizing customer interaction with ease.",
+    "Supercharge your website effortlessly with Infin AI's AI-powered chatbot. Implement in minutes with minimal code, revolutionizing customer interaction with ease.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className={inter.className}>
         <Provider>
           {children}

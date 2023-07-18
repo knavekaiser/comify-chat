@@ -11,7 +11,9 @@ export default {
   validatePassToken: baseUrl + "/api/business/validate-password-reset-token",
 
   topics: baseUrl + "/api/faq-documents",
+  blogs: baseUrl + "/api/dynamic-pages",
   chats: baseUrl + "/api/chats",
+  chatbots: baseUrl + "/api/chatbots",
 
-  comifyChatSdk: `${baseUrl}/assets/sdk/comify-chat-sdk-v0.9.0.js`,
+  infinAIChatSdk: `${baseUrl}/assets/sdk/infinai-chat-sdk-v0.9.0.js`,
 };

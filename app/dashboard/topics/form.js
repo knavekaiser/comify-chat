@@ -90,7 +90,7 @@ export default function Form({ edit, onSuccess }) {
 
       <FileInput
         label="File"
-        accept="txt,pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword"
+        accept="text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         control={control}
         name="files"
       />

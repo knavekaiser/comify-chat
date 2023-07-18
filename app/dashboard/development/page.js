@@ -5,19 +5,31 @@ import pageStyle from "../page.module.scss";
 import s from "./page.module.scss";
 import { Space_Grotesk } from "next/font/google";
 import CodeBlock from "@/components/codeBlock";
+import { useContext } from "react";
+import { SiteContext } from "@/app/context";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
+export const metadata = {
+  title: "Infin AI | Dashboard | Development",
+  description:
+    "Implementation and Integration Guidelines for the Chatbot. Enhance Customer Engagement with Ease.",
+};
+
 export default function Home() {
-  const sdkUrl = endpoints.comifyChatSdk;
+  const { user } = useContext(SiteContext);
+  const sdkUrl = endpoints.infinAIChatSdk;
+  const chatbot_id = user.chatbot._id;
+  const defaultUrl = user.chatbot.domain || "infinai.in";
 
   const js = `<script src="${sdkUrl}"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const { default: mountComifyChat } = ComifyChat;
-    mountComifyChat({
-      openAtStart: false,         // optional
-      defaultUrl: "infinai.in",   // optional
+    const { default: mountInfinAI } = InfinAI;
+    mountInfinAI({
+      chatbotId: "${chatbot_id}",    // required
+      openAtStart: false,                      // optional
+      defaultUrl: "${defaultUrl}",       // optional
     });
   });
 </script>`;
@@ -39,11 +51,12 @@ export default function Home() {
 function App() {
   useEffect(() => {
     loadScript("${sdkUrl}").then(() => {
-      if (window.ComifyChat) {
-        const { default: mountComifyChat } = window.ComifyChat;
-        mountComifyChat({
-          openAtStart: false,         // optional
-          defaultUrl: "infinai.in",   // optional
+      if (window.InfinAI) {
+        const { default: mountInfinAI } = window.InfinAI;
+        mountInfinAI({
+          chatbotId: "${chatbot_id}",    // required
+          openAtStart: false,                      // optional
+          defaultUrl: "${defaultUrl}",       // optional
         });
       }
     });
@@ -66,10 +79,11 @@ export default function RootLayout({ children }) {
         src="${sdkUrl}"
         strategy="lazyOnload"
         onLoad={() => {
-          const { default: mountComifyChat } = ComifyChat;
-          mountComifyChat({
-            openAtStart: false,         // optional
-            defaultUrl: "infinai.in",   // optional
+          const { default: mountInfinAI } = InfinAI;
+          mountInfinAI({
+            chatbotId: "${chatbot_id}",    // required
+            openAtStart: false,                      // optional
+            defaultUrl: "${defaultUrl}",       // optional
           });
         }}
       />
@@ -83,7 +97,7 @@ export default function RootLayout({ children }) {
 ]`;
   const angular = `import { Component, AfterViewInit } from '@angular/core';
 
-declare const ComifyChat: any;
+declare const InfinAI: any;
 
 @Component({
   selector: 'app-root',
@@ -93,22 +107,24 @@ declare const ComifyChat: any;
 export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
-    const mountComifyChat = ComifyChat.default;
-    mountComifyChat({
-      openAtStart: false,         // optional
-      defaultUrl: "infinai.in",   // optional
+    const mountInfinAI = InfinAI.default;
+    mountInfinAI({
+      chatbotId: "${chatbot_id}",    // required
+      openAtStart: false,                       // optional
+      defaultUrl: "${defaultUrl}",       // optional
     });
   }
 }`;
 
   const vueScript = `import Vue from 'vue';
 
-Vue.prototype.$comifyChat = require('${sdkUrl}');`;
+Vue.prototype.$InfinAI = require('${sdkUrl}');`;
   const vue = `mounted() {
-  const mountComifyChat = this.$comifyChat.default;
-  mountComifyChat({
-    openAtStart: false,         // optional
-    defaultUrl: "infinai.in",   // optional
+  const mountInfinAI = this.$InfinAI.default;
+  mountInfinAI({
+    chatbotId: "${chatbot_id}",      // required
+    openAtStart: false,                        // optional
+    defaultUrl: "${defaultUrl}",         // optional
   });
 }`;
   return (
@@ -117,7 +133,7 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
         <h1 className={space_grotesk.className}>Development</h1>
         <p className={s.description}>
           This documentation provides step-by-step instructions on how to
-          implement the Comify Chatbot into your website. By following these
+          implement the Infin AI Chatbot into your website. By following these
           guidelines, you can seamlessly integrate the chatbot functionality and
           enhance your customer engagement. Let&apos;s get started!
         </p>
@@ -151,9 +167,9 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
         <div className={s.content}>
           <ol>
             <li>
-              In your React application, you can create a function called
-              loadScript that loads an external script asynchronously and use
-              that function to load Comify Chat:
+              In your React application, you can create a function called{" "}
+              <code>loadScript</code> that loads an external script
+              asynchronously and use that function to load Infin AI:
               <CodeBlock code={react} language="javascript" />
             </li>
           </ol>
@@ -180,17 +196,24 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
         </div>
         <div className={s.content}>
           <ol>
-            <li>In your Angular application, open the angular.json file.</li>
+            <li>
+              In your Angular application, open the <code>angular.json</code>{" "}
+              file.
+            </li>
             <li>
               Locate the &quot;scripts&quot; array within the
               &quot;architect&quot; section and add the following script URL:
               <CodeBlock code={angularScript} language="javascript" />
             </li>
-            <li>Save the changes to the angular.json file.</li>
             <li>
-              In your Angular component file (e.g., app.component.ts), import
-              the AfterViewInit interface from @angular/core and implement it in
-              your component class.
+              Save the changes to the <code>angular.json</code> file.
+            </li>
+            <li>
+              In your Angular component file (e.g.,{" "}
+              <code>app.component.ts</code>), import the{" "}
+              <code>AfterViewInit</code> interface from{" "}
+              <code>@angular/core</code> and implement it in your component
+              class.
             </li>
             <li>
               Within the component class, add the following code:
@@ -208,18 +231,18 @@ Vue.prototype.$comifyChat = require('${sdkUrl}');`;
         <div className={s.content}>
           <ol>
             <li>
-              In your Vue.js application, open the main JavaScript file (e.g.,
-              main.js).
+              In your Vue.js application, open the main JavaScript file (e.g.,{" "}
+              <code>main.js</code>).
             </li>
             <li>
               Add the following code snippet at the top of the file to import
-              the Comify Chat SDK:
+              the Infin AI SDK:
               <CodeBlock code={vueScript} language="javascript" />
             </li>
             <li>Save the changes to your main JavaScript file.</li>
             <li>
-              In your Vue component file (e.g., App.vue), add the following code
-              snippet within the mounted lifecycle hook:
+              In your Vue component file (e.g., <code>App.vue</code>), add the
+              following code snippet within the mounted lifecycle hook:
               <CodeBlock code={vue} language="javascript" />
             </li>
             <li>Save the changes to your component file.</li>

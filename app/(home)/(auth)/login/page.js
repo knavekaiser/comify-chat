@@ -27,6 +27,12 @@ const validationSchema = yup.object({
     .required("Field is required"),
 });
 
+export const metadata = {
+  title: "Infin AI | Login",
+  description:
+    "Securely access your Infin AI account and take control of your chatbot experience. Enter your credentials and dive into the power of AI-driven customer engagement.",
+};
+
 export default function Login() {
   const { user, setUser } = useContext(SiteContext);
   const [err, setErr] = useState(false);

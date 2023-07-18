@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import s from "./formElements.module.scss";
 import { Controller } from "react-hook-form";
 import { GoCalendar, GoEye, GoEyeClosed } from "react-icons/go";
 import { BsFillExclamationTriangleFill } from "react-icons/bs";
-import { FaTimes, FaUpload } from "react-icons/fa";
+import { FaTimes, FaUpload, FaSortDown } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";
 import { Modal, Prompt } from "./modal";
 import { Table } from "./table";
@@ -41,6 +41,7 @@ export const Input = ({
                 className={`${s.field} ${
                   startAdornment ? s.start_adornment : ""
                 } ${endAdornment ? s.end_adornment : ""}`}
+                style={rest.type === "color" ? { background: value } : {}}
               >
                 <span className={startAdornment ? s.startAdornment : ""}>
                   {startAdornment}
@@ -366,5 +367,283 @@ export const FileInput = ({
         </section>
       )}
     />
+  );
+};
+
+export const Combobox = ({
+  control,
+  formOptions,
+  label,
+  name,
+  placeholder,
+  options,
+  multiple,
+  className,
+  disabled,
+  onChange: compOnChange,
+  item,
+  renderValue,
+}) => {
+  const container = useRef();
+  const [open, setOpen] = useState(false);
+  const [style, setStyle] = useState({});
+  const [hover, setHover] = useState();
+  useEffect(() => {
+    const { width, height, x, y } = container.current.getBoundingClientRect();
+    setStyle({
+      position: "absolute",
+      left: x,
+      top: Math.max(
+        Math.min(
+          y + height,
+          window.innerHeight - Math.min(35 * (options?.length || 0) + 8, 320)
+        ),
+        8
+      ),
+      width: width,
+      maxHeight: Math.min(window.innerHeight - 16, 300),
+    });
+  }, [open, options]);
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={formOptions}
+      render={({
+        field: { onChange, onBlur, value, name, ref },
+        fieldState: { error },
+      }) => {
+        const selected = ![undefined, null].includes(value)
+          ? value
+          : multiple
+          ? []
+          : "";
+        const select = ({ label, value, ...rest }) => {
+          if (disabled) {
+            return;
+          }
+          const _selectedItem = selected?.find?.((item) => item === value);
+          if (_selectedItem !== undefined) {
+            onChange(selected.filter((item) => item !== value));
+          } else {
+            if (multiple) {
+              onChange([
+                ...(selected.filter?.((item) => item !== value) || []),
+                value,
+              ]);
+            } else {
+              onChange(value);
+            }
+          }
+
+          if (!multiple) {
+            setOpen(false);
+          }
+          // clearErrors?.(name);
+          compOnChange && compOnChange({ label, value, ...rest });
+        };
+        return (
+          <section
+            data-testid="combobox-container"
+            className={`${s.combobox} ${className || ""} ${
+              open ? s.open : ""
+            } ${
+              !(Array.isArray(options) && options.length) ? s.noOptions : ""
+            } ${error ? s.err : ""} ${disabled ? s.disabled : ""}`}
+          >
+            {label && (
+              <label data-testid="combobox-label">
+                {label} {formOptions?.required && "*"}
+              </label>
+            )}
+
+            <div
+              className={s.field}
+              onClick={() => {
+                if (Array.isArray(options) && options.length) {
+                  setOpen(true);
+                }
+              }}
+              ref={container}
+              tabIndex={disabled ? 1 : 0}
+              onKeyDown={(e) => {
+                if (disabled) {
+                  return;
+                }
+                if ([32, 38, 40].includes(e.keyCode)) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (e.keyCode === 27) {
+                    // escape key
+                    setOpen(false);
+                    return;
+                  }
+                  if (!open && e.keyCode === 32) {
+                    setOpen(true);
+                    return;
+                  }
+                  if (e.keyCode === 32 && options[hover]) {
+                    select(options[hover]);
+                  }
+                  if (e.keyCode === 38 || e.keyCode === 40) {
+                    const index =
+                      options?.findIndex(({ label, value }) => {
+                        return (
+                          value === selected ||
+                          (selected?.some && selected.some((s) => s === value))
+                        );
+                      }) || 0;
+                    const _hover = hover !== undefined ? hover : index;
+
+                    let newIndex =
+                      e.keyCode === 38
+                        ? Math.max(_hover - 1, 0)
+                        : Math.min(
+                            _hover === null ? 0 : _hover + 1,
+                            options.length - 1
+                          );
+
+                    while (options[newIndex]?.disabled) {
+                      if (e.keyCode === 38 && options[newIndex + 1]) {
+                        newIndex = Math.max(newIndex - 1, 0);
+                      } else if (e.keyCode === 40 && options[newIndex + 1]) {
+                        newIndex = Math.min(newIndex + 1, options.length - 1);
+                      } else {
+                        newIndex = hover;
+                      }
+                    }
+
+                    setHover(newIndex);
+                  }
+                }
+              }}
+            >
+              <p
+                className={`${s.displayValue} ${
+                  (multiple && selected?.length === 0) ||
+                  selected === undefined ||
+                  selected === ""
+                    ? s.placeholder
+                    : ""
+                }`}
+              >
+                {renderValue ? (
+                  renderValue(selected)
+                ) : (
+                  <>
+                    {!(Array.isArray(options) && options.length) &&
+                      "No options provided"}
+                    {selected !== undefined &&
+                      ["string", "number", "boolean"].includes(
+                        typeof selected
+                      ) &&
+                      options?.find(
+                        ({ value }) => value.toString() === selected.toString()
+                      )?.label}
+                    {Array.isArray(selected) &&
+                      (selected.length > 3
+                        ? `${selected.length} items selected`
+                        : selected.reduce(
+                            (p, a, i, arr) =>
+                              `${p} ${
+                                options?.find(
+                                  ({ value }) =>
+                                    value.toString() === a.toString()
+                                )?.label
+                              }${i < arr.length - 1 ? ", " : ""}`,
+                            ""
+                          ))}
+                    {options?.length > 0 &&
+                      ((multiple && selected?.length === 0) ||
+                        selected === undefined ||
+                        selected === "") &&
+                      (placeholder || "Select")}
+                  </>
+                )}
+              </p>
+              <input
+                data-testid="combobox-input"
+                ref={ref}
+                readOnly={true}
+                tabIndex={1}
+              />
+              <span data-testid="combobox-btn" className={s.btn}>
+                <FaSortDown />
+              </span>
+            </div>
+            {error && <span className={s.errMsg}>{error.message}</span>}
+            <Modal
+              open={open}
+              className={s.comboboxModal}
+              backdropClass={s.comboboxBackdrop}
+              setOpen={setOpen}
+              onBackdropClick={() => setOpen(false)}
+              // clickThroughBackdrop
+              style={style}
+            >
+              <ComboboxList
+                hover={hover}
+                setHover={setHover}
+                options={options}
+                select={select}
+                selected={selected}
+                multiple={multiple}
+                item={item}
+              />
+            </Modal>
+          </section>
+        );
+      }}
+    />
+  );
+};
+const ComboboxList = ({
+  options,
+  hover,
+  setHover,
+  select,
+  selected,
+  multiple,
+  item,
+}) => {
+  return (
+    <ul
+      className={s.options}
+      data-testid="combobox-options"
+      onMouseOut={() => setHover(null)}
+    >
+      {options?.map(({ label, value, disabled, ...rest }, i) => (
+        <li
+          key={i}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!disabled) {
+              select({ label, value, ...rest });
+            }
+          }}
+          className={`${
+            (selected?.find && selected.find((item) => item === value)) ||
+            value === selected
+              ? s.selected
+              : ""
+          } ${hover === i && s.hover} ${disabled ? s.disabled : ""}`}
+          data-testid={`combobox-${label}`}
+          onMouseMove={() => setHover(i)}
+          onMouseOut={() => setHover(i)}
+        >
+          {multiple && (
+            <input
+              type="checkbox"
+              checked={
+                (selected?.find && selected.find((item) => item === value)) ||
+                false
+              }
+              readOnly={true}
+            />
+          )}
+          {item ? item({ label, value, ...rest }) : label}
+        </li>
+      ))}
+    </ul>
   );
 };
