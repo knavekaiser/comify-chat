@@ -59,6 +59,7 @@ export default function Home() {
         filters={filters}
         columns={[
           { label: "Topic" },
+          { label: "Show on Chat" },
           { label: "Files" },
           { label: "URLs" },
           { label: "Action" },
@@ -66,6 +67,7 @@ export default function Home() {
         renderRow={(row, i) => (
           <tr key={row._id}>
             <td className="ellepsis line-2">{row.topic}</td>
+            <td>{row.showOnChat ? "Yes" : "No"}</td>
             <td>{row.files.length}</td>
             <td>{row.urls.length}</td>
             <td className="tableActions">

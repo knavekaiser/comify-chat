@@ -2,7 +2,7 @@
 
 import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
-import { CoreFeatures, Testimonials, Blogs } from "./components";
+import { CoreFeatures, Testimonials, Blogs, Platforms } from "./components";
 import Link from "next/link";
 import paths from "@/utils/paths";
 import { motion } from "framer-motion";
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={s.section_one}>
+      <div className={s.intro}>
         <div className={s.innerWrapper}>
           <div className={s.content}>
             <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
@@ -156,7 +156,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={s.section_two}>
+      <div className={s.key_features}>
         <div className={s.innerWrapper}>
           <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
             Unlock the Power of Infin AI: <br />
@@ -220,7 +220,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={s.section_three}>
+      <div className={s.core_features}>
         <div className={s.innerWrapper}>
           <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
             What’s included: core features
@@ -233,11 +233,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={s.section_four}>
+      <div className={s.testimonials}>
         <div className={s.innerWrapper}>
           <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
             See why other businesses <br />
-            like you have chosen InfinAI
+            like you have chosen Infin AI
           </motion.h2>
           <motion.p {...inViewFadeIn} className={s.dscr}>
             Top-rated on Trustpilot, G2, and AppSumo
@@ -247,7 +247,18 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={s.section_five}>
+      <div className={s.platform_section}>
+        <div className={s.innerWrapper}>
+          <h2 className={space_grotesk.className}>
+            Your tools don't have to Change
+          </h2>
+          <p className={s.dscr}>Infin AI integrates with your favorite tools</p>
+
+          <Platforms />
+        </div>
+      </div>
+
+      <div className={s.blog_section}>
         <div className={s.innerWrapper}>
           <h2 className={space_grotesk.className}>Latest updates</h2>
           <p className={s.dscr}>

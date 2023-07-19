@@ -14,6 +14,7 @@ import { Prompt } from "@/components/modal";
 import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
@@ -87,54 +88,109 @@ export const CoreFeatures = () => {
 };
 
 export const Testimonials = () => {
-  const [features, setFeatures] = useState([
+  const [testimonials, setTestimonials] = useState([
     {
-      title: "Welcome screen",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Jane F.",
+        role: "CEO, TechStart Inc.",
+        image: "/assets/img/testimonials/avatar_1.png",
+      },
+      content:
+        "Our organization was delighted to discover how effortlessly we could integrate the AI chatbot into our website. The transition was smooth and seamless. It felt like adding a new team member, only faster and more efficient!",
     },
     {
-      title: "One-click management",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "David L.",
+        role: "CEO, EComm Ventures",
+        image: "/assets/img/testimonials/avatar_2.png",
+      },
+      content:
+        "The ability to establish our own knowledge base has been a game-changer for us. It's like having a virtual assistant on standby, ready to answer our clients' questions with the utmost precision. This AI chatbot has become a vital part of our customer service.",
     },
     {
-      title: "Testimonial 3",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Susan M.",
+        role: "CEO, FinEdge Corp.",
+        image: "/assets/img/testimonials/avatar_3.png",
+      },
+      content:
+        "Customizing the user experience was a breeze. We were able to match the chatbot's look and feel to our site, providing a consistent brand experience for our visitors. It's this attention to detail that sets this AI chatbot apart.",
     },
     {
-      title: "Testimonial 4",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Kevin P.",
+        role: "CEO, Apex Marketing Group",
+        image: "/assets/img/testimonials/avatar_4.png",
+      },
+      content:
+        "The insights we've gained from the analytics are nothing short of invaluable. We now understand our customers' needs better, and it's all thanks to the in-depth data provided by the AI chatbot. It's truly a marketer's dream come true.",
     },
     {
-      title: "Testimonial 5",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Helen S.",
+        role: "CEO, Omni Health Solutions",
+        image: "/assets/img/testimonials/avatar_5.png",
+      },
+      content:
+        "One of the highlights of using this AI chatbot was how straightforward it made setting up our knowledge base. We had it up and running in no time, ready to help our customers. It's as easy as it gets!",
     },
     {
-      title: "Testimonial 6",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Richard B.",
+        role: "CEO, GreenLight Media",
+        image: "/assets/img/testimonials/avatar_6.png",
+      },
+      content:
+        "We were impressed by the smoothness of integrating this AI chatbot into our website. It was like plugging in an extension, a very intelligent one. The ease of use exceeded our expectations.",
     },
     {
-      title: "Testimonial 7",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Sophia N.",
+        role: "CEO, Inspire Design Studio",
+        image: "/assets/img/testimonials/avatar_7.png",
+      },
+      content:
+        "The ability to customize the chatbot to match our website was exceptional. It's like having a digital concierge that not only fits our brand but also knows exactly how to assist our customers.",
     },
     {
-      title: "Testimonial 8",
-      description: `I have used some AI writing tools liked Rytr, Peppertype, and Jasper but I found Writesonic to be the best for writing complete blog posts.`,
-      image: "/assets/feature-prevew.svg",
+      user: {
+        name: "Lucas M.",
+        role: "CEO, Quantum Analytics",
+        image: "/assets/img/testimonials/avatar_8.png",
+      },
+      content:
+        "Having analytics at our fingertips has been a revelation. We've gained insights into our customer queries that we could never have understood otherwise. The satisfaction ratings have helped us understand and enhance our user experience.",
+    },
+    {
+      user: {
+        name: "Ethan W.",
+        role: "CEO, LogicPro IT",
+        image: "/assets/img/testimonials/avatar_9.png",
+      },
+      content:
+        "Being able to establish our own knowledge base with this AI chatbot was incredibly straightforward. We could tailor the chatbot to our clients' needs in no time. It's truly user empowerment at its finest.",
+    },
+    {
+      user: {
+        name: "Charlotte D.",
+        role: "CEO, DreamHomes Realty",
+        image: "/assets/img/testimonials/avatar_10.png",
+      },
+      content:
+        "This AI chatbot isn't just easy to integrate and customize, it's an invaluable tool for understanding our customers better. The insights provided by the analytics have helped us tailor our services to better meet our clients' needs. It's like having a personal advisor for our business!",
     },
   ]);
-  const [active, setActive] = useState(features[0]);
+  const [active, setActive] = useState(testimonials[0]);
 
   return (
-    <motion.ul {...inViewFadeIn} className={s.cards}>
-      {features.map((item) => (
-        <li
+    <ul className={s.cards}>
+      {testimonials.map((item, i) => (
+        <motion.li
+          {...inViewFadeIn}
+          transition={{
+            ...inViewFadeIn.transition,
+            delay: 0.4 + 0.2 * i,
+          }}
           key={item.title}
           className={`${s.card} ${
             active?.title === item.title ? s.active : ""
@@ -142,10 +198,77 @@ export const Testimonials = () => {
           onClick={() => setActive(item)}
         >
           {/* <h4 className={space_grotesk.className}>{item.title}</h4> */}
-          <p>{item.description}</p>
-        </li>
+          <p>{item.content}</p>
+          <div className={s.profile}>
+            <Image
+              height={50}
+              width={50}
+              src={item.user?.image}
+              alt={`${item.user.name} photo`}
+            />
+            <div className={s.detail}>
+              <h4 className={s.name}>{item.user.name}</h4>
+              <p className={s.role}>{item.user.role}</p>
+            </div>
+          </div>
+        </motion.li>
       ))}
-    </motion.ul>
+    </ul>
+  );
+};
+
+export const Platforms = () => {
+  const [platforms, setPlatforms] = useState([
+    {
+      id: "wordpress",
+      img: "/assets/img/platforms/wordpress.webp",
+      url: "#",
+      message: "Add an AI chatbot to your WordPress website",
+    },
+    {
+      id: "zapier",
+      img: "/assets/img/platforms/zapier.webp",
+      url: "#",
+      message: "Connect your chatbot to 5000+ apps on Zapier",
+    },
+    {
+      id: "slack",
+      img: "/assets/img/platforms/slack.webp",
+      url: "#",
+      message: "Coming soon...",
+    },
+    {
+      id: "shopify",
+      img: "/assets/img/platforms/shopify.webp",
+      url: "#",
+      message: "Coming soon...",
+    },
+  ]);
+  return (
+    <ul className={`${s.cards} ${s.platfomrs}`}>
+      {platforms.map((pl, i) => (
+        <motion.li
+          {...inViewFadeIn}
+          transition={{
+            ...inViewFadeIn.transition,
+            delay: 0.4 + 0.2 * i,
+          }}
+          key={pl.id}
+          className={s.card}
+        >
+          <a href={pl.url}>
+            <Image
+              height={68}
+              width={180}
+              src={pl.img}
+              alt={`${pl.id + " logo"}`}
+              objectFit="contain"
+            />
+            <p>{pl.message}</p>
+          </a>
+        </motion.li>
+      ))}
+    </ul>
   );
 };
 
@@ -162,26 +285,36 @@ export const Blogs = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <ul className={s.cards}>
-      {blogs.map((blog) => (
-        <li key={blog._id} className={s.card}>
-          <Link href={"/blogs" + blog.path}>
-            {blog.thumbnail ? (
-              <img src={endpoints.baseUrl + blog.thumbnail.url} />
-            ) : (
-              <img src={"/assets/blog_fallback.jpg"} />
-            )}
-          </Link>
-          <div className={s.metadata}>
-            {/* {blog.author} |{" "} */}
-            <Moment format="MMM DD, YYYY">{blog.createdAt}</Moment>
-          </div>
-          <Link href={"/blogs" + blog.path}>
-            <h3 className={space_grotesk.className}>{blog.title}</h3>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div className={`${s.cards} ${s.blogs}`}>
+      <ul className={s.cardsWrapper}>
+        {blogs.map((blog, i) => (
+          <motion.li
+            {...inViewFadeIn}
+            transition={{
+              ...inViewFadeIn.transition,
+              delay: 0.4 + 0.2 * i,
+            }}
+            key={blog._id}
+            className={s.card}
+          >
+            <Link href={"/blogs" + blog.path}>
+              {blog.thumbnail ? (
+                <img src={endpoints.baseUrl + blog.thumbnail.url} />
+              ) : (
+                <img src={"/assets/blog_fallback.jpg"} />
+              )}
+            </Link>
+            <div className={s.metadata}>
+              {/* {blog.author} |{" "} */}
+              <Moment format="MMM DD, YYYY">{blog.createdAt}</Moment>
+            </div>
+            <Link href={"/blogs" + blog.path}>
+              <h3 className={space_grotesk.className}>{blog.title}</h3>
+            </Link>
+          </motion.li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

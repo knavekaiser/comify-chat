@@ -134,53 +134,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className={s.section}>
-        <div className={s.content}>
-          <h3 className={space_grotesk.className}>Show Topics</h3>
-          <p className="ellepsis line-2">
-            {user?.chatbot?.showTopic ? "Yes" : "No"}
-          </p>
-        </div>
-        <div className={s.action}>
-          <button
-            className="btn primary"
-            onClick={() =>
-              setForm({
-                title: "Show Topics",
-                fields: [
-                  {
-                    inputType: "select",
-                    name: "showTopic",
-                    options: [
-                      { label: "Yes", value: true },
-                      { label: "No", value: false },
-                    ],
-                  },
-                ],
-                currentValues: { showTopic: user?.chatbot?.showTopic || false },
-                schema: yup.object({
-                  showTopic: yup.boolean().required("Field is required"),
-                }),
-                submit: {
-                  url: endpoints.chatbots + `/${user.chatbot._id}`,
-                  method: "put",
-                },
-                onSuccess: (newChatbot) => {
-                  setForm(null);
-                  setUser((prev) => ({ ...prev, chatbot: newChatbot }));
-                  Prompt({
-                    type: "success",
-                    message: "Settings updated successfully",
-                  });
-                },
-              })
-            }
-          >
-            Update
-          </button>
-        </div>
-      </section>
-
       <Modal
         className={s.dynamicFormModal}
         open={form}

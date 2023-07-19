@@ -8,7 +8,12 @@ import s from "./page.module.scss";
 import Menu from "@/components/menu";
 import { useEffect, useRef, useState } from "react";
 import { Table } from "@/components/table";
-import { FileInput, Input, Textarea } from "@/components/formElements";
+import {
+  Combobox,
+  FileInput,
+  Input,
+  Textarea,
+} from "@/components/formElements";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { FaCheck, FaPlus, FaTimes } from "react-icons/fa";
 import { Prompt } from "@/components/modal";
@@ -18,6 +23,7 @@ const docSchema = yup.object({
   description: yup.string(),
   files: yup.array().of(yup.mixed()),
   urls: yup.array().of(yup.string().url()),
+  showOnChat: yup.boolean(),
 });
 
 export default function Form({ edit, onSuccess }) {
@@ -43,7 +49,11 @@ export default function Form({ edit, onSuccess }) {
   const url = watch("url");
 
   useEffect(() => {
-    reset({ ...edit, urls: edit?.urls || [] });
+    reset({
+      ...edit,
+      urls: edit?.urls || [],
+      showOnChat: "showOnChat" in edit ? edit.showOnChat : false,
+    });
   }, [edit]);
   return (
     <form
@@ -87,6 +97,16 @@ export default function Form({ edit, onSuccess }) {
       })}
     >
       <Input control={control} label="Topic" name="topic" />
+
+      <Combobox
+        control={control}
+        name="showOnChat"
+        label="Show on Chat"
+        options={[
+          { label: "Yes", value: true },
+          { label: "No", value: false },
+        ]}
+      />
 
       <FileInput
         label="File"
