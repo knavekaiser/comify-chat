@@ -452,8 +452,9 @@
           }
         }
         &.blogs {
-          overflow: scroll;
+          overflow: auto;
           .cardsWrapper {
+            margin: auto;
             padding: 1rem;
             display: flex;
             grid-gap: 2rem;
@@ -645,6 +646,15 @@
     .testimonials {
       .innerWrapper {
         padding: 5rem 0;
+        .cards {
+          grid-gap: 1rem;
+          padding: 0 1rem;
+          padding-bottom: 1rem;
+          .card {
+            min-width: 75vw;
+            padding: 1.5rem;
+          }
+        }
       }
     }
     h2 {

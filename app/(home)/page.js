@@ -250,7 +250,7 @@ export default function Home() {
       <div className={s.platform_section}>
         <div className={s.innerWrapper}>
           <h2 className={space_grotesk.className}>
-            Your tools don't have to Change
+            Your tools don&apos;t have to Change
           </h2>
           <p className={s.dscr}>Infin AI integrates with your favorite tools</p>
 
