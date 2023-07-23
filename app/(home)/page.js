@@ -6,6 +6,7 @@ import { CoreFeatures, Testimonials, Blogs, Platforms } from "./components";
 import Link from "next/link";
 import paths from "@/utils/paths";
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
@@ -17,22 +18,52 @@ const inViewFadeIn = {
 };
 
 export default function Home() {
+  const videoContainer = useRef();
+  const mainContainer = useRef();
+  const [videoInView, setVideoInView] = useState(false);
+  const [manualCtrl, setManualCtrl] = useState(false);
+  const video = useRef();
+  useEffect(() => {
+    video.current.volume = 0.02;
+    const body = document.querySelector("body");
+    const scrollHandler = (e) => {
+      const bound = videoContainer.current.getBoundingClientRect();
+      const buffer = 200;
+      const inview =
+        bound.y + buffer < window.innerHeight &&
+        bound.y + bound.height > buffer;
+      setVideoInView(inview);
+    };
+    body.addEventListener("scroll", scrollHandler);
+    return () => {
+      body.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+  useEffect(() => {
+    if (!manualCtrl) {
+      if (videoInView) {
+        video.current.play();
+      } else {
+        video.current.pause();
+      }
+    }
+  }, [videoInView]);
   return (
-    <main className={s.main}>
+    <main className={s.main} ref={mainContainer}>
       <div className={s.hero}>
         <div className={s.innerWrapper}>
           <div className={s.content}>
             <motion.h1 {...inViewFadeIn} className={space_grotesk.className}>
-              Empower Your Business with AI-Powered Infin AI Today!
+              Empower Your Business with
+              <br /> Infin AI Today!
             </motion.h1>
             <motion.p
               {...inViewFadeIn}
               transition={{ ...inViewFadeIn.transition, delay: 0.5 }}
             >
-              Revolutionize customer engagement and supercharge your business
-              with Infin AI&apos;s AI-powered chatbot service. Enhance sales,
-              streamline support, and maximize growth with our cutting-edge
-              technology. Get started now!
+              Revolutionize Customer Engagement with Infin AI&apos;s Chatbot
+              Service. Effortlessly Create Chatbots from Documents or Existing
+              Websites - No Code Required. Supercharge Your Business Today!
             </motion.p>
             <motion.div
               {...inViewFadeIn}
@@ -217,6 +248,27 @@ export default function Home() {
               </p>
             </motion.li>
           </ul>
+        </div>
+      </div>
+
+      <div className={s.video_demo}>
+        <div className={s.innerWrapper}>
+          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
+            Video Demo
+          </motion.h2>
+          <motion.p {...inViewFadeIn} className={s.dscr}>
+            Creating a chatbot for your website by uploading word document and
+            training the AI on its content. You can then embed the chatbot on
+            the website!
+          </motion.p>
+
+          <div
+            className={s.video}
+            ref={videoContainer}
+            onClick={() => setManualCtrl(true)}
+          >
+            <video src="/assets/video-tutorial.mp4" controls ref={video} />
+          </div>
         </div>
       </div>
 

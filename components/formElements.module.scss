@@ -238,38 +238,38 @@
 .fileInput {
   .label {
     margin-bottom: 0.2rem;
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
+    font-size: 0.8rem;
     font-weight: 600;
-    span {
-      cursor: pointer;
-      text-decoration: underline;
-      color: var(--text-color-2);
-    }
+    white-space: nowrap;
+    color: var(--text-color-1);
   }
   .inputField {
     border-radius: 0.5rem;
-    border: 1px solid #d1d1d1;
+    border: 2px dashed #d1d1d1;
+    overflow: hidden;
     label {
       cursor: pointer;
       display: grid;
-      grid-template-columns: 1fr max-content;
-      align-items: center;
+      aspect-ratio: 3.5;
       font-size: 13.5px;
-      .fileNames {
-        padding: 0 0.75rem;
-        color: #747474;
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      background: rgb(250, 251, 252);
+      color: rgb(180, 180, 180);
+      place-items: center;
+      &:hover {
+        background: rgb(245, 246, 248);
       }
-      .btn {
+      .wrapper {
+        place-items: center;
+        display: grid;
+      }
+      .icon {
+        margin: auto;
+        font-size: 2rem;
         border-radius: 0 0.5rem 0.5rem 0;
         padding: 0.7rem 1rem;
-        background: rgb(var(--primary-color-rgb));
-        color: white;
+      }
+      .hint {
+        margin: auto;
       }
     }
   }
@@ -281,6 +281,7 @@
     flex-wrap: wrap;
     grid-gap: 1rem;
     li {
+      overflow: hidden;
       border: 1px solid #d1d1d1;
       border-radius: 0.5rem;
       background: white;
@@ -293,7 +294,6 @@
       .clear {
         background: rgba(255, 255, 255, 0.5);
         border-radius: 0.5rem;
-        color: rgb(var(--red-color-rgb));
         font-size: 2rem;
         top: 0rem;
         right: 0rem;
@@ -301,8 +301,9 @@
       }
       &.file {
         img {
-          max-width: 100%;
-          max-height: 100%;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
       &.fileInputUploadBtn {
@@ -312,8 +313,10 @@
           width: 100%;
           height: 100%;
           cursor: pointer;
+          background: rgb(250, 251, 252);
+          color: rgb(155, 155, 155);
           &:hover {
-            background: #d1d1d1;
+            background: rgb(245, 246, 248);
           }
           svg {
             display: block;
@@ -324,6 +327,51 @@
             }
           }
         }
+      }
+    }
+    &.avatar {
+      padding: 0;
+      border: none;
+      li {
+        height: 150px;
+        width: 150px;
+        margin: auto;
+        border-radius: 50%;
+        button {
+          top: unset;
+          bottom: 0;
+          right: unset;
+          width: 100%;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.4);
+        }
+      }
+    }
+  }
+  .fileTable {
+    table {
+      width: 100%;
+      border-color: #d1d1d1;
+      &:not(.showInput) {
+        margin-top: 1rem;
+        border-top: none;
+        border-radius: 0 0 0.5rem 0.5rem;
+      }
+      tr {
+        td {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .tableActions {
+          margin: auto;
+          margin-right: 0;
+          button {
+            color: gray;
+            font-size: 1.25rem;
+          }
+        }
+        grid-template-columns: 1fr 3.5rem;
       }
     }
   }
@@ -343,33 +391,14 @@
   }
 }
 
-.fileInputModal {
-  width: 100%;
-  max-width: 40rem;
-  .container {
-    padding: 1rem;
-    table {
-      width: 100%;
-      tr {
-        td {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        grid-template-columns: 1fr 3.5rem;
-      }
-    }
-  }
-}
-
 .combobox {
   cursor: pointer;
   & > label {
     font-size: 0.8rem;
     font-weight: 600;
     margin-bottom: 0.2rem;
-    display: block;
     white-space: nowrap;
+    color: var(--text-color-1);
   }
   &.open {
     .field {
@@ -377,7 +406,7 @@
         border-radius: 4px 4px 0 0;
       }
       .btn {
-        transform: rotate(180deg) translateY(-4px);
+        transform: rotate(180deg) translateY(-2px);
       }
     }
   }
@@ -425,7 +454,7 @@
     .btn {
       z-index: 12;
       position: absolute;
-      top: 9px;
+      top: 12px;
       display: grid;
       place-items: center;
       font-size: 1.5em;
@@ -527,4 +556,13 @@
 .searchFieldModalBackdrop,
 .comboboxBackdrop {
   background: rgba(0, 0, 0, 0) !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -52,7 +52,7 @@ export default function Form({ edit, onSuccess }) {
     reset({
       ...edit,
       urls: edit?.urls || [],
-      showOnChat: "showOnChat" in edit ? edit.showOnChat : false,
+      showOnChat: edit && "showOnChat" in edit ? edit.showOnChat : false,
     });
   }, [edit]);
   return (
@@ -81,7 +81,7 @@ export default function Form({ edit, onSuccess }) {
           }
           if (Array.isArray(value)) {
             value.forEach((file) => formData.append(key, file));
-          } else if (value) {
+          } else if (value || value === false) {
             formData.append(key, value);
           }
         });
@@ -110,6 +110,7 @@ export default function Form({ edit, onSuccess }) {
 
       <FileInput
         label="File"
+        multiple
         accept="text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         control={control}
         name="files"

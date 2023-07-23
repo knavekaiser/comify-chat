@@ -11,8 +11,9 @@ import endpoints from "@/utils/endpoints";
 import { Table } from "@/components/table";
 import Menu from "@/components/menu";
 import { useState } from "react";
-import { Modal } from "@/components/modal";
+import { Modal, Prompt } from "@/components/modal";
 import Form from "./form";
+import { useFetch } from "@/utils/hooks";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function Home() {
   const { control, handleSubmit } = useForm();
   const [filters, setFilters] = useState({});
   const [addNew, setAddNew] = useState(false);
+  const { remove: dltTopic, loading } = useFetch(endpoints.topics + "/{_id}");
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
       <header>
@@ -59,17 +61,17 @@ export default function Home() {
         filters={filters}
         columns={[
           { label: "Topic" },
-          { label: "Show on Chat" },
-          { label: "Files" },
-          { label: "URLs" },
-          { label: "Action" },
+          { label: "Show on Chat", className: "center" },
+          { label: "Files", className: "center" },
+          { label: "URLs", className: "center" },
+          { label: "Action", className: "center" },
         ]}
         renderRow={(row, i) => (
           <tr key={row._id}>
             <td className="ellepsis line-2">{row.topic}</td>
-            <td>{row.showOnChat ? "Yes" : "No"}</td>
-            <td>{row.files.length}</td>
-            <td>{row.urls.length}</td>
+            <td className="center">{row.showOnChat ? "Yes" : "No"}</td>
+            <td className="center">{row.files.length}</td>
+            <td className="center">{row.urls.length}</td>
             <td className="tableActions">
               <Menu
                 button={
@@ -79,7 +81,28 @@ export default function Home() {
                 }
                 options={[
                   { label: "Edit", onClick: () => setAddNew(row) },
-                  { label: "Delete", onClick: () => {} },
+                  {
+                    label: "Delete",
+                    onClick: () =>
+                      Prompt({
+                        type: "confirmation",
+                        message: `Are you sure you want to remove this Topic?`,
+                        callback: () => {
+                          dltTopic({}, { params: { "{_id}": row._id } }).then(
+                            ({ data }) => {
+                              if (data.success) {
+                                setFilters((prev) => ({ ...prev }));
+                              } else {
+                                Prompt({
+                                  type: "error",
+                                  message: data.message,
+                                });
+                              }
+                            }
+                          );
+                        },
+                      }),
+                  },
                 ]}
               />
             </td>

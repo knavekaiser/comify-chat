@@ -4,7 +4,7 @@
   grid-template-rows: max-content 1fr max-content;
   overflow-x: auto !important;
   width: 100%;
-  border: 1px solid #b7b7b7;
+  border: 1px solid #d1d1d1;
   position: relative;
   border-radius: 0.5rem;
   tr {
@@ -24,20 +24,24 @@
         grid-column: 1 / -1;
         padding: 2rem;
         font-style: italic;
+        color: rgb(168, 168, 168);
       }
     }
   }
   thead {
-    background: rgb(var(--primary-color-rgb));
+    // background: rgb(var(--primary-color-rgb));
     position: sticky;
     top: 0;
     z-index: 10;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #d1d1d1;
     tr {
       background: inherit;
       font-weight: bold;
       th {
-        padding: 0.75rem 0;
-        color: white;
+        padding: 1rem 0;
+        // color: white;
+        color: var(--text-color-1);
         text-align: left;
       }
     }
@@ -74,7 +78,7 @@
   }
   tfoot {
     margin-top: 0.5rem;
-    border-top: 1px solid #b7b7b7;
+    border-top: 1px solid #d1d1d1;
     .pagination {
       position: sticky;
       right: 0;

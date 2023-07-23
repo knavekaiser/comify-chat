@@ -14,11 +14,6 @@ import { Space_Grotesk } from "next/font/google";
 import Link from "next/link";
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-function resizeWindow() {
-  let vh = window.innerHeight * 0.01;
-  document.body.style.setProperty("--vh", `${vh}px`);
-}
-
 export default function ClientLayout(params) {
   const { user, setUser } = useContext(SiteContext);
   const { get: getProfile } = useFetch(endpoints.profile);
@@ -58,8 +53,13 @@ export default function ClientLayout(params) {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("resize", () => resizeWindow());
-    resizeWindow();
+    function adjustVh() {
+      let vh = window.innerHeight * 0.01;
+      document.body.style.setProperty("--vh", `${vh}px`);
+    }
+    window.addEventListener("resize", adjustVh);
+    adjustVh();
+    return () => window.removeEventListener("resize", adjustVh);
   }, []);
 
   return (
@@ -68,12 +68,11 @@ export default function ClientLayout(params) {
         src={endpoints.infinAIChatSdk}
         strategy="lazyOnload"
         onLoad={() => {
-          const { default: mountInfinAIChat } = InfinAI;
-
-          mountInfinAIChat({
-            baseUrl: endpoints.baseUrl,
-            chatbotId: process.env.NEXT_PUBLIC_INFINAI_CHATBOT_ID,
-            defaultUrl: "infinai.in",
+          const { default: mountInfinAI } = InfinAI;
+          mountInfinAI({
+            chatbotId: process.env.NEXT_PUBLIC_INFINAI_CHATBOT_ID, // required
+            openAtStart: false, // optional
+            defaultUrl: "localhost:3000", // optional
           });
         }}
       />

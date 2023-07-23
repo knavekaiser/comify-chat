@@ -32,7 +32,18 @@
         width: 2rem;
         border-radius: 50%;
         outline: 4px solid white;
-        box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.35);
+      }
+      .avatarPreview {
+        display: inline-block;
+        height: 5rem;
+        width: 5rem;
+        border-radius: 50%;
+        object-fit: cover;
+        &.custom {
+          outline: 4px solid white;
+          box-shadow: 0 0 1rem rgba(0, 0, 0, 0.35);
+        }
       }
       p {
         font-size: 0.9rem;

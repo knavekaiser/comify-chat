@@ -164,6 +164,7 @@
   .hero,
   .intro,
   .key_features,
+  .video_demo,
   .core_features,
   .testimonials,
   .platform_section {
@@ -270,6 +271,35 @@
     }
   }
 
+  .video_demo {
+    display: flex;
+    .innerWrapper {
+      display: grid;
+      grid-gap: 2rem;
+      margin: auto;
+      color: var(--text-color-1);
+      h2 {
+        text-align: center;
+      }
+      .dscr {
+        margin: auto;
+        text-align: center;
+        max-width: 50rem;
+      }
+      .video {
+        border-radius: 0.5rem;
+        border: 1px solid rgba(42, 56, 58, 0.178);
+        height: max-content;
+        display: grid;
+        overflow: hidden;
+        video {
+          max-width: 100%;
+        }
+        // aspect-ratio: 1.9;
+      }
+    }
+  }
+
   .core_features {
     display: flex;
     .innerWrapper {
@@ -358,14 +388,17 @@
       }
       .cards {
         display: flex;
-        overflow-x: auto;
+        position: relative;
+        overflow-x: scroll;
         overflow-y: hidden;
         grid-gap: 2rem;
         padding: 0 2rem;
         padding-bottom: 1rem;
         flex-wrap: nowrap;
         .card {
+          // width: 100%;
           min-width: 25rem;
+          height: 100%;
           border-radius: 0.5rem;
           background: linear-gradient(
             180deg,
@@ -653,7 +686,7 @@
           padding: 0 1rem;
           padding-bottom: 1rem;
           .card {
-            min-width: 75vw;
+            // min-width: 75vw;
             padding: 1.5rem;
           }
         }

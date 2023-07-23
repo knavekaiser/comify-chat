@@ -3,13 +3,14 @@ import { useEffect, useState, useRef } from "react";
 import s from "./formElements.module.scss";
 import { Controller } from "react-hook-form";
 import { GoCalendar, GoEye, GoEyeClosed } from "react-icons/go";
-import { BsFillExclamationTriangleFill } from "react-icons/bs";
-import { FaTimes, FaUpload, FaSortDown } from "react-icons/fa";
+import { BsFillExclamationTriangleFill, BsPersonSquare } from "react-icons/bs";
+import { FaSortDown, FaRegTrashAlt } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";
 import { Modal, Prompt } from "./modal";
 import { Table } from "./table";
-import { BiSolidDownArrow } from "react-icons/bi";
-import Menu from "./menu";
+import { IoClose } from "react-icons/io5";
+import { BsUpload } from "react-icons/bs";
+import endpoints from "@/utils/endpoints";
 
 export const Input = ({
   control,
@@ -153,6 +154,61 @@ export const Textarea = ({
   );
 };
 
+const resizeImg = async (file, imgOptions) => {
+  return new Promise((res, rej) => {
+    try {
+      const maxDim = imgOptions?.maxDim || 1200;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = async function () {
+          let w = this.width,
+            h = this.height,
+            aspectRatio = h / w;
+
+          if (w > maxDim || h > maxDim) {
+            if (h > w) {
+              const newHeight = Math.min(maxDim, h);
+              const newWidth = Math.round(newHeight / aspectRatio);
+              h = newHeight;
+              w = newWidth;
+            } else {
+              const newWidth = Math.min(maxDim, w);
+              const newHeight = Math.round(newWidth * aspectRatio);
+              h = newHeight;
+              w = newWidth;
+            }
+          }
+
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = w;
+          canvas.height = h;
+
+          const bitmap = await createImageBitmap(file);
+
+          ctx.drawImage(bitmap, 0, 0, w, h);
+          canvas.toBlob(
+            (blob) =>
+              res(
+                new File([blob], file.name.replace(/\.[^.]+$/, "") + ".webp", {
+                  type: blob.type,
+                })
+              ),
+            "image/webp",
+            0.8
+          );
+        };
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      rej(err);
+    }
+  });
+};
 export const FileInput = ({
   label,
   control,
@@ -161,17 +217,34 @@ export const FileInput = ({
   formOptions,
   multiple,
   accept,
+  imgOptions,
+  avatar,
 }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showFiles, setShowFiles] = useState(false);
   useEffect(() => {
-    if (control._formValues[name]?.length !== files.length) {
-      setFiles(
-        control._formValues[name]?.map((file) =>
-          typeof file === "string" ? { name: file, uploadFilePath: file } : file
-        ) || []
-      );
+    if (multiple) {
+      if (control._formValues[name]?.length !== files.length) {
+        setFiles(
+          control._formValues[name]?.map((file) =>
+            typeof file === "string"
+              ? { name: file, uploadFilePath: file }
+              : file
+          ) || []
+        );
+      }
+    } else {
+      const _file = control._formValues[name];
+      if (_file && typeof _file === "string") {
+        setFiles([
+          {
+            name: _file,
+            uploadFilePath: _file,
+          },
+        ]);
+      } else if (_file) {
+        setFiles([_file]);
+      }
     }
   }, [control._formValues[name]?.length]);
   return (
@@ -186,16 +259,13 @@ export const FileInput = ({
           data-testid="fileInput"
           className={`${s.fileInput} ${error ? s.error : ""}`}
         >
-          <div className={s.label}>
-            <label>
-              {label} {formOptions?.required && "*"}
-            </label>
-            {!thumbnail && (
-              <span className={s.fileCount} onClick={() => setShowFiles(true)}>
-                {files.length} files selected
-              </span>
-            )}
-          </div>
+          {label && (
+            <div className={s.label}>
+              <label>
+                {label} {formOptions?.required && "*"}
+              </label>
+            </div>
+          )}
           <input
             disabled={loading}
             id={name}
@@ -225,21 +295,21 @@ export const FileInput = ({
                   const item = _files[i];
                   if (item.type?.startsWith("image/")) {
                     setLoading(true);
-                    _files[i] = await resizeImg(item);
+                    _files[i] = await resizeImg(item, imgOptions);
                     setLoading(false);
                   }
                 }
                 setFiles(_files);
-                onChange(_files);
+                onChange(multiple ? _files : _files[0] || null);
               }
             }}
           />
           {thumbnail ? (
-            <ul className={s.files}>
+            <ul className={`${s.files} ${avatar ? s.avatar : ""}`}>
               {files.map((file, i) => {
                 const ClearBtn = () => (
                   <button
-                    className={`clear ${s.clear}`}
+                    className={`btn clear small ${s.clear}`}
                     type="button"
                     onClick={() => {
                       let _files = files.filter((f) =>
@@ -249,21 +319,21 @@ export const FileInput = ({
                             (file.name || file.fileName)
                       );
                       setFiles(_files);
-                      onChange(_files);
+                      onChange(multiple ? _files : null);
                     }}
                   >
-                    <FaTimes />
+                    <IoClose />
                   </button>
                 );
 
                 if (
-                  !file.size &&
+                  !file?.size &&
                   new RegExp(/\.(jpg|jpeg|png|gif|webp|ico)$/).test(file.name)
                 ) {
                   return (
                     <li className={s.file} key={i}>
                       <ClearBtn />
-                      <img src={file.name} />
+                      <img src={endpoints.baseUrl + file.name} />
                     </li>
                   );
                 }
@@ -291,77 +361,77 @@ export const FileInput = ({
                   <label htmlFor={name}>
                     {loading ? (
                       <CgSpinner className={s.spinner} />
+                    ) : avatar ? (
+                      <BsPersonSquare />
                     ) : (
-                      <FaUpload />
+                      <BsUpload />
                     )}
                   </label>
                 </li>
               )}
             </ul>
           ) : (
-            <div className={s.inputField}>
-              <label htmlFor={name}>
-                <span className={s.fileNames}>
-                  {files.reduce((p, a) => {
-                    return p + (a.name || a.fileName) + ", ";
-                  }, "") || "Item select"}
-                </span>
-                <span className={s.btn}>
-                  {loading ? <CgSpinner className={s.spinner} /> : <FaUpload />}
-                </span>
-              </label>
-            </div>
-          )}
-          {!thumbnail && (
-            <Modal
-              open={showFiles}
-              className={s.fileInputModal}
-              setOpen={setShowFiles}
-              title="Files"
-            >
-              <div className={s.container}>
-                <Table columns={[{ label: "File" }, { label: "Action" }]}>
-                  {files.map((file, i) => (
-                    <tr key={i}>
-                      <td>
-                        <a target="_blank" href={file.uploadFilePath}>
-                          {file.name || file.fileName || file.uploadFilePath}
-                        </a>
-                      </td>
-                      <td className="tableActions">
-                        <Menu
-                          button={
-                            <button type="button" className="btn clear small">
-                              <BiSolidDownArrow />
-                            </button>
-                          }
-                          options={[
-                            {
-                              label: "Remove",
-                              onClick: () =>
-                                Prompt({
-                                  type: "confirmation",
-                                  message: `Are you sure you want to remove this File?`,
-                                  callback: () => {
-                                    let _files = files.filter((f) =>
-                                      typeof f === "string"
-                                        ? f !== file
-                                        : (f.name || f.fileName) !==
-                                          (file.name || file.fileName)
-                                    );
-                                    setFiles(_files);
-                                    onChange(_files);
-                                  },
-                                }),
-                            },
-                          ]}
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </Table>
+            (multiple || (!multiple && !files.length)) && (
+              <div className={s.inputField}>
+                <label htmlFor={name}>
+                  <div className={s.wrapper}>
+                    <span className={s.icon}>
+                      {loading ? (
+                        <CgSpinner className={s.spinner} />
+                      ) : (
+                        <BsUpload />
+                      )}
+                    </span>
+                    <span className={s.hint}>
+                      Drag & drop files or Browse Files
+                    </span>
+                  </div>
+                </label>
               </div>
-            </Modal>
+            )
+          )}
+          {!thumbnail && (multiple || (!multiple && files.length > 0)) && (
+            <div className={s.fileTable}>
+              <Table
+                className={
+                  !(multiple || (!multiple && !files.length)) ? s.showInput : ""
+                }
+              >
+                {files.map((file, i) => (
+                  <tr key={i}>
+                    <td
+                      title={file.name || file.fileName || file.uploadFilePath}
+                    >
+                      {file.name || file.fileName || file.uploadFilePath}
+                    </td>
+                    <td className={s.tableActions}>
+                      <button
+                        type="button"
+                        className="btn clear small"
+                        onClick={() =>
+                          Prompt({
+                            type: "confirmation",
+                            message: `Are you sure you want to remove this File?`,
+                            callback: () => {
+                              let _files = files.filter((f) =>
+                                typeof f === "string"
+                                  ? f !== file
+                                  : (f.name || f.fileName) !==
+                                    (file.name || file.fileName)
+                              );
+                              setFiles(_files);
+                              onChange(_files);
+                            },
+                          })
+                        }
+                      >
+                        <FaRegTrashAlt />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </Table>
+            </div>
           )}
           {error && <span className={s.errMsg}>{error.message}</span>}
         </section>

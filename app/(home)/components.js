@@ -15,12 +15,19 @@ import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const inViewFadeIn = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
+  transition: { ease: [0.61, 1, 0.88, 1], duration: 0.75 },
+  viewport: { once: true, margin: "-100px" },
+};
+const inViewScaleIn = {
+  initial: { opacity: 0, s: 0 },
+  whileInView: { opacity: 1, s: 1 },
   transition: { ease: [0.61, 1, 0.88, 1], duration: 0.75 },
   viewport: { once: true, margin: "-100px" },
 };
@@ -90,6 +97,7 @@ export const CoreFeatures = () => {
 export const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([
     {
+      _id: "1",
       user: {
         name: "Jane F.",
         role: "CEO, TechStart Inc.",
@@ -99,6 +107,7 @@ export const Testimonials = () => {
         "Our organization was delighted to discover how effortlessly we could integrate the AI chatbot into our website. The transition was smooth and seamless. It felt like adding a new team member, only faster and more efficient!",
     },
     {
+      _id: "2",
       user: {
         name: "David L.",
         role: "CEO, EComm Ventures",
@@ -108,6 +117,7 @@ export const Testimonials = () => {
         "The ability to establish our own knowledge base has been a game-changer for us. It's like having a virtual assistant on standby, ready to answer our clients' questions with the utmost precision. This AI chatbot has become a vital part of our customer service.",
     },
     {
+      _id: "3",
       user: {
         name: "Susan M.",
         role: "CEO, FinEdge Corp.",
@@ -117,6 +127,7 @@ export const Testimonials = () => {
         "Customizing the user experience was a breeze. We were able to match the chatbot's look and feel to our site, providing a consistent brand experience for our visitors. It's this attention to detail that sets this AI chatbot apart.",
     },
     {
+      _id: "4",
       user: {
         name: "Kevin P.",
         role: "CEO, Apex Marketing Group",
@@ -126,6 +137,7 @@ export const Testimonials = () => {
         "The insights we've gained from the analytics are nothing short of invaluable. We now understand our customers' needs better, and it's all thanks to the in-depth data provided by the AI chatbot. It's truly a marketer's dream come true.",
     },
     {
+      _id: "5",
       user: {
         name: "Helen S.",
         role: "CEO, Omni Health Solutions",
@@ -135,6 +147,7 @@ export const Testimonials = () => {
         "One of the highlights of using this AI chatbot was how straightforward it made setting up our knowledge base. We had it up and running in no time, ready to help our customers. It's as easy as it gets!",
     },
     {
+      _id: "6",
       user: {
         name: "Richard B.",
         role: "CEO, GreenLight Media",
@@ -144,6 +157,7 @@ export const Testimonials = () => {
         "We were impressed by the smoothness of integrating this AI chatbot into our website. It was like plugging in an extension, a very intelligent one. The ease of use exceeded our expectations.",
     },
     {
+      _id: "7",
       user: {
         name: "Sophia N.",
         role: "CEO, Inspire Design Studio",
@@ -153,6 +167,7 @@ export const Testimonials = () => {
         "The ability to customize the chatbot to match our website was exceptional. It's like having a digital concierge that not only fits our brand but also knows exactly how to assist our customers.",
     },
     {
+      _id: "8",
       user: {
         name: "Lucas M.",
         role: "CEO, Quantum Analytics",
@@ -162,6 +177,7 @@ export const Testimonials = () => {
         "Having analytics at our fingertips has been a revelation. We've gained insights into our customer queries that we could never have understood otherwise. The satisfaction ratings have helped us understand and enhance our user experience.",
     },
     {
+      _id: "9",
       user: {
         name: "Ethan W.",
         role: "CEO, LogicPro IT",
@@ -171,6 +187,7 @@ export const Testimonials = () => {
         "Being able to establish our own knowledge base with this AI chatbot was incredibly straightforward. We could tailor the chatbot to our clients' needs in no time. It's truly user empowerment at its finest.",
     },
     {
+      _id: "10",
       user: {
         name: "Charlotte D.",
         role: "CEO, DreamHomes Realty",
@@ -180,24 +197,47 @@ export const Testimonials = () => {
         "This AI chatbot isn't just easy to integrate and customize, it's an invaluable tool for understanding our customers better. The insights provided by the analytics have helped us tailor our services to better meet our clients' needs. It's like having a personal advisor for our business!",
     },
   ]);
-  const [active, setActive] = useState(testimonials[0]);
+  const [cardWidth, setCardWidth] = useState(3.5);
 
+  // useEffect(() => {
+  //   function resizeWindow() {
+  //     if (window.innerWidth > 720) {
+  //       setCardWidth(window.innerWidth / 400);
+  //     } else if (window.innerWidth > 480 && window.innerWidth <= 720) {
+  //       setCardWidth(window.innerWidth / 288);
+  //     } else if (window.innerWidth <= 480) {
+  //       setCardWidth(1.25);
+  //     }
+  //   }
+  //   window.addEventListener("resize", resizeWindow);
+  //   resizeWindow();
+  //   return () => window.removeEventListener("resize", resizeWindow);
+  // }, []);
+  // console.log(cardWidth);
   return (
-    <ul className={s.cards}>
+    <ul
+      className={s.cards}
+      // responsive
+      // show={cardWidth}
+      // infinite
+      // {...(window.innerWidth > 720 && { show: window.innerWidth / 400 })}
+      // {...(window.innerWidth > 480 && { show: window.innerWidth / 288 })}
+      // {...(window.innerWidth <= 480 && { show: 1.25 })}
+      // slide={testimonials.length}
+      // swiping={true}
+      // leftArrow={
+      //   <button className="btn clear carousel_btn left">
+      //     <FaChevronLeft />
+      //   </button>
+      // }
+      // rightArrow={
+      //   <button className="btn clear carousel_btn right">
+      //     <FaChevronRight />
+      //   </button>
+      // }
+    >
       {testimonials.map((item, i) => (
-        <motion.li
-          {...inViewFadeIn}
-          transition={{
-            ...inViewFadeIn.transition,
-            delay: 0.4 + 0.2 * i,
-          }}
-          key={item.title}
-          className={`${s.card} ${
-            active?.title === item.title ? s.active : ""
-          }`}
-          onClick={() => setActive(item)}
-        >
-          {/* <h4 className={space_grotesk.className}>{item.title}</h4> */}
+        <li key={item._id} className={`${s.card}`}>
           <p>{item.content}</p>
           <div className={s.profile}>
             <Image
@@ -211,7 +251,7 @@ export const Testimonials = () => {
               <p className={s.role}>{item.user.role}</p>
             </div>
           </div>
-        </motion.li>
+        </li>
       ))}
     </ul>
   );
@@ -248,10 +288,10 @@ export const Platforms = () => {
     <ul className={`${s.cards} ${s.platfomrs}`}>
       {platforms.map((pl, i) => (
         <motion.li
-          {...inViewFadeIn}
+          {...inViewScaleIn}
           transition={{
             ...inViewFadeIn.transition,
-            delay: 0.4 + 0.2 * i,
+            delay: 0.2 * i,
           }}
           key={pl.id}
           className={s.card}
@@ -289,12 +329,12 @@ export const Blogs = () => {
       <ul className={s.cardsWrapper}>
         {blogs.map((blog, i) => (
           <motion.li
+            key={blog._id}
             {...inViewFadeIn}
             transition={{
               ...inViewFadeIn.transition,
-              delay: 0.4 + 0.2 * i,
+              delay: 0.2 * i,
             }}
-            key={blog._id}
             className={s.card}
           >
             <Link href={"/blogs" + blog.path}>

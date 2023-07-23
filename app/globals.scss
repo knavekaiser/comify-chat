@@ -139,6 +139,24 @@ button {
     }
   }
 }
+button.btn.carousel_btn {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.719);
+  height: 100%;
+  border-radius: 0;
+  font-size: 1.5rem;
+  color: var(--text-color-2);
+  padding: 1rem;
+  &.right {
+    right: 0;
+  }
+  &.left {
+    left: 0;
+  }
+}
 
 li {
   list-style: none;
@@ -209,19 +227,31 @@ a {
     }
   }
   .head {
-    background: rgb(var(--primary-color-rgb));
     border-radius: 0.5rem 0.5rem 0 0;
-    color: white;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
     font-weight: 500;
-    padding: 0.25rem 1rem;
+    padding: 0.15rem 1rem;
+    padding-top: calc(0.15rem + 8px);
     padding-right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: var(--text-color-1);
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 8px;
+      background: rgb(var(--primary-color-rgb));
+      top: 0;
+      left: 0;
+    }
     button {
+      color: var(--text-color-1);
       font-size: 1.5rem;
       padding: 0.5rem;
-      color: white;
     }
   }
 }
@@ -292,6 +322,10 @@ a {
   }
 }
 
+.center {
+  text-align: center !important;
+}
+
 dialog {
   z-index: 300;
   & ~ dialog {
@@ -335,13 +369,13 @@ form {
 
 @media (hover: hover) {
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background-color: rgba(rgba(255, 255, 255, 0), 0.2);
     // border-radius: 1rem;
   }
   ::-webkit-scrollbar-thumb {
-    background-color: rgb(var(--primary-color-rgb));
+    background-color: rgb(var(--primary-color-rgb), 0.5);
     // border-radius: 1rem;
   }
 }

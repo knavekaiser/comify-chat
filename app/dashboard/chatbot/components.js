@@ -1,4 +1,4 @@
-import { Input, Combobox } from "@/components/formElements";
+import { Input, Combobox, FileInput } from "@/components/formElements";
 import { useForm } from "react-hook-form";
 import s from "./page.module.scss";
 import { useEffect } from "react";
@@ -29,7 +29,14 @@ export const DynamicForm = ({
         } else if (submit.method === "post") {
           action = post;
         }
-        action(values)
+        let formData = null;
+        if (fields.some((item) => item.inputType === "fileInput")) {
+          formData = new FormData();
+          Object.entries(values).forEach(([key, value]) => {
+            formData.append(key, value);
+          });
+        }
+        action(formData || values)
           .then(({ data }) => {
             if (data.success) {
               return onSuccss(data.data);
@@ -60,6 +67,19 @@ export const DynamicForm = ({
               name={field.name}
               label={field.label}
               options={field.options}
+            />
+          );
+        }
+        if (field.inputType === "fileInput") {
+          return (
+            <FileInput
+              thumbnail
+              avatar
+              key={field.name}
+              control={control}
+              name={field.name}
+              label={field.label}
+              imgOptions={field.imgOptions}
             />
           );
         }

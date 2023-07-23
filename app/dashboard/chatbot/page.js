@@ -64,7 +64,7 @@ export default function Home() {
                     }),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot._id}`,
+                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
                   method: "put",
                 },
                 onSuccess: (newChatbot) => {
@@ -79,6 +79,61 @@ export default function Home() {
             }
           >
             {user?.domain ? "Update Domain" : "Add Domain"}
+          </button>
+        </div>
+      </section>
+
+      <section className={s.section}>
+        <div className={s.content}>
+          <h3 className={space_grotesk.className}>Avatar</h3>
+          <img
+            className={`${s.avatarPreview} ${
+              user.chatbot?.avatar ? s.custom : ""
+            }`}
+            src={
+              endpoints.baseUrl +
+              (user.chatbot?.avatar
+                ? user.chatbot.avatar
+                : `/assets/sdk/infinai-chat-avatar/full.webp`)
+            }
+          />
+        </div>
+        <div className={s.action}>
+          <button
+            className="btn primary"
+            onClick={() =>
+              setForm({
+                title: "Avatar",
+                fields: [
+                  {
+                    // label: "Avatar",
+                    inputType: "fileInput",
+                    name: "avatar",
+                    imgOptions: { maxDim: 120 },
+                  },
+                ],
+                currentValues: {
+                  avatar: user?.chatbot?.avatar || null,
+                },
+                schema: yup.object({
+                  avatar: yup.mixed().nullable(),
+                }),
+                submit: {
+                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
+                  method: "put",
+                },
+                onSuccess: (newChatbot) => {
+                  setForm(null);
+                  setUser((prev) => ({ ...prev, chatbot: newChatbot }));
+                  Prompt({
+                    type: "success",
+                    message: "Chatbot avatar updated successfully",
+                  });
+                },
+              })
+            }
+          >
+            Change Avatar
           </button>
         </div>
       </section>
@@ -115,7 +170,7 @@ export default function Home() {
                   primaryColor: yup.string().required("Field is required"),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot._id}`,
+                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
                   method: "put",
                 },
                 onSuccess: (newChatbot) => {
