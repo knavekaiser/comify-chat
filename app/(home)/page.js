@@ -27,12 +27,14 @@ export default function Home() {
     video.current.volume = 0.02;
     const body = document.querySelector("body");
     const scrollHandler = (e) => {
-      const bound = videoContainer.current.getBoundingClientRect();
-      const buffer = 200;
-      const inview =
-        bound.y + buffer < window.innerHeight &&
-        bound.y + bound.height > buffer;
-      setVideoInView(inview);
+      if (videoContainer.current) {
+        const bound = videoContainer.current?.getBoundingClientRect();
+        const buffer = 200;
+        const inview =
+          bound.y + buffer < window.innerHeight &&
+          bound.y + bound.height > buffer;
+        setVideoInView(inview);
+      }
     };
     body.addEventListener("scroll", scrollHandler);
     return () => {
@@ -112,6 +114,27 @@ export default function Home() {
               className={s.chatUi}
             />
           </motion.div>
+        </div>
+      </div>
+
+      <div className={s.video_demo}>
+        <div className={s.innerWrapper}>
+          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
+            Video Demo
+          </motion.h2>
+          <motion.p {...inViewFadeIn} className={s.dscr}>
+            Creating a chatbot for your website by uploading word document and
+            training the AI on its content. You can then embed the chatbot on
+            the website!
+          </motion.p>
+
+          <div
+            className={s.video}
+            ref={videoContainer}
+            onClick={() => setManualCtrl(true)}
+          >
+            <video src="/assets/video-tutorial.mp4" controls ref={video} />
+          </div>
         </div>
       </div>
 
@@ -248,27 +271,6 @@ export default function Home() {
               </p>
             </motion.li>
           </ul>
-        </div>
-      </div>
-
-      <div className={s.video_demo}>
-        <div className={s.innerWrapper}>
-          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
-            Video Demo
-          </motion.h2>
-          <motion.p {...inViewFadeIn} className={s.dscr}>
-            Creating a chatbot for your website by uploading word document and
-            training the AI on its content. You can then embed the chatbot on
-            the website!
-          </motion.p>
-
-          <div
-            className={s.video}
-            ref={videoContainer}
-            onClick={() => setManualCtrl(true)}
-          >
-            <video src="/assets/video-tutorial.mp4" controls ref={video} />
-          </div>
         </div>
       </div>
 

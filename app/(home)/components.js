@@ -16,6 +16,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Carousel from "react-multi-carousel";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
@@ -26,8 +27,8 @@ const inViewFadeIn = {
   viewport: { once: true, margin: "-100px" },
 };
 const inViewScaleIn = {
-  initial: { opacity: 0, s: 0 },
-  whileInView: { opacity: 1, s: 1 },
+  initial: { opacity: 0, scale: 0 },
+  whileInView: { opacity: 1, scale: 1 },
   transition: { ease: [0.61, 1, 0.88, 1], duration: 0.75 },
   viewport: { once: true, margin: "-100px" },
 };
@@ -199,45 +200,48 @@ export const Testimonials = () => {
   ]);
   const [cardWidth, setCardWidth] = useState(3.5);
 
-  // useEffect(() => {
-  //   function resizeWindow() {
-  //     if (window.innerWidth > 720) {
-  //       setCardWidth(window.innerWidth / 400);
-  //     } else if (window.innerWidth > 480 && window.innerWidth <= 720) {
-  //       setCardWidth(window.innerWidth / 288);
-  //     } else if (window.innerWidth <= 480) {
-  //       setCardWidth(1.25);
-  //     }
-  //   }
-  //   window.addEventListener("resize", resizeWindow);
-  //   resizeWindow();
-  //   return () => window.removeEventListener("resize", resizeWindow);
-  // }, []);
-  // console.log(cardWidth);
   return (
-    <ul
+    <Carousel
       className={s.cards}
-      // responsive
-      // show={cardWidth}
-      // infinite
-      // {...(window.innerWidth > 720 && { show: window.innerWidth / 400 })}
-      // {...(window.innerWidth > 480 && { show: window.innerWidth / 288 })}
-      // {...(window.innerWidth <= 480 && { show: 1.25 })}
-      // slide={testimonials.length}
-      // swiping={true}
-      // leftArrow={
-      //   <button className="btn clear carousel_btn left">
-      //     <FaChevronLeft />
-      //   </button>
-      // }
-      // rightArrow={
-      //   <button className="btn clear carousel_btn right">
-      //     <FaChevronRight />
-      //   </button>
-      // }
+      showDots
+      dotListClass={s.dots}
+      responsive={{
+        superLargeDesktop: {
+          breakpoint: { max: 4000, min: 2100 },
+          items: 6,
+        },
+        extraLargeDesktop: {
+          breakpoint: { max: 2100, min: 1700 },
+          items: 5,
+        },
+        largeDesktop: {
+          breakpoint: { max: 1700, min: 1250 },
+          items: 4,
+        },
+        desktop: {
+          breakpoint: { max: 1250, min: 900 },
+          items: 3,
+        },
+        tablet: {
+          breakpoint: { max: 900, min: 600 },
+          items: 2,
+        },
+        mobile: {
+          breakpoint: { max: 600, min: 0 },
+          items: 1,
+        },
+      }}
     >
       {testimonials.map((item, i) => (
-        <li key={item._id} className={`${s.card}`}>
+        <motion.div
+          {...inViewScaleIn}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{
+            ...inViewFadeIn.transition,
+          }}
+          key={item._id}
+          className={`${s.card}`}
+        >
           <p>{item.content}</p>
           <div className={s.profile}>
             <Image
@@ -251,9 +255,9 @@ export const Testimonials = () => {
               <p className={s.role}>{item.user.role}</p>
             </div>
           </div>
-        </li>
+        </motion.div>
       ))}
-    </ul>
+    </Carousel>
   );
 };
 
@@ -325,36 +329,64 @@ export const Blogs = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div className={`${s.cards} ${s.blogs}`}>
-      <ul className={s.cardsWrapper}>
-        {blogs.map((blog, i) => (
-          <motion.li
-            key={blog._id}
-            {...inViewFadeIn}
-            transition={{
-              ...inViewFadeIn.transition,
-              delay: 0.2 * i,
-            }}
-            className={s.card}
-          >
-            <Link href={"/blogs" + blog.path}>
-              {blog.thumbnail ? (
-                <img src={endpoints.baseUrl + blog.thumbnail.url} />
-              ) : (
-                <img src={"/assets/blog_fallback.jpg"} />
-              )}
-            </Link>
-            <div className={s.metadata}>
-              {/* {blog.author} |{" "} */}
-              <Moment format="MMM DD, YYYY">{blog.createdAt}</Moment>
-            </div>
-            <Link href={"/blogs" + blog.path}>
-              <h3 className={space_grotesk.className}>{blog.title}</h3>
-            </Link>
-          </motion.li>
-        ))}
-      </ul>
-    </div>
+    <Carousel
+      showDots
+      dotListClass={s.dots}
+      responsive={{
+        superLargeDesktop: {
+          breakpoint: { max: 4000, min: 2100 },
+          items: 6,
+        },
+        extraLargeDesktop: {
+          breakpoint: { max: 2100, min: 1700 },
+          items: 5,
+        },
+        largeDesktop: {
+          breakpoint: { max: 1700, min: 1250 },
+          items: 4,
+        },
+        desktop: {
+          breakpoint: { max: 1250, min: 900 },
+          items: 3,
+        },
+        tablet: {
+          breakpoint: { max: 900, min: 600 },
+          items: 2,
+        },
+        mobile: {
+          breakpoint: { max: 600, min: 0 },
+          items: 1,
+        },
+      }}
+      className={`${s.cards} ${s.blogs}`}
+    >
+      {blogs.map((blog, i) => (
+        <motion.div
+          {...inViewScaleIn}
+          viewport={{ once: false, margin: "-100px" }}
+          transition={{
+            ...inViewFadeIn.transition,
+          }}
+          key={blog._id}
+          className={s.card}
+        >
+          <Link href={"/blogs" + blog.path}>
+            {blog.thumbnail ? (
+              <img src={endpoints.baseUrl + blog.thumbnail.url} />
+            ) : (
+              <img src={"/assets/blog_fallback.jpg"} />
+            )}
+          </Link>
+          <div className={s.metadata}>
+            {/* {blog.author} |{" "} */}
+            <Moment format="MMM DD, YYYY">{blog.createdAt}</Moment>
+          </div>
+          <Link href={"/blogs" + blog.path}>
+            <h3 className={space_grotesk.className}>{blog.title}</h3>
+          </Link>
+        </motion.div>
+      ))}
+    </Carousel>
   );
 };
 

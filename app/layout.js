@@ -2,6 +2,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import ClientLayout from "./components";
 import { Provider } from "./context";
 import "./globals.scss";
+import "react-multi-carousel/lib/styles.css";
 
 const inter = Inter({
   variable: "--font-inter",
