@@ -14,6 +14,7 @@ export default {
   blogs: baseUrl + "/api/dynamic-pages",
   chats: baseUrl + "/api/chats",
   chatbots: baseUrl + "/api/chatbots",
+  chatbotByDomain: baseUrl + "/api/get-chatbot/by-domain",
 
   infinAIChatSdk: `${baseUrl}/assets/sdk/infinai-chat-sdk-v0.9.0.js`,
 };

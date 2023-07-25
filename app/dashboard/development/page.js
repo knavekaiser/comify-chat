@@ -14,7 +14,6 @@ export default function Home() {
   const { user } = useContext(SiteContext);
   const sdkUrl = endpoints.infinAIChatSdk;
   const chatbot_id = user.chatbot._id;
-  const defaultUrl = user.chatbot.domain || "infinai.in";
 
   const js = `<script src="${sdkUrl}"></script>
 <script>
@@ -23,7 +22,7 @@ export default function Home() {
     mountInfinAI({
       chatbotId: "${chatbot_id}",    // required
       openAtStart: false,                      // optional
-      defaultUrl: "${defaultUrl}",       // optional
+      paths: ['/', '/some-other-page']
     });
   });
 </script>`;
@@ -50,7 +49,6 @@ function App() {
         mountInfinAI({
           chatbotId: "${chatbot_id}",    // required
           openAtStart: false,                      // optional
-          defaultUrl: "${defaultUrl}",       // optional
         });
       }
     });
@@ -77,7 +75,6 @@ export default function RootLayout({ children }) {
           mountInfinAI({
             chatbotId: "${chatbot_id}",    // required
             openAtStart: false,                      // optional
-            defaultUrl: "${defaultUrl}",       // optional
           });
         }}
       />
@@ -105,7 +102,6 @@ export class AppComponent implements AfterViewInit {
     mountInfinAI({
       chatbotId: "${chatbot_id}",    // required
       openAtStart: false,                       // optional
-      defaultUrl: "${defaultUrl}",       // optional
     });
   }
 }`;
@@ -118,7 +114,6 @@ Vue.prototype.$InfinAI = require('${sdkUrl}');`;
   mountInfinAI({
     chatbotId: "${chatbot_id}",      // required
     openAtStart: false,                        // optional
-    defaultUrl: "${defaultUrl}",         // optional
   });
 }`;
   return (

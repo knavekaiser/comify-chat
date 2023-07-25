@@ -11,4 +11,5 @@ export default {
   tnc: "/terms-and-conditions",
   privacyPolicy: "/privacy-policy",
   development: "/dashboard/development",
+  dynamicChatbot: "/chatbot",
 };

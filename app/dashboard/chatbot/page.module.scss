@@ -55,6 +55,15 @@
       justify-content: center;
       padding: 1rem;
     }
+    &.domain {
+      .content {
+        p {
+          display: flex !important;
+          flex-wrap: wrap;
+          grid-gap: 0.5rem;
+        }
+      }
+    }
   }
 }
 

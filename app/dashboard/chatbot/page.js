@@ -9,6 +9,8 @@ import { Modal, Prompt } from "@/components/modal";
 import { DynamicForm } from "./components";
 import * as yup from "yup";
 import endpoints from "@/utils/endpoints";
+import paths from "@/utils/paths";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
@@ -25,12 +27,69 @@ export default function Home() {
         </p>
       </header>
 
-      <section className={s.section}>
+      <section className={`${s.section} ${s.domain}`}>
+        <div className={s.content}>
+          <h3 className={space_grotesk.className}>Display Name</h3>
+          <p className="ellepsis line-2">
+            {user?.chatbot?.display_name || "Infin AI"}
+          </p>
+        </div>
+        <div className={s.action}>
+          <button
+            className="btn primary"
+            onClick={() =>
+              setForm({
+                title: "Display Name",
+                fields: [
+                  {
+                    inputType: "input",
+                    name: "display_name",
+                    placeholder: "Display Name",
+                  },
+                ],
+                currentValues: {
+                  display_name: user?.chatbot?.display_name || "",
+                },
+                schema: yup.object({
+                  display_name: yup.string(25).required("Field is required"),
+                }),
+                submit: {
+                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
+                  method: "put",
+                },
+                onSuccess: (newChatbot) => {
+                  setForm(null);
+                  setUser((prev) => ({ ...prev, chatbot: newChatbot }));
+                  Prompt({
+                    type: "success",
+                    message: "Display Name updated successfully",
+                  });
+                },
+              })
+            }
+          >
+            Update Name
+          </button>
+        </div>
+      </section>
+
+      <section className={`${s.section} ${s.domain}`}>
         <div className={s.content}>
           <h3 className={space_grotesk.className}>Domain</h3>
           <p className="ellepsis line-2">
-            {user?.chatbot?.domain ||
-              "The website domain where the chatbot will be deployed"}
+            {user?.chatbot?.domain ? (
+              <>
+                <span>{user?.chatbot?.domain}</span>
+                <a
+                  href={paths.dynamicChatbot + "/" + user.chatbot.domain}
+                  target="_blank"
+                >
+                  <BsBoxArrowUpRight />
+                </a>
+              </>
+            ) : (
+              "The website domain where the chatbot will be deployed"
+            )}
           </p>
         </div>
         <div className={s.action}>
