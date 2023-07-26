@@ -53,7 +53,7 @@ export const Input = ({
                   value={value}
                   onChange={(e) => {
                     onChange(e);
-                    customOnChange?.();
+                    customOnChange?.(e);
                   }}
                   placeholder={rest.placeholder || "Enter"}
                   {...rest}
@@ -135,17 +135,16 @@ export const Textarea = ({
             )}
             <div className={s.wrapper}>
               <span className={s.field}>
-                <textarea value={value} onChange={onChange} {...rest} />
-                {error && (
-                  <span
-                    className={s.errIcon}
-                    style={!label ? { transform: "translateY(-6px)" } : {}}
-                  >
-                    <BsFillExclamationTriangleFill />
-                  </span>
-                )}
-                {error && <span className={s.errMsg}>{error.message}</span>}
+                <textarea
+                  value={value}
+                  onChange={(e) => {
+                    onChange(e);
+                    customOnChange?.(e);
+                  }}
+                  {...rest}
+                />
               </span>
+              {error && <span className={s.errMsg}>{error.message}</span>}
             </div>
           </section>
         );
@@ -210,6 +209,7 @@ const resizeImg = async (file, imgOptions) => {
   });
 };
 export const FileInput = ({
+  className,
   label,
   control,
   name,
@@ -257,7 +257,9 @@ export const FileInput = ({
       }) => (
         <section
           data-testid="fileInput"
-          className={`${s.fileInput} ${error ? s.error : ""}`}
+          className={`${s.fileInput} ${error ? s.error : ""} ${
+            className || ""
+          }`}
         >
           {label && (
             <div className={s.label}>

@@ -110,20 +110,6 @@
       border-color: red;
     }
   }
-  .errIcon {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    color: red;
-    font-size: 0.8em;
-    pointer-events: none;
-    display: grid;
-    place-items: center;
-    transform: translateY(-50%);
-    svg {
-      position: static;
-    }
-  }
   .errMsg {
     margin-top: 4px;
     font-size: 10pt;
@@ -147,62 +133,6 @@
     display: grid;
     place-items: center;
   }
-  &.mobileNumberInput {
-    .wrapper {
-      & > .field {
-        border: 1px solid #b7b7b7;
-        border-radius: 4px;
-        display: grid;
-        .country {
-          grid-column: 1/2;
-          grid-row: 1/2;
-          .countryFlags {
-            .field {
-              height: 28px;
-              align-items: center;
-              .displayValue {
-                height: min-content;
-                border: none;
-                display: grid;
-                width: 20px;
-                img {
-                  display: relative;
-                }
-              }
-              & > input {
-                padding: 0;
-                border: none;
-                width: 0;
-              }
-              .btn {
-                left: 33px;
-                svg {
-                  position: unset;
-                  margin-top: -8px;
-                }
-              }
-            }
-          }
-        }
-        & > input {
-          z-index: 10;
-          margin-left: 3rem;
-          width: calc(100% - 3rem);
-          grid-column: 1/2;
-          grid-row: 1/2;
-          border: none;
-        }
-      }
-      .errIcon {
-        z-index: 15;
-      }
-    }
-    &.err {
-      .wrapper > .field {
-        border-color: red;
-      }
-    }
-  }
   &.textarea {
     .wrapper {
       .field {
@@ -211,11 +141,6 @@
         display: grid;
         grid-template-columns: 1fr;
       }
-    }
-    .errIcon {
-      top: 6px;
-      right: 8px;
-      transform: none;
     }
   }
   .eye {

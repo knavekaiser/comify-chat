@@ -42,7 +42,15 @@
     padding: 1.5rem;
     display: grid;
     grid-gap: 1.5rem;
+    grid-template-columns: 1fr 10rem;
+    .fileInput,
+    .contextForUsers,
+    .description,
+    .actions {
+      grid-column: 1 / -1;
+    }
     .urls {
+      grid-column: 1 / -1;
       display: grid;
       grid-gap: 1rem;
       .urlInput {
@@ -65,12 +73,35 @@
         grid-template-columns: 1fr 3.5rem;
       }
     }
+    .questionGeneration {
+      display: grid;
+      grid-gap: 1rem;
+      grid-column: 1 / -1;
+      .btn {
+        width: max-content;
+        margin: auto;
+        margin-right: 0;
+      }
+    }
   }
 }
 
 @media (max-width: 720px) {
   .main {
     .searchForm {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    .searchForm {
+      grid-template-columns: 1fr;
+    }
+  }
+  .formModal {
+    .form {
       grid-template-columns: 1fr;
     }
   }

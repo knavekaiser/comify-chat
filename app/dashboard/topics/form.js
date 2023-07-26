@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import s from "./page.module.scss";
 import Menu from "@/components/menu";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Table } from "@/components/table";
 import {
   Combobox,
@@ -19,8 +19,12 @@ import { FaCheck, FaPlus, FaTimes } from "react-icons/fa";
 import { Prompt } from "@/components/modal";
 
 const docSchema = yup.object({
-  topic: yup.string().required("Field is required"),
-  description: yup.string(),
+  topic: yup
+    .string()
+    .max(75, "Must be under 75 characters")
+    .required("Field is required"),
+  description: yup.string().max(200, "Must be under 200 characters"),
+  contextForUsers: yup.string().max(200, "Must be under 200 characters"),
   files: yup.array().of(yup.mixed()),
   urls: yup.array().of(yup.string().url()),
   showOnChat: yup.boolean(),
@@ -44,6 +48,29 @@ export default function Form({ edit, onSuccess }) {
   const { post, put, loading } = useFetch(
     endpoints.topics + `/${edit?._id || ""}`
   );
+  const { post: getUserContext, loading: generatingQuestion } = useFetch(
+    endpoints.generateUserContext
+  );
+
+  const prompt = watch("prompt");
+
+  const generateQuestion = useCallback(() => {
+    if (!prompt) {
+      return setError("prompt", {
+        type: "manual",
+        message: "Field is required",
+      });
+    }
+    getUserContext({ prompt }, { params: { "{_id}": edit._id } })
+      .then(({ data }) => {
+        if (!data.success) {
+          return Prompt({ type: "error", message: data.message });
+        }
+        setValue("contextForUsers", data.data.contextForUsers);
+        setValue("prompt", "");
+      })
+      .catch((err) => Prompt({ type: "error", message: err.message }));
+  }, [prompt]);
 
   const urls = watch("urls");
   const url = watch("url");
@@ -96,9 +123,10 @@ export default function Form({ edit, onSuccess }) {
           .catch((err) => Prompt({ type: "error", message: err.message }));
       })}
     >
-      <Input control={control} label="Topic" name="topic" />
+      <Input className={s.topic} control={control} label="Topic" name="topic" />
 
       <Combobox
+        className={s.showOnChat}
         control={control}
         name="showOnChat"
         label="Show on Chat"
@@ -109,6 +137,7 @@ export default function Form({ edit, onSuccess }) {
       />
 
       <FileInput
+        className={s.fileInput}
         label="File"
         multiple
         accept="text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -201,7 +230,7 @@ export default function Form({ edit, onSuccess }) {
         >
           {(urls || []).map((item) => (
             <tr key={item}>
-              <td>{item}</td>
+              <td className="ellepsis">{item}</td>
               <td className="tableActions">
                 <Menu
                   button={
@@ -239,9 +268,53 @@ export default function Form({ edit, onSuccess }) {
         </Table>
       </section>
 
-      <Textarea label="Description" control={control} name="description" />
-      <section className="actions">
-        <button className="btn primary" disabled={loading}>
+      {edit && (
+        <>
+          <div className={s.questionGeneration}>
+            <Textarea
+              label="Your Question to Infin AI"
+              control={control}
+              name="prompt"
+              onChange={() => {
+                clearErrors("prompt");
+              }}
+              onKeyPress={(e) => {
+                if (e.charCode === 13) {
+                  e.preventDefault();
+                  generateQuestion();
+                }
+              }}
+            />
+            <button
+              className={`btn secondary medium ${s.btn}`}
+              type="button"
+              disabled={loading || generatingQuestion}
+              onClick={generateQuestion}
+            >
+              Generate Questions
+            </button>
+          </div>
+
+          <Textarea
+            className={s.contextForUsers}
+            label="Topic Context for Users"
+            control={control}
+            name="contextForUsers"
+          />
+        </>
+      )}
+
+      <Textarea
+        className={s.contextForUsers}
+        label="Description"
+        control={control}
+        name="description"
+      />
+      <section className={`${s.actions} actions`}>
+        <button
+          className="btn primary"
+          disabled={loading || generatingQuestion}
+        >
           Submit
         </button>
       </section>

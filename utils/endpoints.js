@@ -11,6 +11,8 @@ export default {
   validatePassToken: baseUrl + "/api/business/validate-password-reset-token",
 
   topics: baseUrl + "/api/faq-documents",
+  generateUserContext:
+    baseUrl + "/api/faq-documents/{_id}/generate-user-context",
   blogs: baseUrl + "/api/dynamic-pages",
   chats: baseUrl + "/api/chats",
   chatbots: baseUrl + "/api/chatbots",
