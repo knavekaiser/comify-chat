@@ -11,5 +11,6 @@ export default {
   tnc: "/terms-and-conditions",
   privacyPolicy: "/privacy-policy",
   development: "/dashboard/development",
+  analytics: "/dashboard/analytics",
   dynamicChatbot: "/chatbot",
 };

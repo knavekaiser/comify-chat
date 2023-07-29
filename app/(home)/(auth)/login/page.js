@@ -80,14 +80,14 @@ export default function Login() {
             control={control}
             name="email"
             placeholder="Email"
-            onChange={setErr}
+            onChange={() => setErr(null)}
           />
           <Input
             control={control}
             type={pType}
             name="password"
             placeholder="Password"
-            onChange={setErr}
+            onChange={() => setErr(null)}
             endAdornment={
               <button
                 className={s.eye}

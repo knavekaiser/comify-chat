@@ -15,8 +15,8 @@ export const Sidebar = ({ closeSidebar }) => {
     { label: "Topic", path: paths.topics },
     { label: "Chats", path: paths.chats },
     { label: "Chatbot", path: paths.chatbot },
+    { label: "Analytics", path: paths.analytics },
     { label: "Development", path: paths.development },
-    // {label: "Accounts", path: ""},
     // {label: "Payments", path: ""},
   ]);
   const pathname = usePathname();
