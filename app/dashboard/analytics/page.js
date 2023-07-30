@@ -1,18 +1,13 @@
 "use client";
 
-import { Space_Grotesk } from "next/font/google";
 import pageStyle from "../page.module.scss";
 import s from "./page.module.scss";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/formElements";
-import { BsSearch } from "react-icons/bs";
-import { BiSolidDownArrow } from "react-icons/bi";
+import { CalendarInput, Combobox } from "@/components/formElements";
 import endpoints from "@/utils/endpoints";
-import { Table } from "@/components/table";
-import Menu from "@/components/menu";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Prompt } from "@/components/modal";
-import { useFetch } from "@/utils/hooks";
+import { useFetch, useYup } from "@/utils/hooks";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,8 +18,9 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
+import { Moment, moment } from "@/components/moment";
+import { FiRefreshCw } from "react-icons/fi";
+import * as yup from "yup";
 
 ChartJS.register(
   CategoryScale,
@@ -96,15 +92,37 @@ export const placeholder = {
   ],
 };
 
+const validationSchema = yup.object({
+  dateRange: yup.string(),
+  customDate: yup.object().when("dateRange", ([dateRange], schema) => {
+    if (dateRange === "custom") {
+      return schema.required("Please select custom dates");
+    }
+    return schema;
+  }),
+});
+
 export default function Home() {
-  const { control, handleSubmit } = useForm();
-  const [filters, setFilters] = useState({});
+  const { control, handleSubmit, watch, setValue } = useForm({
+    defaultValues: {
+      granularity: "day",
+      dateRange: "current_month",
+    },
+    resolver: useYup(validationSchema),
+  });
+  const [filters, setFilters] = useState({
+    minDate: new Date(new Date().setDate(1)),
+    maxDate: new Date(),
+  });
   const [data, setData] = useState({});
-  const { get: getAnalytics, loading } = useFetch(endpoints.analytics);
-  useEffect(() => {
-    getAnalytics()
+
+  const { get: fetchAnalytics, loading } = useFetch(endpoints.analytics);
+  const getAnalytics = useCallback((query) => {
+    fetchAnalytics({
+      query,
+    })
       .then(({ data }) => {
-        console.log(data.data);
+        // console.log(data.data);
         if (!data.success) {
           return Prompt({ type: "error", message: data.message });
         }
@@ -112,41 +130,113 @@ export default function Home() {
       })
       .catch((err) => Prompt({ type: "error", message: err.message }));
   }, []);
+
+  const dateRange = watch("dateRange");
+  const granularity = watch("granularity");
+
+  useEffect(() => {
+    getAnalytics({
+      minDate: moment(filters.minDate, "YYYY-MM-DD"),
+      maxDate: moment(filters.maxDate, "YYYY-MM-DD"),
+      granularity: filters.granularity || "day",
+    });
+  }, [filters]);
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
-      {/* <header>
-        <h1 className={space_grotesk.className}>Analytics</h1>
+      <header>
+        <h1>Analytics</h1>
         <p className={s.description}>
           Uncover valuable insights and drive data-backed decisions with Infin
           AI&apos;s powerful analytics.
         </p>
-      </header> */}
+      </header>
 
-      {/* <form
-        className={s.searchForm}
+      <form
+        className={s.dateFilter}
         onSubmit={handleSubmit((values) => {
-          setFilters(values);
+          const query = {
+            minDate: filters.minDate,
+            maxDate: filters.maxDate,
+            granularity: values.granularity,
+          };
+          if (values.dateRange === "current_month") {
+            query.minDate = new Date(new Date().setDate(1));
+            query.maxDate = new Date();
+          } else if (values.dateRange === "last_7_days") {
+            query.minDate = new Date(
+              new Date().setDate(new Date().getDate() - 7)
+            );
+            query.maxDate = new Date();
+          } else if (values.dateRange === "last_28_days") {
+            query.minDate = new Date(
+              new Date().setDate(new Date().getDate() - 28)
+            );
+            query.maxDate = new Date();
+          } else if (values.dateRange === "last_year") {
+            query.minDate = new Date(
+              new Date().setFullYear(new Date().getFullYear() - 1)
+            );
+            query.maxDate = new Date();
+          } else if (values.dateRange === "custom") {
+            query.minDate = values.customDate?.startDate;
+            query.maxDate = values.customDate?.endDate;
+          }
+          // console.log(values, query);
+          setFilters(query);
+          // getAnalytics(query);
         })}
       >
-        <Input
-          startAdornment={<BsSearch className={s.searchIcon} />}
+        <Combobox
+          label="Frequency"
           control={control}
-          name="topic"
-          placeholder="Search topics"
+          name="granularity"
+          options={[
+            { label: "Day", value: "day" },
+            { label: "Month", value: "month" },
+          ]}
+          onChange={(e) => {
+            if (e.value === "month") {
+              setValue("dateRange", "last_year");
+            }
+          }}
         />
-        <button className="btn secondary">Search</button>
-        <button
-          className="btn primary"
-          type="button"
-          onClick={() => setAddNew(true)}
-        >
-          Add New Topic
+        <Combobox
+          label="Date Range"
+          control={control}
+          name="dateRange"
+          options={[
+            ...(granularity === "day"
+              ? [
+                  { label: "This Month", value: "current_month" },
+                  { label: "Last 7 days", value: "last_7_days" },
+                  { label: "Last 28 days", value: "last_28_days" },
+                ]
+              : []),
+            { label: "Last year", value: "last_year" },
+            { label: "Custom", value: "custom" },
+          ]}
+        />
+        {dateRange === "custom" && (
+          <CalendarInput
+            popup
+            label="From - To"
+            control={control}
+            name="customDate"
+            dateWindow="pastIncludingToday"
+          />
+        )}
+        <button className={`btn small secondary ${s.btn}`}>
+          <FiRefreshCw />
         </button>
-      </form> */}
+      </form>
 
       <section className={s.graphSection}>
         <div className={s.head}>
-          <h2>Total Chats Per Topics in Last 28 Days</h2>
+          <h2>
+            Total Chats Per Topics from{" "}
+            <Moment format="DD MMM YY">{filters.minDate}</Moment> to{" "}
+            <Moment format="DD MMM YY">{filters.maxDate}</Moment>
+          </h2>
           <p className={s.description}>
             Explore chat engagement by topics, prioritize resources, and enhance
             customer interactions with data-driven insights.
@@ -175,7 +265,11 @@ export default function Home() {
 
       <section className={s.graphSection}>
         <div className={s.head}>
-          <h2>Total Chats Per Day in Last 28 Days</h2>
+          <h2>
+            Total Chats Per {granularity} from{" "}
+            <Moment format="DD MMM YY">{filters.minDate}</Moment> to{" "}
+            <Moment format="DD MMM YY">{filters.maxDate}</Moment>
+          </h2>
           <p className={s.description}>
             Track chat activity trends over time, optimize support, and allocate
             resources strategically for seamless interactions.
@@ -191,6 +285,39 @@ export default function Home() {
                   {
                     label: "Total Chats",
                     data: data.chatsOverTime.data,
+                    backgroundColor: "rgb(255, 99, 132)",
+                  },
+                ],
+              }}
+            />
+          ) : (
+            <p className={s.placeholder}>Not enough data!</p>
+          )}
+        </div>
+      </section>
+
+      <section className={s.graphSection}>
+        <div className={s.head}>
+          <h2>
+            Total Usage Per {granularity} from{" "}
+            <Moment format="DD MMM YY">{filters.minDate}</Moment> to{" "}
+            <Moment format="DD MMM YY">{filters.maxDate}</Moment>
+          </h2>
+          <p className={s.description}>
+            Track chat usage over time, optimize support, and allocate resources
+            strategically for seamless interactions.
+          </p>
+        </div>
+        <div className={s.chart}>
+          {data?.tokenUsageOverTime ? (
+            <Bar
+              options={barOptions}
+              data={{
+                labels: data.tokenUsageOverTime.labels,
+                datasets: [
+                  {
+                    label: "Total Usage",
+                    data: data.tokenUsageOverTime.data,
                     backgroundColor: "rgb(255, 99, 132)",
                   },
                 ],

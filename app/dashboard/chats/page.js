@@ -66,7 +66,7 @@ export default function Home() {
             </td>
             <td className="ellepsis line-2">{row.user?.name}</td>
             <td>{row.topic}</td>
-            <td className="tableActions">
+            <td className={`tableActions ${s.actions}`}>
               <Menu
                 button={
                   <button className="btn clear small">

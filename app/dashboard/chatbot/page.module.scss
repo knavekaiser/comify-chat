@@ -79,8 +79,7 @@
 
 @media (max-width: 720px) {
   .main {
-    .email,
-    .password {
+    .section {
       grid-template-columns: 1fr;
       .content {
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);

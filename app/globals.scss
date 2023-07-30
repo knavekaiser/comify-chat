@@ -474,3 +474,64 @@ form {
     }
   }
 }
+
+.rdrDateRangePickerWrapper {
+  width: 100%;
+  .rdrDefinedRangesWrapper {
+    display: none;
+  }
+  .rdrCalendarWrapper {
+    width: 100%;
+    .rdrDateDisplayWrapper {
+      width: 100%;
+      .rdrDateDisplayItemActive {
+        color: rgb(var(--primary-color-rgb));
+      }
+    }
+    .rdrDays {
+      button {
+        z-index: 1;
+        .rdrStartEdge,
+        .rdrInRange,
+        .rdrEndEdge {
+          color: rgb(var(--primary-color-rgb)) !important;
+        }
+        .rdrDayStartPreview,
+        .rdrDayInPreview,
+        .rdrDayEndPreview {
+          border-color: rgb(var(--primary-color-rgb)) !important;
+        }
+        &.rdrDayToday {
+          span::after {
+            background: rgb(var(--primary-color-rgb));
+          }
+        }
+      }
+    }
+    &.multiple {
+      .rdrDays {
+        button {
+          .rdrStartEdge,
+          .rdrInRange,
+          .rdrEndEdge {
+            color: rgb(var(--orange-color-rgb)) !important;
+          }
+          .rdrDayStartPreview,
+          .rdrDayInPreview,
+          .rdrDayEndPreview {
+            border-color: rgb(var(--orange-color-rgb)) !important;
+          }
+        }
+      }
+    }
+    .rdrMonthAndYearWrapper {
+      width: 100%;
+    }
+    .rdrMonths {
+      width: 100%;
+      .rdrMonth {
+        width: 100%;
+      }
+    }
+  }
+}

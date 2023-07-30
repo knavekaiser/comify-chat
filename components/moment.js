@@ -84,10 +84,84 @@ export const moment = (time, format) => {
     .join("");
 };
 
+Date.prototype.deduct = function (time) {
+  if (time.match(/[a-z]/gi)) {
+    time = parseTimeShorthand(time);
+  }
+  const [sec, min, hour, day, month, year] = time
+    .split(" ")
+    .map((t) => parseInt(t))
+    .filter((t) => !isNaN(t));
+
+  let date = new Date(this);
+  if (sec) {
+    date = new Date(date.setSeconds(date.getSeconds() - sec));
+  }
+  if (min) {
+    date = new Date(date.setMinutes(date.getMinutes() - min));
+  }
+  if (hour) {
+    date = new Date(date.setHours(date.getHours() - hour));
+  }
+  if (day) {
+    date = new Date(date.setDate(date.getDate() - day));
+  }
+  if (month) {
+    date = new Date(date.setMonth(date.getMonth() - month));
+  }
+  if (year) {
+    date = new Date(date.setYear(date.getFullYear() - year));
+  }
+
+  return date;
+};
+Date.prototype.add = function (time) {
+  if (time.match(/[a-z]/gi)) {
+    time = parseTimeShorthand(time);
+  }
+
+  const [sec, min, hour, day, month, year] = time
+    .split(" ")
+    .map((t) => parseInt(t))
+    .filter((t) => !isNaN(t));
+
+  let date = new Date(this);
+  if (sec) {
+    date = new Date(date.setSeconds(date.getSeconds() + sec));
+  }
+  if (min) {
+    date = new Date(date.setMinutes(date.getMinutes() + min));
+  }
+  if (hour) {
+    date = new Date(date.setHours(date.getHours() + hour));
+  }
+  if (day) {
+    date = new Date(date.setDate(date.getDate() + day));
+  }
+  if (month) {
+    date = new Date(date.setMonth(date.getMonth() + month));
+  }
+  if (year) {
+    date = new Date(date.setYear(date.getFullYear() + year));
+  }
+
+  return date;
+};
+
 export const Moment = ({ format, children, ...rest }) => {
   return (
     <time {...rest} data-testid="moment">
       {moment(children, format)}
     </time>
   );
+};
+
+export const getAllDates = ({ startDate, endDate, format }) => {
+  const dates = [];
+  let currDate = startDate;
+  while (currDate <= endDate) {
+    dates.push(moment(currDate, format || "YYYY-MM-DD"));
+    currDate = currDate.add("0 0 0 1");
+  }
+  return dates;
 };

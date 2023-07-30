@@ -23,7 +23,7 @@ export const useFetch = (url) => {
         });
       }
       if (query) {
-        _url += `${_url.includes("?") ? "" : "?"}&${new URLSearchParams(
+        _url += `${_url.includes("?") ? "&" : "?"}${new URLSearchParams(
           JSON.parse(JSON.stringify(query))
         ).toString()}`;
       }

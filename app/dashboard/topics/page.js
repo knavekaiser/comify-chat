@@ -68,11 +68,23 @@ export default function Home() {
         ]}
         renderRow={(row, i) => (
           <tr key={row._id}>
-            <td className="ellepsis line-2">{row.topic}</td>
-            <td className="center">{row.showOnChat ? "Yes" : "No"}</td>
-            <td className="center">{row.files.length}</td>
-            <td className="center">{row.urls.length}</td>
-            <td className="tableActions">
+            <td className="ellepsis line-2">
+              <span className={s.cellLabel}>Topic: </span>
+              {row.topic}
+            </td>
+            <td className="center">
+              <span className={s.cellLabel}>Show on Chat: </span>
+              {row.showOnChat ? "Yes" : "No"}
+            </td>
+            <td className="center">
+              <span className={s.cellLabel}>Files: </span>
+              {row.files.length}
+            </td>
+            <td className="center">
+              <span className={s.cellLabel}>URLs: </span>
+              {row.urls.length}
+            </td>
+            <td className={`tableActions ${s.actions}`}>
               <Menu
                 button={
                   <button className="btn clear small">

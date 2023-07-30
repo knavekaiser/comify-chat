@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import s from "./formElements.module.scss";
 import { Controller } from "react-hook-form";
 import { GoCalendar, GoEye, GoEyeClosed } from "react-icons/go";
@@ -11,6 +11,11 @@ import { Table } from "./table";
 import { IoClose } from "react-icons/io5";
 import { BsUpload } from "react-icons/bs";
 import endpoints from "@/utils/endpoints";
+import { DateRangePicker } from "react-date-range";
+
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { moment, getAllDates, Moment } from "./moment";
 
 export const Input = ({
   control,
@@ -717,5 +722,170 @@ const ComboboxList = ({
         </li>
       ))}
     </ul>
+  );
+};
+
+export const CalendarInput = ({
+  control,
+  name,
+  label,
+  formOptions,
+  dateWindow,
+  disabledDates = [],
+  popup,
+  datesArray,
+  multipleRanges,
+}) => {
+  const [dateRange, setDateRange] = useState({});
+  const [open, setOpen] = useState(false);
+  const setDefaultRange = useCallback(() => {
+    let startDate = new Date();
+    let endDate = new Date();
+    if (dateWindow === "pastIncludingToday") {
+      startDate = new Date();
+      endDate = new Date();
+    } else if (dateWindow === "pastExcludingToday") {
+      startDate = new Date().deduct("0 0 0 1");
+      endDate = new Date().deduct("0 0 0 1");
+    } else if (dateWindow === "futureIncludingToday") {
+      startDate = new Date();
+      endDate = new Date();
+    } else if (dateWindow === "futureExcludingToday") {
+      startDate = new Date().add("0 0 0 1");
+      endDate = new Date().add("0 0 0 1");
+    }
+    setDateRange({ startDate, endDate, key: "selection" });
+  }, [dateWindow]);
+  useEffect(() => {
+    setDefaultRange();
+  }, [dateWindow]);
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={formOptions}
+      render={({
+        field: { onChange, value = datesArray ? [] : {} },
+        fieldState: { error },
+      }) => {
+        return (
+          <section className={`${s.calendarInput} ${error ? s.err : ""}`}>
+            {label && <label>{label}</label>}
+            {popup && (
+              <div className={s.field} onClick={() => setOpen(!open)}>
+                {datesArray ? (
+                  !value?.length ? (
+                    "No dates selected"
+                  ) : (
+                    `${value[0]} - ${value[value.length - 1]}`
+                  )
+                ) : !Object.values(value).length ? (
+                  "No dates selected"
+                ) : (
+                  <>
+                    <Moment format="DD-MM-YYYY">{value.startDate}</Moment> to{" "}
+                    <Moment format="DD-MM-YYYY">{value.endDate}</Moment>
+                  </>
+                )}
+              </div>
+            )}
+            {(!popup || open) && (
+              <div className={s.calendarWrapper}>
+                <DateRangePicker
+                  className={multipleRanges ? "multiple" : ""}
+                  disabledDay={(date) => {
+                    if (dateWindow === "pastIncludingToday") {
+                      return (
+                        date.setHours(0, 0, 0, 0) >
+                        new Date().setHours(0, 0, 0, 0)
+                      );
+                    } else if (dateWindow === "pastExcludingToday") {
+                      return (
+                        date.setHours(0, 0, 0, 0) >=
+                        new Date().setHours(0, 0, 0, 0)
+                      );
+                    } else if (dateWindow === "futureIncludingToday") {
+                      return (
+                        date.setHours(0, 0, 0, 0) <
+                        new Date().setHours(0, 0, 0, 0)
+                      );
+                    } else if (dateWindow === "futureExcludingToday") {
+                      return (
+                        date.setHours(0, 0, 0, 0) <=
+                        new Date().setHours(0, 0, 0, 0)
+                      );
+                    }
+                    if (disabledDates.includes(moment(date, "YYYY-MM-DD"))) {
+                      return true;
+                    }
+                    return false;
+                  }}
+                  ranges={[dateRange]}
+                  onChange={({ selection }) => {
+                    setDateRange(selection);
+                    if (!multipleRanges) {
+                      onChange(datesArray ? getAllDates(selection) : selection);
+                    }
+                  }}
+                  staticRanges={[]}
+                  inputRanges={[]}
+                  dayContentRenderer={(date) => {
+                    return (
+                      <span
+                        className={
+                          multipleRanges &&
+                          value.includes(moment(date, "YYYY-MM-DD"))
+                            ? s.selected
+                            : ""
+                        }
+                      >
+                        {date.getDate()}
+                      </span>
+                    );
+                  }}
+                />
+                {multipleRanges && (
+                  <div className={`flex p-1 pt-0 gap-1`}>
+                    <button
+                      className={`btn all-columns`}
+                      type="button"
+                      onClick={() => {
+                        onChange(
+                          [
+                            ...new Set([...value, ...getAllDates(dateRange)]),
+                          ].sort((a, b) => (a > b ? 1 : -1))
+                        );
+                        setDefaultRange();
+                      }}
+                    >
+                      Add Days
+                    </button>
+                    <button
+                      className={`btn all-columns`}
+                      type="button"
+                      onClick={() => {
+                        const dates = getAllDates(dateRange);
+                        onChange(
+                          value
+                            .filter(
+                              (date) =>
+                                !dates.includes(moment(date, "YYYY-MM-DD"))
+                            )
+                            .sort((a, b) => (a > b ? 1 : -1))
+                        );
+                        setDefaultRange();
+                      }}
+                    >
+                      Remove Days
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {error && <span className={s.errMsg}>{error.message}</span>}
+          </section>
+        );
+      }}
+    />
   );
 };
