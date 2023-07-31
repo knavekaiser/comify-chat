@@ -24,28 +24,28 @@ export default function Login() {
           </p>
 
           <p>
-            As an affiliate partner, you'll earn a competitive commission for
-            each new customer you refer who signs up for our AI chatbot
-            solutions. Whether you're a blogger, content creator, consultant, or
-            a business catering to a similar industry, our program is an
-            excellent way to supplement your income while providing value to
-            your audience.
+            As an affiliate partner, you&apos;ll earn a competitive commission
+            for each new customer you refer who signs up for our AI chatbot
+            solutions. Whether you&apos;re a blogger, content creator,
+            consultant, or a business catering to a similar industry, our
+            program is an excellent way to supplement your income while
+            providing value to your audience.
           </p>
 
           <p>
-            The process is simple: Once you sign up, we'll provide you with a
-            unique referral link and promotional materials to help you get
-            started. When someone signs up using your link, you'll earn a
+            The process is simple: Once you sign up, we&apos;ll provide you with
+            a unique referral link and promotional materials to help you get
+            started. When someone signs up using your link, you&apos;ll earn a
             commission. We offer real-time tracking so you can see your
             referrals and commissions at any time.
           </p>
 
           <p>
             But our Affiliate Program is about more than just earning money.
-            It's also about sharing innovative technology and helping businesses
-            provide better customer experiences. When you join our Affiliate
-            Program, you're not just promoting a product - you're promoting a
-            solution that can truly make a difference.
+            It&apos;s also about sharing innovative technology and helping
+            businesses provide better customer experiences. When you join our
+            Affiliate Program, you&apos;re not just promoting a product -
+            you&apos;re promoting a solution that can truly make a difference.
           </p>
 
           <p>
@@ -56,7 +56,8 @@ export default function Login() {
           </p>
 
           <p>
-            Join us today, and let's grow together in this exciting AI journey!
+            Join us today, and let&apos;s grow together in this exciting AI
+            journey!
           </p>
         </div>
       </div>

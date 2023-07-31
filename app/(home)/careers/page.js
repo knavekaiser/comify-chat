@@ -79,12 +79,12 @@ export default function Login() {
 
         <section className={s.section}>
           <p>
-            At our company, we're committed to creating a diverse, inclusive
-            environment where everyone feels they belong. We value the fresh
-            ideas and unique perspectives a diverse group of individuals can
-            bring to our company. If you're passionate about AI and excited
-            about shaping the future of customer interactions, we'd love to hear
-            from you!
+            At our company, we&apos;re committed to creating a diverse,
+            inclusive environment where everyone feels they belong. We value the
+            fresh ideas and unique perspectives a diverse group of individuals
+            can bring to our company. If you&apos;re passionate about AI and
+            excited about shaping the future of customer interactions, we&apos;d
+            love to hear from you!
           </p>
         </section>
       </div>

@@ -36,27 +36,28 @@ export default function Login() {
           </p>
 
           <p>
-            But we're not just about technology. We're also about relationships.
-            We collaborate closely with our clients, getting to the heart of
-            their business needs and customizing our solutions to fit those
-            needs. Our dedicated support and development teams work
+            But we&apos;re not just about technology. We&apos;re also about
+            relationships. We collaborate closely with our clients, getting to
+            the heart of their business needs and customizing our solutions to
+            fit those needs. Our dedicated support and development teams work
             round-the-clock, ensuring our clients have everything they need to
             make the most of our services.
           </p>
 
           <p>
             We also strive to stay ahead of the curve, continuously refining our
-            technology and learning from our clients' experiences. We're not
-            just a provider; we're a partner who's committed to our clients'
-            success. As we grow and evolve, we continue to explore new
-            possibilities in AI, making our solutions smarter, more efficient,
-            and more intuitive.
+            technology and learning from our clients&apos; experiences.
+            We&apos;re not just a provider; we&apos;re a partner who&apos;s
+            committed to our clients&apos; success. As we grow and evolve, we
+            continue to explore new possibilities in AI, making our solutions
+            smarter, more efficient, and more intuitive.
           </p>
 
           <p>
-            At our core, we're driven by a mission to make AI accessible and
-            beneficial for all businesses. We're excited about the future, and
-            we're thrilled to help our clients navigate the journey with us.
+            At our core, we&apos;re driven by a mission to make AI accessible
+            and beneficial for all businesses. We&apos;re excited about the
+            future, and we&apos;re thrilled to help our clients navigate the
+            journey with us.
           </p>
         </section>
       </div>

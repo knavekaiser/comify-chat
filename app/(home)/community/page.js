@@ -58,9 +58,10 @@ export default function Login() {
 
           <p>
             We believe in the power of collective intelligence, and this
-            community is a testament to that belief. Whether you're a newbie
-            navigating your first chatbot project or a seasoned professional
-            with insights to share, there's a place for you here.
+            community is a testament to that belief. Whether you&apos;re a
+            newbie navigating your first chatbot project or a seasoned
+            professional with insights to share, there&apos;s a place for you
+            here.
           </p>
 
           <p>
@@ -85,10 +86,10 @@ export default function Login() {
 
         <section className={s.section}>
           <p>
-            Our community is respectful, inclusive, and supportive. We're all
-            here to help each other grow and succeed in our AI journey. So, get
-            involved, start a discussion, share your thoughts, and let's grow
-            together!
+            Our community is respectful, inclusive, and supportive. We&apos;re
+            all here to help each other grow and succeed in our AI journey. So,
+            get involved, start a discussion, share your thoughts, and
+            let&apos;s grow together!
           </p>
 
           <p>
