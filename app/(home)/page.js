@@ -133,7 +133,12 @@ export default function Home() {
             ref={videoContainer}
             onClick={() => setManualCtrl(true)}
           >
-            <video src="/assets/video-tutorial.mp4" controls ref={video} />
+            <video
+              src="/assets/video-tutorial.mp4"
+              controls
+              ref={video}
+              muted
+            />
           </div>
         </div>
       </div>

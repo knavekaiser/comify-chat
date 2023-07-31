@@ -6,7 +6,7 @@
     margin: auto;
     width: 100%;
     max-width: 90rem;
-    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr 1fr;
     padding: 8rem 3rem;
     padding-bottom: 0;
     .logo {
@@ -22,9 +22,9 @@
       font-size: 1.3rem;
       color: var(--text-color-1);
     }
-    .section_two,
-    .section_three,
-    .section_four {
+    .links,
+    .links,
+    .contact {
       .head {
         h6 {
           font-size: 1rem;
@@ -48,7 +48,7 @@
         }
       }
     }
-    .section_four {
+    .contact {
       p {
         font-size: 0.9rem;
         color: var(--text-color-2);

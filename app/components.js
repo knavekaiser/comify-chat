@@ -85,43 +85,43 @@ export const Footer = () => {
   return (
     <footer className={s.footer}>
       <div className={s.innerWrapper}>
-        <div className={s.section_one}>
+        <div className={s.logoWrapper}>
           <div className={s.logo}>
             <img src="/assets/logo_big_eyes.png" />
             <h2 className={space_grotesk.className}>Infin AI</h2>
           </div>
         </div>
 
-        <div className={s.section_two}>
+        <div className={s.links}>
           <div className={s.head}>
             <h6>Company</h6>
           </div>
           <div className={s.body}>
             <ul className={s.menu}>
               <li>
-                <a href="#">About Us</a>
+                <Link href={paths.aboutUs}>About Us</Link>
               </li>
               <li>
-                <a href="#">Community</a>
+                <Link href={paths.community}>Community</Link>
               </li>
               <li>
-                <a href="#">Careers</a>
+                <Link href={paths.careers}>Careers</Link>
               </li>
               <li>
-                <a href="#">Affiliate Program</a>
+                <Link href={paths.affiliateProgram}>Affiliate Program</Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className={s.section_three}>
+        {/* <div className={s.links}>
           <div className={s.head}>
             <h6>Use Casees</h6>
           </div>
           <div className={s.body}>
             <ul className={s.menu}>
               <li>
-                <a href="#">About Us</a>
+                <a href="#">Pricing</a>
               </li>
               <li>
                 <a href="#">Community</a>
@@ -134,9 +134,9 @@ export const Footer = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
-        <div className={s.section_four}>
+        <div className={s.contact}>
           <div className={s.head}>
             <h6>Contact Info</h6>
           </div>
