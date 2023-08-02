@@ -141,6 +141,7 @@ export default function Home() {
             />
           </div>
         </div>
+        <div id="chatContainer" />
       </div>
 
       <div className={s.intro}>
@@ -258,9 +259,12 @@ export default function Home() {
               transition={{ ...inViewFadeIn.transition, delay: 0.4 }}
               className={s.card}
             >
-              <img src="/assets/stickers/about.png" />
-              <h3 className={space_grotesk.className}>Informed</h3>
-              <p>Insightful responses fueled by document-based intelligence.</p>
+              <img src="/assets/stickers/data-analytics.png" />
+              <h3 className={space_grotesk.className}>Analytics</h3>
+              <p>
+                Data-driven insights for optimizing chatbot performance and
+                customer engagement.
+              </p>
             </motion.li>
             <motion.li
               key="seamless"
@@ -268,7 +272,7 @@ export default function Home() {
               transition={{ ...inViewFadeIn.transition, delay: 0.6 }}
               className={s.card}
             >
-              <img src="/assets/stickers/abstract-shape-1.png" />
+              <img src="/assets/stickers/abstract-shape.png" />
               <h3 className={space_grotesk.className}>Seamless</h3>
               <p>
                 Seamless implementation for effortless chatbot integration on

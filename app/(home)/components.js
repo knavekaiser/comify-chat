@@ -198,7 +198,6 @@ export const Testimonials = () => {
         "This AI chatbot isn't just easy to integrate and customize, it's an invaluable tool for understanding our customers better. The insights provided by the analytics have helped us tailor our services to better meet our clients' needs. It's like having a personal advisor for our business!",
     },
   ]);
-  const [cardWidth, setCardWidth] = useState(3.5);
 
   return (
     <Carousel
@@ -239,7 +238,7 @@ export const Testimonials = () => {
           transition={{
             ...inViewFadeIn.transition,
           }}
-          key={item._id}
+          key={item._id || i}
           className={`${s.card}`}
         >
           <p>{item.content}</p>
