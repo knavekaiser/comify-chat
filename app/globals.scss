@@ -446,8 +446,10 @@ form {
     }
   }
 }
-.react-multiple-carousel__arrow {
-  opacity: 0;
+.react-multi-carousel-list {
+  .react-multiple-carousel__arrow {
+    opacity: 0;
+  }
 }
 .react-multiple-carousel__arrow--left {
   left: 2rem;
