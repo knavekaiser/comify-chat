@@ -141,6 +141,7 @@ export default function Home() {
             />
           </div>
         </div>
+        <div id="chatContainer" />
       </div>
 
       <div className={s.intro}>
