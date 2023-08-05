@@ -72,7 +72,9 @@ export default function ClientLayout(params) {
           mountInfinAI({
             baseUrl: endpoints.baseUrl,
             chatbotId: process.env.NEXT_PUBLIC_INFINAI_CHATBOT_ID,
-            paths: ["/"],
+            containerId: "chatContainer",
+            // paths: ["/"],
+            standalone: true,
           });
         }}
       />

@@ -202,14 +202,6 @@ Vue.prototype.$InfinAI = require('${sdkUrl}');`;
   }
   mountInfinAI(options);
 }`;
-
-  const standalone = `const options = {
-  chatbotId: "${chatbot_id}",
-  path: ["/support"],
-  standalone: true,
-  containerId: "chatContainer"
-}
-`;
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
       <header>
@@ -245,127 +237,7 @@ Vue.prototype.$InfinAI = require('${sdkUrl}');`;
 
       <section className={s.section}>
         <div className={s.head}>
-          <h3>
-            <code>options</code>
-          </h3>
-        </div>
-        <div className={s.content}>
-          <Table
-            className={s.fieldsTable}
-            columns={[
-              { label: "Field" },
-              { label: "Default", className: "center" },
-              { label: "Required", className: "center" },
-              { label: "Description" },
-            ]}
-          >
-            {fields.map((item) => (
-              <tr key={item.field}>
-                <td className={s.fieldName}>
-                  <strong>{item.field}</strong>
-                </td>
-                <td className="center">{item.default}</td>
-                <td className="center">{item.required}</td>
-                <td>{item.description}</td>
-              </tr>
-            ))}
-          </Table>
-
-          <div className={s.head}>
-            <h4>
-              <code>paths</code>
-            </h4>
-          </div>
-          <ul className={s.ps}>
-            <li>
-              <p>
-                The <code>paths</code> field allows you to control on which
-                pages of your website the Chatbot will appear. It takes an array
-                of strings that define the URL paths where the chatbot should be
-                visible.
-              </p>
-            </li>
-            <li>
-              <p>Here&apos;s a more detailed explanation:</p>
-              <Table className={s.pathsExample}>
-                {pathsExample.map((item) => (
-                  <tr key={item.path}>
-                    <td className={s.pathName}>
-                      <code>{item.path}</code>
-                    </td>
-                    <td className={s.description}>{item.description}</td>
-                  </tr>
-                ))}
-              </Table>
-            </li>
-          </ul>
-
-          <div className={s.head}>
-            <h4>
-              <code>standalone</code>
-            </h4>
-          </div>
-          <ul className={s.ps}>
-            <li>
-              <p>
-                When <code>standalone</code> is set to <code>false</code>{" "}
-                (default), the chatbot appears as a non-intrusive popup-style
-                chatbot, usually located at the corner of the page. It overlays
-                on top of the content and does not affect the document flow.
-              </p>
-            </li>
-            <li>
-              <p>
-                When <code>standalone</code> is set to <code>true</code>, the
-                chatbot is placed within the document flow of your website. It
-                means the chatbot becomes part of the webpage layout, and its
-                position will be determined by the element with the specified
-                containerId. This option allows more flexibility in positioning
-                the chatbot within your webpage&apos;s design.
-              </p>
-            </li>
-          </ul>
-
-          <div className={s.head}>
-            <h4>Chatbot on a dedicated page</h4>
-          </div>
-          <ul className={s.ps}>
-            <li>
-              <p>
-                To set up the chatbot on a dedicated page like{" "}
-                <code>website.com/support</code> follow these steps:
-              </p>
-              <CodeBlock code={standalone} language="javascript" />
-            </li>
-            <li>
-              <p>Style the container so that it takes up the whole page.</p>
-            </li>
-          </ul>
-
-          <div className={s.head}>
-            <h4>Automatic mode switch</h4>
-          </div>
-          <ul className={s.ps}>
-            <li>
-              <p>
-                You can enable standalone mode on specific pages by passing an
-                array of strings to the <code>standalone</code> field.
-                seamlessly transitioning from popup to a dedicated chatbot
-                experience.
-              </p>
-            </li>
-            <li>
-              <p>
-                Example: <code>["/chatbot"]</code>
-              </p>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section className={s.section}>
-        <div className={s.head}>
-          <h2>React Application</h2>
+          <h2 className={space_grotesk.className}>React Application</h2>
         </div>
         <div className={s.content}>
           <ol>
