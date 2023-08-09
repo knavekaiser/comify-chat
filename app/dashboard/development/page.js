@@ -356,7 +356,7 @@ Vue.prototype.$InfinAI = require('${sdkUrl}');`;
             </li>
             <li>
               <p>
-                Example: <code>["/chatbot"]</code>
+                Example: <code>{`["/chatbot"]`}</code>
               </p>
             </li>
           </ul>

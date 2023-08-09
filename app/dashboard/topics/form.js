@@ -74,11 +74,13 @@ export default function Form({ edit, onSuccess }) {
 
   const urls = watch("urls");
   const url = watch("url");
+  const showOnChat = watch("showOnChat");
 
   useEffect(() => {
     reset({
       ...edit,
       urls: edit?.urls || [],
+      paths: edit?.paths?.length ? edit.paths.join(", ") : "",
       showOnChat: edit && "showOnChat" in edit ? edit.showOnChat : false,
     });
   }, [edit]);
@@ -94,6 +96,9 @@ export default function Form({ edit, onSuccess }) {
         };
         const formData = new FormData();
         Object.entries(payload).forEach(([key, value]) => {
+          if (key === "paths") {
+            value = value.split(", ");
+          }
           if (key === "files" && value) {
             const oldFiles = value.filter((item) => item.url);
             const newFiles = value.filter((item) => !item.url);
@@ -135,6 +140,18 @@ export default function Form({ edit, onSuccess }) {
           { label: "No", value: false },
         ]}
       />
+      {showOnChat && (
+        <>
+          <Input
+            className={s.paths}
+            label="Paths (select where this topic appears)"
+            control={control}
+            placeholder="/some-path"
+            name="paths"
+            hint={`Separate multiple paths with ", "`}
+          />
+        </>
+      )}
 
       <FileInput
         className={s.fileInput}
@@ -152,6 +169,7 @@ export default function Form({ edit, onSuccess }) {
             control={control}
             name="url"
             className={s.urlField}
+            placeholder="https://example.com"
             onChange={() => {
               clearErrors("url");
             }}

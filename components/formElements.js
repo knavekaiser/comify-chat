@@ -25,6 +25,7 @@ export const Input = ({
   required,
   startAdornment,
   endAdornment,
+  hint,
   onChange: customOnChange,
   ...rest
 }) => {
@@ -73,6 +74,7 @@ export const Input = ({
                 </span>
               </span>
               {error && <span className={s.errMsg}>{error.message}</span>}
+              {hint && <span className={s.hint}>{hint}</span>}
             </div>
           </section>
         );
@@ -397,7 +399,7 @@ export const FileInput = ({
               </div>
             )
           )}
-          {!thumbnail && (multiple || (!multiple && files.length > 0)) && (
+          {!thumbnail && files.length > 0 && (
             <div className={s.fileTable}>
               <Table
                 className={

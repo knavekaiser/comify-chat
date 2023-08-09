@@ -38,6 +38,12 @@
         background: #f5f4f4;
       }
     }
+    .hint {
+      font-size: 0.8rem;
+      color: #929292;
+      display: block;
+      margin-top: 0.5rem;
+    }
     &:has(input[type="color"]) {
       .field {
         margin-top: 0.3rem;
@@ -100,7 +106,7 @@
 
   textarea {
     resize: vertical;
-    min-height: 3rem;
+    min-height: 5rem;
     font-size: 1em;
     font-family: inherit;
   }
