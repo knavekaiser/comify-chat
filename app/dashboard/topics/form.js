@@ -97,7 +97,7 @@ export default function Form({ edit, onSuccess }) {
         const formData = new FormData();
         Object.entries(payload).forEach(([key, value]) => {
           if (key === "paths") {
-            value = value.split(", ");
+            value = value.split(", ").filter(Boolean);
           }
           if (key === "files" && value) {
             const oldFiles = value.filter((item) => item.url);
@@ -148,7 +148,7 @@ export default function Form({ edit, onSuccess }) {
             control={control}
             placeholder="/some-path"
             name="paths"
-            hint={`Separate multiple paths with ", "`}
+            hint={`List multiple paths with ", " (comma and space). By default, it will be displayed on all pages.`}
           />
         </>
       )}
