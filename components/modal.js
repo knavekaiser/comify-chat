@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from "react";
+import React, { useRef } from "react";
 import { FaCheck } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";

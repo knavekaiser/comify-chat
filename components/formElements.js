@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import s from "./formElements.module.scss";
 import { Controller } from "react-hook-form";
 import { GoCalendar, GoEye, GoEyeClosed } from "react-icons/go";
-import { BsFillExclamationTriangleFill, BsPersonSquare } from "react-icons/bs";
+import { BsPersonSquare, BsSearch } from "react-icons/bs";
 import { FaSortDown, FaRegTrashAlt } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";
 import { Modal, Prompt } from "./modal";
@@ -16,6 +16,8 @@ import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { moment, getAllDates, Moment } from "./moment";
+import { useFetch } from "@/utils/hooks";
+import ReactSelect, { components } from "react-select";
 
 export const Input = ({
   control,
@@ -724,6 +726,217 @@ const ComboboxList = ({
         </li>
       ))}
     </ul>
+  );
+};
+
+const DropdownIndicator = (props) => {
+  return (
+    components.DropdownIndicator && (
+      <components.DropdownIndicator {...props}>
+        <BsSearch />
+      </components.DropdownIndicator>
+    )
+  );
+};
+export const Select = ({
+  control,
+  formOptions,
+  name,
+  options: defaultOptions,
+  url,
+  getQuery,
+  handleData,
+  multiple,
+  label,
+  className,
+  placeholder,
+  renderOption,
+  disabled,
+  onChange: _onChange,
+  startAdronment,
+}) => {
+  const firstRender = useRef(true);
+  const [inputValue, setInputValue] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [options, setOptions] = useState([]);
+
+  const { get: fetchData, loading: loadingData } = useFetch(url);
+
+  const getOptions = useCallback(
+    (inputValue, selected) => {
+      fetchData({
+        query: {
+          ...(getQuery && inputValue && getQuery(inputValue, selected)),
+          pageSize: 10 + (selectedOptions.length || 0),
+        },
+      })
+        .then(({ data }) => {
+          if (data.success) {
+            const _data = data.data.map(handleData);
+            if (multiple) {
+              let _selectedOptions;
+              if (firstRender.current) {
+                _selectedOptions = _data.filter((item) =>
+                  (
+                    (name?.includes(".")
+                      ? name
+                          .split(".")
+                          .reduce((p, c) => p[c], control._formValues)
+                      : control._formValues[name]) || []
+                  ).includes(item.value)
+                );
+                setSelectedOptions(_selectedOptions);
+              }
+              setOptions(
+                [
+                  ..._data,
+                  ...(_selectedOptions || selectedOptions),
+                ].findUniqueObj()
+              );
+            } else {
+              setOptions(_data);
+            }
+            firstRender.current = false;
+          } else if (data.success === false) {
+            Prompt({ type: "error", message: data.message });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Prompt({ type: "error", message: err.message });
+        });
+    },
+    [control._formValues[name], selectedOptions]
+  );
+
+  useEffect(() => {
+    if (url && inputValue) {
+      getOptions(inputValue);
+    } else if (url) {
+      getOptions(inputValue);
+    }
+  }, [inputValue]);
+
+  useEffect(() => {
+    const _value =
+      name && name.includes(".")
+        ? name.split(".").reduce((p, c) => p[c], control._formValues)
+        : control._formValues[name];
+    if (_value && !options.length && url) {
+      getOptions(null, _value);
+    }
+  }, []);
+
+  useEffect(() => {
+    setOptions(defaultOptions);
+  }, [defaultOptions]);
+  return (
+    <Controller
+      control={control}
+      name={name}
+      rules={formOptions}
+      render={({
+        field: { onChange, onBlur, value, name, ref },
+        fieldState: { invalid, isTouched, isDirty, error },
+      }) => {
+        const ClearButton = (props) => {
+          return (
+            components.DropdownIndicator && (
+              <components.DropdownIndicator {...props}>
+                <IoClose onClick={() => onChange(multiple ? [] : "")} />
+              </components.DropdownIndicator>
+            )
+          );
+        };
+        return (
+          <section className={`${s.select} ${className || ""}`}>
+            {label && (
+              <label>
+                {label} {formOptions?.required && "*"}
+              </label>
+            )}
+            <div className={`${s.field} ${error ? s.err : ""}`}>
+              <span className={s.startAdronment}>{startAdronment}</span>
+              <ReactSelect
+                placeholder={
+                  url
+                    ? "Search..."
+                    : !options || !options?.length
+                    ? "No options provided"
+                    : placeholder || "Enter"
+                }
+                components={{
+                  DropdownIndicator:
+                    (multiple && !value?.length) || (!multiple && !value)
+                      ? DropdownIndicator
+                      : ClearButton,
+                  ...(disabled && {
+                    DropdownIndicator: undefined,
+                  }),
+                  ...(multiple && { DropdownIndicator: undefined }),
+                  ...(renderOption && {
+                    Option: (props) => (
+                      <components.Option {...props}>
+                        {renderOption(props.data)}
+                      </components.Option>
+                    ),
+                  }),
+                }}
+                className={`reactSelect ${s.reactSelect} ${
+                  disabled ? "readOnly" : ""
+                } ${className || ""}`}
+                classNamePrefix="reactSelect"
+                isDisabled={url ? false : !options || !options?.length}
+                inputRef={ref}
+                menuPortalTarget={document.querySelector("#portal")}
+                menuPosition="fixed"
+                menuPlacement="auto"
+                options={options || []}
+                value={
+                  options?.find((op) => op.value === value) ||
+                  options?.filter((op) =>
+                    value?.some?.((item) => item === op.value)
+                  ) ||
+                  ""
+                }
+                onInputChange={(value) => {
+                  if (url) {
+                    setInputValue(value);
+                  }
+                }}
+                onChange={(val) => {
+                  if (multiple) {
+                    onChange(val.map((item) => item.value));
+                    setSelectedOptions(val);
+                  } else {
+                    onChange(val.value);
+                  }
+                  _onChange && _onChange(val);
+                }}
+                isMulti={multiple}
+                styles={{
+                  option: (provided, state) => ({
+                    ...provided,
+                    background: state.isSelected
+                      ? "#e8e8e8;"
+                      : state.isFocused
+                      ? "#eeeeee"
+                      : "white",
+                    padding: "6px 10px",
+                    color: "black",
+                    fontSize: "0.8rem",
+                  }),
+                  control: () => ({}),
+                  singleValue: (provided, state) => {},
+                  menuPortal: (base) => ({ ...base, zIndex: 99999999999 }),
+                }}
+              />
+            </div>
+            {error && <span className={s.errMsg}>{error.message}</span>}
+          </section>
+        );
+      }}
+    />
   );
 };
 

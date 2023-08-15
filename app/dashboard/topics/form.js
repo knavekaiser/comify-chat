@@ -9,6 +9,7 @@ import Menu from "@/components/menu";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Table } from "@/components/table";
 import {
+  Select,
   Combobox,
   FileInput,
   Input,
@@ -23,6 +24,7 @@ const docSchema = yup.object({
     .string()
     .max(75, "Must be under 75 characters")
     .required("Field is required"),
+  parentTopic: yup.string().nullable(),
   description: yup.string().max(200, "Must be under 200 characters"),
   contextForUsers: yup.string().max(200, "Must be under 200 characters"),
   files: yup.array().of(yup.mixed()),
@@ -38,8 +40,10 @@ export default function Form({ edit, onSuccess }) {
     control,
     watch,
     setError,
+    setFocus,
     setValue,
     clearErrors,
+    formState: { errors },
   } = useForm({
     resolver: useYup(docSchema),
   });
@@ -84,6 +88,16 @@ export default function Form({ edit, onSuccess }) {
       showOnChat: edit && "showOnChat" in edit ? edit.showOnChat : false,
     });
   }, [edit]);
+
+  useEffect(() => {
+    const firstError = Object.keys(errors).reduce((field, a) => {
+      return !!errors[field] ? field : a;
+    }, null);
+
+    if (firstError) {
+      setFocus(firstError);
+    }
+  }, [errors, setFocus]);
   return (
     <form
       ref={formRef}
@@ -98,6 +112,13 @@ export default function Form({ edit, onSuccess }) {
         Object.entries(payload).forEach(([key, value]) => {
           if (key === "paths") {
             value = value.split(", ").filter(Boolean);
+            if (!value.length) {
+              formData.append(key, null);
+              return;
+            }
+          }
+          if (key === "parentTopic" && !value) {
+            value = null;
           }
           if (key === "files" && value) {
             const oldFiles = value.filter((item) => item.url);
@@ -111,9 +132,10 @@ export default function Form({ edit, onSuccess }) {
             }
             return;
           }
+
           if (Array.isArray(value)) {
             value.forEach((file) => formData.append(key, file));
-          } else if (value || value === false) {
+          } else if (value || value === false || value === null) {
             formData.append(key, value);
           }
         });
@@ -121,6 +143,14 @@ export default function Form({ edit, onSuccess }) {
         (edit ? put : post)(formData)
           .then(({ data }) => {
             if (!data.success) {
+              if (data.error?.type === "field_validation") {
+                if (data.error.field === "body.topic") {
+                  return setError("topic", {
+                    type: "unique",
+                    message: data.message,
+                  });
+                }
+              }
               return Prompt({ type: "error", message: data.message });
             }
             onSuccess(data.data);
@@ -152,6 +182,19 @@ export default function Form({ edit, onSuccess }) {
           />
         </>
       )}
+
+      <Select
+        className={s.parentTopic}
+        label="Parent Topic"
+        control={control}
+        name="parentTopic"
+        url={endpoints.topics}
+        getQuery={(v) => ({ topic: v })}
+        handleData={(topic) => ({
+          label: topic.topic,
+          value: topic._id,
+        })}
+      />
 
       <FileInput
         className={s.fileInput}

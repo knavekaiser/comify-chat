@@ -100,9 +100,6 @@
       line-height: 0;
     }
   }
-  // input[type="color"] {
-  //   padding: 0;
-  // }
 
   textarea {
     resize: vertical;
@@ -553,6 +550,53 @@
     .calendarWrapper {
       border-color: rgba(var(--primary-color-rgb), 1);
     }
+  }
+}
+
+.select {
+  display: grid;
+  height: min-content;
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    color: var(--text-color-1);
+  }
+  .field {
+    display: grid;
+    grid-template-columns: min-content 1fr min-content;
+    align-items: center;
+    // flex-wrap: wrap;
+    // grid-gap: 6px;
+    .startAdronment {
+      & > * {
+        margin-left: 6px;
+      }
+    }
+    .chip {
+      height: 30px;
+    }
+    &:focus-within {
+      border-color: rgb(var(--primary-color-rgb));
+    }
+    &.err {
+      border-color: red;
+    }
+    &.reactSelect--is-disabled {
+      background: rgb(235, 235, 235);
+    }
+    border: 1px solid #d1d1d1;
+    border-radius: 0.5rem;
+  }
+  .customValue {
+    width: max-content;
+  }
+  .errMsg {
+    font-size: 10pt;
+    color: red;
+    text-align: left;
+    display: block;
   }
 }
 

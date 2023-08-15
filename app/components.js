@@ -71,7 +71,7 @@ export default function ClientLayout(params) {
           const { default: mountInfinAI } = InfinAI;
           mountInfinAI({
             baseUrl: endpoints.baseUrl,
-            chatbotId: "64ad0fab0efb0096d63baf15", // process.env.NEXT_PUBLIC_INFINAI_CHATBOT_ID,
+            chatbotId: process.env.NEXT_PUBLIC_INFINAI_CHATBOT_ID,
             paths: ["/", "/chatbot"],
           });
         }}
