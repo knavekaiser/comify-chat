@@ -333,7 +333,9 @@
         border-radius: 4px 4px 0 0;
       }
       .btn {
-        transform: rotate(180deg) translateY(-2px);
+        .arrow {
+          transform: rotate(180deg) translateY(-11px);
+        }
       }
     }
   }
@@ -381,19 +383,19 @@
     .btn {
       z-index: 12;
       position: absolute;
-      top: 12px;
       display: grid;
       place-items: center;
       font-size: 1.5em;
-      svg {
-        margin-top: -7px;
-        margin-right: 2px;
-      }
       background: white;
       color: var(--text-color-2);
       right: 2px;
-      // height: 1rem;
-      // width: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      .arrow {
+        top: 12px;
+        margin-top: -10px;
+        margin-right: 2px;
+      }
     }
   }
   &.noOptions {

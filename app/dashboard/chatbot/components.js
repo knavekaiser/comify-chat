@@ -67,6 +67,8 @@ export const DynamicForm = ({
               name={field.name}
               label={field.label}
               options={field.options}
+              clearable={field.clearable}
+              placeholder={field.placeholder}
             />
           );
         }

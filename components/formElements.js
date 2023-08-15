@@ -464,6 +464,7 @@ export const Combobox = ({
   onChange: compOnChange,
   item,
   renderValue,
+  clearable,
 }) => {
   const container = useRef();
   const [open, setOpen] = useState(false);
@@ -540,8 +541,12 @@ export const Combobox = ({
 
             <div
               className={s.field}
-              onClick={() => {
-                if (Array.isArray(options) && options.length) {
+              onClick={(e) => {
+                if (
+                  e.target.id !== "close" &&
+                  Array.isArray(options) &&
+                  options.length
+                ) {
                   setOpen(true);
                 }
               }}
@@ -648,9 +653,19 @@ export const Combobox = ({
                 readOnly={true}
                 tabIndex={1}
               />
-              <span data-testid="combobox-btn" className={s.btn}>
-                <FaSortDown />
-              </span>
+              {clearable && value ? (
+                <span
+                  data-testid="combobox-btn"
+                  className={s.btn}
+                  onClick={() => onChange(multiple ? [] : "")}
+                >
+                  <IoClose id="close" />
+                </span>
+              ) : (
+                <span data-testid="combobox-btn" className={s.btn}>
+                  <FaSortDown className={s.arrow} />
+                </span>
+              )}
             </div>
             {error && <span className={s.errMsg}>{error.message}</span>}
             <Modal

@@ -248,6 +248,63 @@ export default function Home() {
         </div>
       </section>
 
+      <section className={`${s.section} ${s.autoOpen}`}>
+        <div className={s.content}>
+          <h3 className={space_grotesk.className}>Auto Open Chatbot</h3>
+          <p className="ellepsis line-2">
+            {user?.chatbot?.autoOpenAfter
+              ? `After ${user.chatbot.autoOpenAfter} seconds`
+              : "Never"}
+          </p>
+        </div>
+        <div className={s.action}>
+          <button
+            className="btn primary"
+            onClick={() =>
+              setForm({
+                title: "Auto Open Chatbot",
+                fields: [
+                  {
+                    inputType: "select",
+                    name: "autoOpenAfter",
+                    clearable: true,
+                    options: [
+                      // { label: "Never", value: "" },
+                      { label: "After 5 Seconds", value: "5s" },
+                      { label: "After 10 Seconds", value: "10s" },
+                    ],
+                    placeholder: "Never",
+                  },
+                ],
+                currentValues: {
+                  autoOpenAfter: user?.chatbot?.autoOpenAfter || "",
+                },
+                schema: yup.object({
+                  autoOpenAfter: yup
+                    .string()
+                    .nullable()
+                    .oneOf(["5s", "10s", "", null]),
+                }),
+                submit: {
+                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
+                  method: "put",
+                },
+                onSuccess: (newChatbot) => {
+                  setForm(null);
+                  setUser((prev) => ({ ...prev, chatbot: newChatbot }));
+                  Prompt({
+                    type: "success",
+                    message: "Domain updated successfully",
+                  });
+                },
+              })
+            }
+          >
+            Change Setting
+          </button>
+        </div>
+      </section>
+
       <Modal
         className={s.dynamicFormModal}
         open={form}
