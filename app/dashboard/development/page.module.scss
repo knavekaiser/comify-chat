@@ -13,85 +13,84 @@
       color: var(--text-color-2);
     }
   }
+}
 
-  .section {
-    color: var(--text-color-1);
-    margin: 0.5rem 0;
-    .head {
-      margin-bottom: 0.75rem;
-      code {
-        font-size: 1.2em;
-      }
+.section {
+  color: var(--text-color-1);
+  margin: 0.5rem 0;
+  .head {
+    margin-bottom: 0.75rem;
+    code {
+      font-size: 1.2em;
     }
-    .content {
-      font-size: 1rem;
-      line-height: 1.6em;
-      ol {
-        li {
-          margin-left: 1rem;
-          list-style: unset;
-          margin-bottom: 0.5rem;
-          & > code {
-            color: rgb(193, 132, 1);
-          }
+  }
+  .content {
+    font-size: 1rem;
+    line-height: 1.6em;
+    ol {
+      li {
+        margin-left: 1rem;
+        list-style: unset;
+        margin-bottom: 0.5rem;
+        & > code {
+          color: rgb(193, 132, 1);
         }
       }
-      pre {
-        width: 100%;
-        max-width: 85vw;
-        line-height: 1.4em;
-        border: 1px solid rgba(63, 86, 92, 0.1);
-        border-radius: 1rem;
-        margin: 0.5rem 0;
-      }
     }
-    .ps {
-      padding-left: 1.5rem;
+    pre {
+      width: 100%;
+      max-width: 85vw;
+      line-height: 1.4em;
+      border: 1px solid rgba(63, 86, 92, 0.1);
+      border-radius: 1rem;
+      margin: 0.5rem 0;
+    }
+  }
+  .ps {
+    padding-left: 1.5rem;
+    code {
+      color: rgb(193, 132, 1);
+      font-size: 1.05em;
+    }
+    li {
+      list-style: circle;
+      margin-bottom: 0.75rem;
+    }
+    margin-bottom: 1.5rem;
+  }
+  .fieldsTable {
+    tr {
+      grid-template-columns: 9rem 6rem 6rem 1fr;
+      // td:not(:last-child) {
+      // border-right: 1px solid rgba(0, 0, 0, 0.2);
+      // }
+      .fieldName {
+        color: var(--text-color-1);
+      }
       code {
         color: rgb(193, 132, 1);
         font-size: 1.05em;
       }
-      li {
-        list-style: circle;
-        margin-bottom: 0.75rem;
-      }
-      margin-bottom: 1.5rem;
     }
-    .fieldsTable {
-      tr {
-        grid-template-columns: 9rem 6rem 6rem 1fr;
-        // td:not(:last-child) {
-        // border-right: 1px solid rgba(0, 0, 0, 0.2);
-        // }
-        .fieldName {
-          color: var(--text-color-1);
-        }
+    margin-bottom: 2rem;
+  }
+  .pathsExample {
+    margin-top: 0.5rem;
+    tr {
+      grid-template-columns: 15rem 1fr;
+      .pathName {
+        font-size: 1rem;
+        color: var(--text-color-1);
+      }
+      .description {
         code {
           color: rgb(193, 132, 1);
           font-size: 1.05em;
         }
       }
-      margin-bottom: 2rem;
-    }
-    .pathsExample {
-      margin-top: 0.5rem;
-      tr {
-        grid-template-columns: 15rem 1fr;
-        .pathName {
-          font-size: 1rem;
-          color: var(--text-color-1);
-        }
-        .description {
-          code {
-            color: rgb(193, 132, 1);
-            font-size: 1.05em;
-          }
-        }
-      }
     }
   }
 }
-
 @media (max-width: 720px) {
   .main {
     //

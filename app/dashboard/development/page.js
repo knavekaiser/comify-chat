@@ -7,9 +7,11 @@ import CodeBlock from "@/components/codeBlock";
 import { useContext, useState } from "react";
 import { SiteContext } from "@/app/context";
 import { Table } from "@/components/table";
+import Tabs from "@/components/tabs";
 
-export default function Home() {
+export const Codes = () => {
   const { user } = useContext(SiteContext);
+  const [activeTab, setActiveTab] = useState("react");
   const sdkUrl = endpoints.infinAIChatSdk;
   const chatbot_id = user.chatbot._id;
 
@@ -211,17 +213,7 @@ Vue.prototype.$InfinAI = require('${sdkUrl}');`;
 }
 `;
   return (
-    <main className={`${pageStyle.main} ${s.main}`}>
-      <header>
-        <h1>Development</h1>
-        <p className={s.description}>
-          This documentation provides step-by-step instructions on how to
-          implement the Infin AI Chatbot into your website. By following these
-          guidelines, you can seamlessly integrate the chatbot functionality and
-          enhance your customer engagement. Let&apos;s get started!
-        </p>
-      </header>
-
+    <>
       <section className={s.section}>
         <div className={s.head}>
           <h2>Javascript Websites</h2>
@@ -363,95 +355,131 @@ Vue.prototype.$InfinAI = require('${sdkUrl}');`;
         </div>
       </section>
 
-      <section className={s.section}>
-        <div className={s.head}>
-          <h2>React Application</h2>
-        </div>
-        <div className={s.content}>
-          <ol>
-            <li>
-              In your React application, you can create a function called{" "}
-              <code>loadScript</code> that loads an external script
-              asynchronously and use that function to load Infin AI:
-              <CodeBlock code={react} language="javascript" />
-            </li>
-          </ol>
-        </div>
-      </section>
+      <Tabs
+        activeTab={activeTab}
+        onChange={(newTab) => setActiveTab(newTab.value)}
+        tabs={[
+          { label: "React", value: "react" },
+          { label: "Next.JS", value: "nextJs" },
+          { label: "Angular JS", value: "angularJs" },
+          { label: "Vue JS", value: "vueJs" },
+        ]}
+      />
 
-      <section className={s.section}>
-        <div className={s.head}>
-          <h2>Next.JS</h2>
-        </div>
-        <div className={s.content}>
-          <ol>
-            <li>
-              Add this snippet of code on the top level of the app
-              <CodeBlock code={nextjs} language="javascript" />
-            </li>
-          </ol>
-        </div>
-      </section>
+      {activeTab === "react" && (
+        <section className={s.section}>
+          <div className={s.head}>
+            <h2>React Application</h2>
+          </div>
+          <div className={s.content}>
+            <ol>
+              <li>
+                In your React application, you can create a function called{" "}
+                <code>loadScript</code> that loads an external script
+                asynchronously and use that function to load Infin AI:
+                <CodeBlock code={react} language="javascript" />
+              </li>
+            </ol>
+          </div>
+        </section>
+      )}
 
-      <section className={s.section}>
-        <div className={s.head}>
-          <h2>Angular JS</h2>
-        </div>
-        <div className={s.content}>
-          <ol>
-            <li>
-              In your Angular application, open the <code>angular.json</code>{" "}
-              file.
-            </li>
-            <li>
-              Locate the &quot;scripts&quot; array within the
-              &quot;architect&quot; section and add the following script URL:
-              <CodeBlock code={angularScript} language="javascript" />
-            </li>
-            <li>
-              Save the changes to the <code>angular.json</code> file.
-            </li>
-            <li>
-              In your Angular component file (e.g.,{" "}
-              <code>app.component.ts</code>), import the{" "}
-              <code>AfterViewInit</code> interface from{" "}
-              <code>@angular/core</code> and implement it in your component
-              class.
-            </li>
-            <li>
-              Within the component class, add the following code:
-              <CodeBlock code={angular} language="javascript" />
-            </li>
-            <li>Save the changes to your component file.</li>
-          </ol>
-        </div>
-      </section>
+      {activeTab === "nextJs" && (
+        <section className={s.section}>
+          <div className={s.head}>
+            <h2>Next.JS</h2>
+          </div>
+          <div className={s.content}>
+            <ol>
+              <li>
+                Add this snippet of code on the top level of the app
+                <CodeBlock code={nextjs} language="javascript" />
+              </li>
+            </ol>
+          </div>
+        </section>
+      )}
 
-      <section className={s.section}>
-        <div className={s.head}>
-          <h2>Angular JS</h2>
-        </div>
-        <div className={s.content}>
-          <ol>
-            <li>
-              In your Vue.js application, open the main JavaScript file (e.g.,{" "}
-              <code>main.js</code>).
-            </li>
-            <li>
-              Add the following code snippet at the top of the file to import
-              the Infin AI SDK:
-              <CodeBlock code={vueScript} language="javascript" />
-            </li>
-            <li>Save the changes to your main JavaScript file.</li>
-            <li>
-              In your Vue component file (e.g., <code>App.vue</code>), add the
-              following code snippet within the mounted lifecycle hook:
-              <CodeBlock code={vue} language="javascript" />
-            </li>
-            <li>Save the changes to your component file.</li>
-          </ol>
-        </div>
-      </section>
+      {activeTab === "angularJs" && (
+        <section className={s.section}>
+          <div className={s.head}>
+            <h2>Angular JS</h2>
+          </div>
+          <div className={s.content}>
+            <ol>
+              <li>
+                In your Angular application, open the <code>angular.json</code>{" "}
+                file.
+              </li>
+              <li>
+                Locate the &quot;scripts&quot; array within the
+                &quot;architect&quot; section and add the following script URL:
+                <CodeBlock code={angularScript} language="javascript" />
+              </li>
+              <li>
+                Save the changes to the <code>angular.json</code> file.
+              </li>
+              <li>
+                In your Angular component file (e.g.,{" "}
+                <code>app.component.ts</code>), import the{" "}
+                <code>AfterViewInit</code> interface from{" "}
+                <code>@angular/core</code> and implement it in your component
+                class.
+              </li>
+              <li>
+                Within the component class, add the following code:
+                <CodeBlock code={angular} language="javascript" />
+              </li>
+              <li>Save the changes to your component file.</li>
+            </ol>
+          </div>
+        </section>
+      )}
+
+      {activeTab === "vueJs" && (
+        <section className={s.section}>
+          <div className={s.head}>
+            <h2>Vue JS</h2>
+          </div>
+          <div className={s.content}>
+            <ol>
+              <li>
+                In your Vue.js application, open the main JavaScript file (e.g.,{" "}
+                <code>main.js</code>).
+              </li>
+              <li>
+                Add the following code snippet at the top of the file to import
+                the Infin AI SDK:
+                <CodeBlock code={vueScript} language="javascript" />
+              </li>
+              <li>Save the changes to your main JavaScript file.</li>
+              <li>
+                In your Vue component file (e.g., <code>App.vue</code>), add the
+                following code snippet within the mounted lifecycle hook:
+                <CodeBlock code={vue} language="javascript" />
+              </li>
+              <li>Save the changes to your component file.</li>
+            </ol>
+          </div>
+        </section>
+      )}
+    </>
+  );
+};
+
+export default function Home() {
+  return (
+    <main className={`${pageStyle.main} ${s.main}`}>
+      <header>
+        <h1>Development</h1>
+        <p className={s.description}>
+          This documentation provides step-by-step instructions on how to
+          implement the Infin AI Chatbot into your website. By following these
+          guidelines, you can seamlessly integrate the chatbot functionality and
+          enhance your customer engagement. Let&apos;s get started!
+        </p>
+      </header>
+      <Codes />
     </main>
   );
 }

@@ -7,6 +7,9 @@ import paths from "@/utils/paths";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SiteContext } from "@/app/context";
+import TopicForm from "./topics/form";
+import { ChatbotConfig } from "./chatbot/page";
+import { Codes } from "./development/page";
 
 export const Sidebar = ({ closeSidebar }) => {
   const { user } = useContext(SiteContext);
@@ -50,14 +53,53 @@ export const Sidebar = ({ closeSidebar }) => {
   );
 };
 
-export const GettingStarted = () => {
-  const [step, setStep] = useState(1);
+export const GettingStarted = ({ close }) => {
+  const [step, setStep] = useState(3);
+  const { user } = useContext(SiteContext);
   return (
     <div className={s.gettingStarted}>
-      <div className={s.head}>
-        <h3>Getting Started</h3>
+      <header>
+        <h1>Getting Started</h1>
+        {step === 1 && <p className={s.description}>Add your first topic</p>}
+        {step === 2 && (
+          <p className={s.description}>Update chatbot configuration</p>
+        )}
+        {step === 3 && (
+          <p className={s.description}>Add chatbot to your site</p>
+        )}
+      </header>
+
+      <div className={s.content}>
+        {step === 1 && <TopicForm onSuccess={() => setStep(2)} />}
+        {step === 2 && (
+          <>
+            <ChatbotConfig />
+            <div className={s.actions}>
+              <button
+                className={`btn primary`}
+                disabled={!user.chatbot?.domain}
+                onClick={() => setStep(3)}
+              >
+                Next
+              </button>
+            </div>
+          </>
+        )}
+        {step === 3 && (
+          <>
+            <Codes />
+            <div className={s.actions}>
+              <button
+                className={`btn primary`}
+                disabled={!user.chatbot?.domain}
+                onClick={() => close()}
+              >
+                Done
+              </button>
+            </div>
+          </>
+        )}
       </div>
-      {step === 1 && <div className={s.content}>Content</div>}
     </div>
   );
 };

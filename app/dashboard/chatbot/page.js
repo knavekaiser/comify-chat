@@ -14,19 +14,11 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
-export default function Home() {
+export const ChatbotConfig = () => {
   const { user, setUser } = useContext(SiteContext);
   const [form, setForm] = useState(null);
   return (
-    <main className={`${pageStyle.main} ${s.main}`}>
-      <header>
-        <h1 className={space_grotesk.className}>Chatbot</h1>
-        <p className={s.description}>
-          Tailor your chatbot&apos;s look to match your site and brand
-          seamlessly.
-        </p>
-      </header>
-
+    <>
       <section className={`${s.section} ${s.domain}`}>
         <div className={s.content}>
           <h3 className={space_grotesk.className}>Display Name</h3>
@@ -54,8 +46,8 @@ export default function Home() {
                   display_name: yup.string(25).required("Field is required"),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
-                  method: "put",
+                  url: endpoints.chatbots + `/${user.chatbot?._id || ""}`,
+                  method: user.chatbot?._id ? "put" : "post",
                 },
                 onSuccess: (newChatbot) => {
                   setForm(null);
@@ -123,8 +115,8 @@ export default function Home() {
                     }),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
-                  method: "put",
+                  url: endpoints.chatbots + `/${user.chatbot?._id || ""}`,
+                  method: user.chatbot?._id ? "put" : "post",
                 },
                 onSuccess: (newChatbot) => {
                   setForm(null);
@@ -178,8 +170,8 @@ export default function Home() {
                   avatar: yup.mixed().nullable(),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
-                  method: "put",
+                  url: endpoints.chatbots + `/${user.chatbot?._id || ""}`,
+                  method: user.chatbot?._id ? "put" : "post",
                 },
                 onSuccess: (newChatbot) => {
                   setForm(null);
@@ -229,8 +221,8 @@ export default function Home() {
                   primaryColor: yup.string().required("Field is required"),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
-                  method: "put",
+                  url: endpoints.chatbots + `/${user.chatbot?._id || ""}`,
+                  method: user.chatbot?._id ? "put" : "post",
                 },
                 onSuccess: (newChatbot) => {
                   setForm(null);
@@ -286,8 +278,8 @@ export default function Home() {
                     .oneOf(["5s", "10s", "", null]),
                 }),
                 submit: {
-                  url: endpoints.chatbots + `/${user.chatbot?._id}`,
-                  method: "put",
+                  url: endpoints.chatbots + `/${user.chatbot?._id || ""}`,
+                  method: user.chatbot?._id ? "put" : "post",
                 },
                 onSuccess: (newChatbot) => {
                   setForm(null);
@@ -322,6 +314,22 @@ export default function Home() {
           onSuccss={form?.onSuccess}
         />
       </Modal>
+    </>
+  );
+};
+
+export default function Home() {
+  return (
+    <main className={`${pageStyle.main} ${s.main}`}>
+      <header>
+        <h1 className={space_grotesk.className}>Chatbot</h1>
+        <p className={s.description}>
+          Tailor your chatbot&apos;s look to match your site and brand
+          seamlessly.
+        </p>
+      </header>
+
+      <ChatbotConfig />
     </main>
   );
 }

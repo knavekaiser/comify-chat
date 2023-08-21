@@ -1,7 +1,7 @@
 "use client";
 
 import { SiteContext } from "@/app/context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import s from "./page.module.scss";
 import { AiFillLock, AiOutlineLock, AiTwotoneLock } from "react-icons/ai";
 import { FiLock } from "react-icons/fi";
@@ -16,12 +16,32 @@ import { Space_Grotesk } from "next/font/google";
 import { Avatar } from "../(home)/components";
 import { Footer } from "../components";
 import { motion, AnimatePresence } from "framer-motion";
+import { useFetch } from "@/utils/hooks";
+import endpoints from "@/utils/endpoints";
 
 const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function DashboardLayout({ children }) {
+  const firstRender = useRef(true);
   const { user } = useContext(SiteContext);
+  const [showGettingStarted, setShowGettingStarted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { get: getTopics } = useFetch(endpoints.topics);
+
+  useEffect(() => {
+    if (firstRender.current && user) {
+      getTopics()
+        .then(({ data }) => {
+          if (data.success) {
+            firstRender.current = false;
+            if (data.data.length === 0) {
+              setShowGettingStarted(true);
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user, firstRender.current]);
 
   if (!user) {
     return (
@@ -66,7 +86,9 @@ export default function DashboardLayout({ children }) {
           </div>
         </div>
       </header>
-      {true ? (
+      {showGettingStarted ? (
+        <GettingStarted close={() => setShowGettingStarted(false)} />
+      ) : (
         <div
           className={`${s.container} ${
             sidebarOpen ? s.sidebarOpen : ""
@@ -89,8 +111,6 @@ export default function DashboardLayout({ children }) {
             <Footer />
           </div>
         </div>
-      ) : (
-        <GettingStarted />
       )}
     </>
   );
