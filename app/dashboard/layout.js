@@ -9,7 +9,7 @@ import { FaLock } from "react-icons/fa";
 import { IoMdLock } from "react-icons/io";
 import { LuLock } from "react-icons/lu";
 import { PiLockKeyFill } from "react-icons/pi";
-import { Sidebar } from "./components";
+import { GettingStarted, Sidebar } from "./components";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Space_Grotesk } from "next/font/google";
@@ -66,28 +66,32 @@ export default function DashboardLayout({ children }) {
           </div>
         </div>
       </header>
-      <div
-        className={`${s.container} ${
-          sidebarOpen ? s.sidebarOpen : ""
-        } body-min-1fr-min`}
-      >
-        <Sidebar closeSidebar={setSidebarOpen} />
-        <AnimatePresence>
-          {sidebarOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={s.backdrop}
-              onClick={() => setSidebarOpen(false)}
-            />
-          )}
-        </AnimatePresence>
-        <div className={s.content}>
-          {children}
-          <Footer />
+      {true ? (
+        <div
+          className={`${s.container} ${
+            sidebarOpen ? s.sidebarOpen : ""
+          } body-min-1fr-min`}
+        >
+          <Sidebar closeSidebar={setSidebarOpen} />
+          <AnimatePresence>
+            {sidebarOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={s.backdrop}
+                onClick={() => setSidebarOpen(false)}
+              />
+            )}
+          </AnimatePresence>
+          <div className={s.content}>
+            {children}
+            <Footer />
+          </div>
         </div>
-      </div>
+      ) : (
+        <GettingStarted />
+      )}
     </>
   );
 }

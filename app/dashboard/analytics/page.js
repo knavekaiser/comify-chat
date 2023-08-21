@@ -122,7 +122,6 @@ export default function Home() {
       query,
     })
       .then(({ data }) => {
-        // console.log(data.data);
         if (!data.success) {
           return Prompt({ type: "error", message: data.message });
         }
@@ -243,7 +242,8 @@ export default function Home() {
           </p>
         </div>
         <div className={s.chart}>
-          {data?.chatsOverTime ? (
+          {data?.chatsByTopic &&
+          data.chatsByTopic.data.find((item) => item > 0) ? (
             <Bar
               options={barOptionWithLabels}
               data={{
@@ -276,7 +276,8 @@ export default function Home() {
           </p>
         </div>
         <div className={s.chart}>
-          {data?.chatsOverTime ? (
+          {data?.chatsOverTime &&
+          data.chatsOverTime.data.find((item) => item > 0) ? (
             <Bar
               options={barOptions}
               data={{
@@ -309,7 +310,8 @@ export default function Home() {
           </p>
         </div>
         <div className={s.chart}>
-          {data?.tokenUsageOverTime ? (
+          {data?.tokenUsageOverTime &&
+          data.tokenUsageOverTime.data.find((item) => item > 0) ? (
             <Bar
               options={barOptions}
               data={{

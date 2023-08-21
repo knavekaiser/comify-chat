@@ -103,7 +103,10 @@ export default function Login() {
             <Link href={paths.forgotPassword}>Forgot password?</Link>
           </section>
           <section>
-            <button className="btn primary large" disabled={loading || user}>
+            <button
+              className={`btn primary large  ${loading ? "loading" : ""}`}
+              disabled={loading || user}
+            >
               Sign In
             </button>
           </section>

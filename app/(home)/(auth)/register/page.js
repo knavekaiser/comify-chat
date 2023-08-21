@@ -28,7 +28,6 @@ const validationSchema = yup.object({
     .required("Field is Required"),
 });
 
-
 export default function Register() {
   const { user, setUser } = useContext(SiteContext);
   const router = useRouter();
@@ -115,7 +114,10 @@ export default function Register() {
             </p>
           </section>
           <section>
-            <button className="btn primary large" disabled={loading || user}>
+            <button
+              className={`btn primary large  ${loading ? "loading" : ""}`}
+              disabled={loading || user}
+            >
               Sign Up
             </button>
           </section>

@@ -69,6 +69,7 @@ h6 {
 
 button {
   &.btn {
+    position: relative;
     padding: 11px 40px;
     font-size: 1rem;
     font-weight: 600;
@@ -85,8 +86,6 @@ button {
     }
     &.secondary {
       background: white;
-      // color: rgb(var(--primary-color-rgb));
-      // box-shadow: inset 0 0 0 2px rgb(var(--primary-color-rgb));
       color: rgb(var(--comp-color-rgb));
       box-shadow: inset 0 0 0 2px rgb(var(--comp-color-rgb));
       &:hover {
@@ -137,6 +136,63 @@ button {
       cursor: default;
       opacity: 0.5;
     }
+    &.loading {
+      &::after,
+      &::before {
+        content: "";
+        display: inline-block;
+        height: 0.8rem;
+        width: 0.8rem;
+        background: blue;
+        position: absolute;
+        border-radius: 1rem;
+        left: 50%;
+      }
+      &::before {
+        // transform: translateX(calc(-50% + -0.4rem));
+        animation: btnLeftBallAnim 0.5s cubic-bezier(0.04, 0.34, 0.65, 0.88)
+          infinite alternate;
+        z-index: 10;
+      }
+      &::after {
+        // transform: translateX(calc(-50% + 0.4rem));
+        animation: btnRightBallAnim 0.5s cubic-bezier(0.88, 0.65, 0.34, 0.04)
+          infinite alternate;
+      }
+      &.secondary,
+      &.clear {
+        &::after,
+        &::before {
+          background: rgb(var(--comp-color-rgb));
+        }
+      }
+      &.primary {
+        &::after,
+        &::before {
+          background: white;
+        }
+      }
+      color: transparent;
+      * {
+        opacity: 0;
+      }
+    }
+  }
+}
+@keyframes btnLeftBallAnim {
+  0% {
+    transform: translateX(calc(-50% + -0.4rem));
+  }
+  100% {
+    transform: translateX(calc(-50% + -0.4rem - 10px));
+  }
+}
+@keyframes btnRightBallAnim {
+  0% {
+    transform: translateX(calc(-50% + 0.4rem));
+  }
+  100% {
+    transform: translateX(calc(-50% + 0.4rem + 10px));
   }
 }
 button.btn.carousel_btn {

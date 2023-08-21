@@ -347,7 +347,9 @@ export default function Form({ edit, onSuccess }) {
               }}
             />
             <button
-              className={`btn secondary medium ${s.btn}`}
+              className={`btn secondary medium ${s.btn} ${
+                loading || generatingQuestion ? "loading" : ""
+              }`}
               type="button"
               disabled={loading || generatingQuestion}
               onClick={generateQuestion}
@@ -373,7 +375,9 @@ export default function Form({ edit, onSuccess }) {
       />
       <section className={`${s.actions} actions`}>
         <button
-          className="btn primary"
+          className={`btn primary ${
+            loading || generatingQuestion ? "loading" : ""
+          }`}
           disabled={loading || generatingQuestion}
         >
           Submit

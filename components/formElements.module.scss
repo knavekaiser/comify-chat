@@ -172,9 +172,9 @@
   }
   .inputField {
     border-radius: 0.5rem;
-    border: 2px dashed #d1d1d1;
     overflow: hidden;
     label {
+      border: 2px dashed #d1d1d1;
       cursor: pointer;
       display: grid;
       aspect-ratio: 3.5;
@@ -185,9 +185,20 @@
       &:hover {
         background: rgb(245, 246, 248);
       }
+      &.dragOver {
+        border-color: var(--text-color-1);
+        background: rgb(var(--primary-color-rgb), 0.025);
+      }
       .wrapper {
+        pointer-events: none;
         place-items: center;
         display: grid;
+      }
+      .downlaod {
+        path:nth-child(2) {
+          animation: updown 0.5s cubic-bezier(0.04, 0.34, 0.65, 0.88) infinite
+            alternate;
+        }
       }
       .icon {
         margin: auto;
@@ -489,7 +500,7 @@
 
 .calendarInput {
   display: grid;
-  min-width: 280px;
+  min-width: 290px;
   label {
     font-size: 0.8rem;
     font-weight: 600;
@@ -503,6 +514,11 @@
     font-size: 0.88em;
     border-radius: 0.5rem;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    svg {
+      color: var(--text-color-2);
+    }
   }
   .calendarWrapper {
     position: absolute;
@@ -608,5 +624,14 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(-5px);
   }
 }

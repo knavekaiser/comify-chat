@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import s from "./page.module.scss";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import paths from "@/utils/paths";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -46,6 +46,18 @@ export const Sidebar = ({ closeSidebar }) => {
           </Link>
         ))}
       </ul>
+    </div>
+  );
+};
+
+export const GettingStarted = () => {
+  const [step, setStep] = useState(1);
+  return (
+    <div className={s.gettingStarted}>
+      <div className={s.head}>
+        <h3>Getting Started</h3>
+      </div>
+      {step === 1 && <div className={s.content}>Content</div>}
     </div>
   );
 };

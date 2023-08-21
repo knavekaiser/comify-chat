@@ -114,7 +114,10 @@ export default function Login() {
               />
 
               <section>
-                <button className="btn primary large" disabled={loading}>
+                <button
+                  disabled={loading}
+                  className={`btn primary large  ${loading ? "loading" : ""}`}
+                >
                   Submit
                 </button>
               </section>

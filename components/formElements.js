@@ -3,7 +3,12 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import s from "./formElements.module.scss";
 import { Controller } from "react-hook-form";
 import { GoCalendar, GoEye, GoEyeClosed } from "react-icons/go";
-import { BsPersonSquare, BsSearch } from "react-icons/bs";
+import {
+  BsDownload,
+  BsFillCalendar3RangeFill,
+  BsPersonSquare,
+  BsSearch,
+} from "react-icons/bs";
 import { FaSortDown, FaRegTrashAlt } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";
 import { Modal, Prompt } from "./modal";
@@ -229,6 +234,7 @@ export const FileInput = ({
   imgOptions,
   avatar,
 }) => {
+  const [dragOver, setDragOver] = useState(false);
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -384,17 +390,66 @@ export const FileInput = ({
           ) : (
             (multiple || (!multiple && !files.length)) && (
               <div className={s.inputField}>
-                <label htmlFor={name}>
+                <label
+                  htmlFor={name}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDragEnter={() => setDragOver(true)}
+                  onDragLeave={() => setDragOver(false)}
+                  className={dragOver ? s.dragOver : ""}
+                  onDrop={async (e) => {
+                    e.preventDefault();
+                    setDragOver(false);
+                    let newFiles = [
+                      ...(e.dataTransfer.items || e.dataTransfer.files),
+                    ]
+                      .map((item) => item.getAsFile())
+                      .filter((file) => accept.includes(file.type))
+                      .filter(
+                        (newFile) =>
+                          !files.some(
+                            (file) =>
+                              (file.name || file.fileName) ===
+                              (newFile.name || newFile.fileName)
+                          )
+                      );
+
+                    if (!newFiles.length) {
+                      return console.log("Please drop accepted files.");
+                    }
+
+                    let _files;
+                    if (multiple) {
+                      _files = [...files, ...newFiles];
+                    } else {
+                      _files = [newFiles[0]];
+                    }
+                    for (let i = 0; i < _files.length; i++) {
+                      const item = _files[i];
+                      if (item.type?.startsWith("image/")) {
+                        setLoading(true);
+                        _files[i] = await resizeImg(item, imgOptions);
+                        setLoading(false);
+                      }
+                    }
+
+                    setFiles(_files);
+                    onChange(multiple ? _files : _files[0] || null);
+                  }}
+                >
                   <div className={s.wrapper}>
                     <span className={s.icon}>
                       {loading ? (
                         <CgSpinner className={s.spinner} />
+                      ) : dragOver ? (
+                        <BsDownload className={s.downlaod} />
                       ) : (
                         <BsUpload />
                       )}
                     </span>
                     <span className={s.hint}>
-                      Drag & drop files or Browse Files
+                      {dragOver
+                        ? "Release the files to add"
+                        : "Drag & drop files or Browse Files"}
                     </span>
                   </div>
                 </label>
@@ -1012,11 +1067,12 @@ export const CalendarInput = ({
                 ) : !Object.values(value).length ? (
                   "No dates selected"
                 ) : (
-                  <>
+                  <span>
                     <Moment format="DD-MM-YYYY">{value.startDate}</Moment> to{" "}
                     <Moment format="DD-MM-YYYY">{value.endDate}</Moment>
-                  </>
+                  </span>
                 )}
+                <BsFillCalendar3RangeFill />
               </div>
             )}
             {(!popup || open) && (

@@ -22,8 +22,6 @@ const validationSchema = yup.object({
     .required("Field is required"),
 });
 
-
-
 export default function Login() {
   const { handleSubmit, control, setError } = useForm({
     resolver: useYup(validationSchema),
@@ -94,7 +92,10 @@ export default function Login() {
               <Input control={control} name="email" placeholder="Email" />
 
               <section>
-                <button className="btn primary large" disabled={loading}>
+                <button
+                  className={`btn primary large  ${loading ? "loading" : ""}`}
+                  disabled={loading}
+                >
                   Submit
                 </button>
               </section>
