@@ -29,6 +29,12 @@ const docSchema = yup.object({
   contextForUsers: yup.string().max(200, "Must be under 200 characters"),
   files: yup.array().of(yup.mixed()),
   urls: yup.array().of(yup.string().url()),
+  content: yup.string().when(["files", "urls"], ([files, urls], schema) => {
+    if (!files?.length && !urls.length) {
+      return schema.required("Please enter context or provide files or urls");
+    }
+    return schema;
+  }),
   showOnChat: yup.boolean(),
 });
 
@@ -132,6 +138,9 @@ export default function Form({ edit, onSuccess }) {
             }
             return;
           }
+          if (key === "content") {
+            value = value || null;
+          }
 
           if (Array.isArray(value)) {
             value.forEach((file) => formData.append(key, file));
@@ -194,6 +203,13 @@ export default function Form({ edit, onSuccess }) {
           label: topic.topic,
           value: topic._id,
         })}
+      />
+
+      <Textarea
+        className={s.content}
+        control={control}
+        label="Content"
+        name="content"
       />
 
       <FileInput

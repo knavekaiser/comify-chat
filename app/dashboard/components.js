@@ -54,7 +54,7 @@ export const Sidebar = ({ closeSidebar }) => {
 };
 
 export const GettingStarted = ({ close }) => {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const { user } = useContext(SiteContext);
   return (
     <div className={s.gettingStarted}>
