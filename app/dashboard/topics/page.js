@@ -1,6 +1,5 @@
 "use client";
 
-import { Space_Grotesk } from "next/font/google";
 import pageStyle from "../page.module.scss";
 import s from "./page.module.scss";
 import { useForm } from "react-hook-form";
@@ -15,8 +14,6 @@ import { Modal, Prompt } from "@/components/modal";
 import Form from "./form";
 import { useFetch } from "@/utils/hooks";
 
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
-
 export default function Home() {
   const { control, handleSubmit } = useForm();
   const [filters, setFilters] = useState({});
@@ -25,7 +22,7 @@ export default function Home() {
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
       <header>
-        <h1 className={space_grotesk.className}>Topics</h1>
+        <h1>Topics</h1>
         <p className={s.description}>
           Efficiently organize and customize your chatbot&apos;s knowledge with
           Infin AI&apos;s intuitive topic management system.

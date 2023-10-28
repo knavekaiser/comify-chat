@@ -1,8 +1,6 @@
-import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
 import Link from "next/link";
 import paths from "@/utils/paths";
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const terms = [
   {
@@ -80,13 +78,13 @@ export default function Login() {
     <main className={`${s.main} body-min-1fr-min`}>
       <div className={s.innerWrapper}>
         <header>
-          <h1 className={space_grotesk.className}>Terms & Conditions</h1>
+          <h1>Terms & Conditions</h1>
           <p>Please read and agree to our terms before using our services.</p>
         </header>
 
         {terms.map((item) => (
           <section key={item.title} className={s.section}>
-            <h3 className={space_grotesk.className}>{item.title}</h3>
+            <h3>{item.title}</h3>
             <p>{item.description}</p>
           </section>
         ))}

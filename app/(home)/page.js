@@ -1,14 +1,11 @@
 "use client";
 
-import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
 import { CoreFeatures, Testimonials, Blogs, Platforms } from "./components";
 import Link from "next/link";
 import paths from "@/utils/paths";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const inViewFadeIn = {
   initial: { opacity: 0, y: 50 },
@@ -55,7 +52,7 @@ export default function Home() {
       <div className={s.hero}>
         <div className={s.innerWrapper}>
           <div className={s.content}>
-            <motion.h1 {...inViewFadeIn} className={space_grotesk.className}>
+            <motion.h1 {...inViewFadeIn}>
               Empower Your Business with
               <br /> Infin AI Today!
             </motion.h1>
@@ -119,9 +116,7 @@ export default function Home() {
 
       <div className={s.video_demo}>
         <div className={s.innerWrapper}>
-          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
-            Video Demo
-          </motion.h2>
+          <motion.h2 {...inViewFadeIn}>Video Demo</motion.h2>
           <motion.p {...inViewFadeIn} className={s.dscr}>
             Creating a chatbot for your website by uploading word document and
             training the AI on its content. You can then embed the chatbot on
@@ -147,7 +142,7 @@ export default function Home() {
       <div className={s.intro}>
         <div className={s.innerWrapper}>
           <div className={s.content}>
-            <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
+            <motion.h2 {...inViewFadeIn}>
               Start conversations, win loyal customers
             </motion.h2>
             <motion.p {...inViewFadeIn}>
@@ -218,7 +213,7 @@ export default function Home() {
 
       <div className={s.key_features}>
         <div className={s.innerWrapper}>
-          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
+          <motion.h2 {...inViewFadeIn}>
             Unlock the Power of Infin AI: <br />
             Key Features at a Glance
           </motion.h2>
@@ -237,7 +232,7 @@ export default function Home() {
               className={s.card}
             >
               <img src="/assets/stickers/automation.png" />
-              <h3 className={space_grotesk.className}>Automate</h3>
+              <h3>Automate</h3>
               <p>Streamline, save time with AI-driven customer interactions.</p>
             </motion.li>
             <motion.li
@@ -247,7 +242,7 @@ export default function Home() {
               className={s.card}
             >
               <img src="/assets/stickers/equalizer.png" />
-              <h3 className={space_grotesk.className}>Tailored</h3>
+              <h3>Tailored</h3>
               <p>
                 Tailor experiences to individual customers, foster deeper
                 connections.
@@ -260,7 +255,7 @@ export default function Home() {
               className={s.card}
             >
               <img src="/assets/stickers/data-analytics.png" />
-              <h3 className={space_grotesk.className}>Analytics</h3>
+              <h3>Analytics</h3>
               <p>
                 Data-driven insights for optimizing chatbot performance and
                 customer engagement.
@@ -273,7 +268,7 @@ export default function Home() {
               className={s.card}
             >
               <img src="/assets/stickers/abstract-shape.png" />
-              <h3 className={space_grotesk.className}>Seamless</h3>
+              <h3>Seamless</h3>
               <p>
                 Seamless implementation for effortless chatbot integration on
                 your website.
@@ -285,7 +280,7 @@ export default function Home() {
 
       <div className={s.core_features}>
         <div className={s.innerWrapper}>
-          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
+          <motion.h2 {...inViewFadeIn}>
             What’s included: core features
           </motion.h2>
           <motion.p {...inViewFadeIn} className={s.dscr}>
@@ -298,7 +293,7 @@ export default function Home() {
 
       <div className={s.testimonials}>
         <div className={s.innerWrapper}>
-          <motion.h2 {...inViewFadeIn} className={space_grotesk.className}>
+          <motion.h2 {...inViewFadeIn}>
             See why other businesses <br />
             like you have chosen Infin AI
           </motion.h2>
@@ -312,9 +307,7 @@ export default function Home() {
 
       <div className={s.platform_section}>
         <div className={s.innerWrapper}>
-          <h2 className={space_grotesk.className}>
-            Your tools don&apos;t have to Change
-          </h2>
+          <h2>Your tools don&apos;t have to Change</h2>
           <p className={s.dscr}>Infin AI integrates with your favorite tools</p>
 
           <Platforms />
@@ -323,7 +316,7 @@ export default function Home() {
 
       <div className={s.blog_section}>
         <div className={s.innerWrapper}>
-          <h2 className={space_grotesk.className}>Latest updates</h2>
+          <h2>Latest updates</h2>
           <p className={s.dscr}>
             Transforming the way customers contact brands online.
           </p>

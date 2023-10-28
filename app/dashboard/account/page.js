@@ -3,14 +3,11 @@
 import { useContext, useState } from "react";
 import pageStyle from "../page.module.scss";
 import s from "./page.module.scss";
-import { Space_Grotesk } from "next/font/google";
 import { SiteContext } from "@/app/context";
 import { Modal, Prompt } from "@/components/modal";
 import { DynamicForm } from "./components";
 import * as yup from "yup";
 import endpoints from "@/utils/endpoints";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function Home() {
   const { user, setUser } = useContext(SiteContext);
@@ -18,7 +15,7 @@ export default function Home() {
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
       <header>
-        <h1 className={space_grotesk.className}>Account</h1>
+        <h1>Account</h1>
         <p className={s.description}>
           Personalize your Infin AI experience and manage your account settings
           with ease.
@@ -27,7 +24,7 @@ export default function Home() {
 
       <section className={s.email}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Email Address</h3>
+          <h3>Email Address</h3>
           <p className="ellepsis line-2">{user?.email}</p>
         </div>
         <div className={s.action}>
@@ -73,7 +70,7 @@ export default function Home() {
 
       <section className={s.password}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Password</h3>
+          <h3>Password</h3>
           <p>********</p>
         </div>
         <div className={s.action}>

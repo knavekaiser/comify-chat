@@ -10,9 +10,7 @@ import s from "./components.module.scss";
 import Script from "next/script";
 
 import { RouterEvents } from "../components/pageLoader";
-import { Space_Grotesk } from "next/font/google";
 import Link from "next/link";
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function ClientLayout(params) {
   const { user, setUser } = useContext(SiteContext);
@@ -88,7 +86,7 @@ export const Footer = () => {
         <div className={s.logoWrapper}>
           <div className={s.logo}>
             <img src="/assets/logo_big_eyes.png" />
-            <h2 className={space_grotesk.className}>Infin AI</h2>
+            <h2>Infin AI</h2>
           </div>
         </div>
 

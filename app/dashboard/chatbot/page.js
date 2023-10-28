@@ -3,7 +3,6 @@
 import { useContext, useState } from "react";
 import pageStyle from "../page.module.scss";
 import s from "./page.module.scss";
-import { Space_Grotesk } from "next/font/google";
 import { SiteContext } from "@/app/context";
 import { Modal, Prompt } from "@/components/modal";
 import { DynamicForm } from "./components";
@@ -12,8 +11,6 @@ import endpoints from "@/utils/endpoints";
 import paths from "@/utils/paths";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
-
 export const ChatbotConfig = () => {
   const { user, setUser } = useContext(SiteContext);
   const [form, setForm] = useState(null);
@@ -21,7 +18,7 @@ export const ChatbotConfig = () => {
     <>
       <section className={`${s.section} ${s.domain}`}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Display Name</h3>
+          <h3>Display Name</h3>
           <p className="ellepsis line-2">
             {user?.chatbot?.display_name || "Infin AI"}
           </p>
@@ -67,7 +64,7 @@ export const ChatbotConfig = () => {
 
       <section className={`${s.section} ${s.domain}`}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Domain</h3>
+          <h3>Domain</h3>
           <p className="ellepsis line-2">
             {user?.chatbot?.domain ? (
               <>
@@ -136,7 +133,7 @@ export const ChatbotConfig = () => {
 
       <section className={s.section}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Avatar</h3>
+          <h3>Avatar</h3>
           <img
             className={`${s.avatarPreview} ${
               user.chatbot?.avatar ? s.custom : ""
@@ -191,7 +188,7 @@ export const ChatbotConfig = () => {
 
       <section className={s.section}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Primary Color</h3>
+          <h3>Primary Color</h3>
           <span
             className={s.colorPreview}
             style={{
@@ -242,7 +239,7 @@ export const ChatbotConfig = () => {
 
       <section className={`${s.section} ${s.autoOpen}`}>
         <div className={s.content}>
-          <h3 className={space_grotesk.className}>Auto Open Chatbot</h3>
+          <h3>Auto Open Chatbot</h3>
           <p className="ellepsis line-2">
             {user?.chatbot?.autoOpenAfter
               ? `After ${user.chatbot.autoOpenAfter} seconds`
@@ -322,7 +319,7 @@ export default function Home() {
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
       <header>
-        <h1 className={space_grotesk.className}>Chatbot</h1>
+        <h1>Chatbot</h1>
         <p className={s.description}>
           Tailor your chatbot&apos;s look to match your site and brand
           seamlessly.

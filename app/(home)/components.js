@@ -1,6 +1,5 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
 import Link from "next/link";
 import { Moment } from "@/components/moment";
@@ -15,10 +14,7 @@ import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Carousel from "react-multi-carousel";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const inViewFadeIn = {
   initial: { opacity: 0, y: 30 },
@@ -86,7 +82,7 @@ export const CoreFeatures = () => {
             }`}
             onClick={() => setActive(item)}
           >
-            <h4 className={space_grotesk.className}>{item.title}</h4>
+            <h4>{item.title}</h4>
             <p>{item.description}</p>
           </motion.li>
         ))}
@@ -381,7 +377,7 @@ export const Blogs = () => {
             <Moment format="MMM DD, YYYY">{blog.createdAt}</Moment>
           </div>
           <Link href={"/blogs" + blog.path}>
-            <h3 className={space_grotesk.className}>{blog.title}</h3>
+            <h3>{blog.title}</h3>
           </Link>
         </motion.div>
       ))}

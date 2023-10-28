@@ -1,13 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
 import { RightSection } from "./components";
 import { Footer } from "../components";
 import paths from "@/utils/paths";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
@@ -18,7 +15,7 @@ export default function RootLayout({ children }) {
             <Link href={paths.home}>
               <div className={s.logo}>
                 <img src="/assets/logo_big_eyes_white.png" />
-                <h2 className={space_grotesk.className}>Infin AI</h2>
+                <h2>Infin AI</h2>
               </div>
             </Link>
           </div>

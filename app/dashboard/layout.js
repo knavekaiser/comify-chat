@@ -12,14 +12,11 @@ import { PiLockKeyFill } from "react-icons/pi";
 import { GettingStarted, Sidebar } from "./components";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Space_Grotesk } from "next/font/google";
 import { Avatar } from "../(home)/components";
 import { Footer } from "../components";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from "@/utils/hooks";
 import endpoints from "@/utils/endpoints";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 export default function DashboardLayout({ children }) {
   const firstRender = useRef(true);
@@ -77,7 +74,7 @@ export default function DashboardLayout({ children }) {
             <Link href="/">
               <div className={s.logo}>
                 <img src="/assets/logo_big_eyes_white.png" />
-                <h2 className={space_grotesk.className}>Infin AI</h2>
+                <h2>Infin AI</h2>
               </div>
             </Link>
           </div>

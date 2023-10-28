@@ -1,6 +1,5 @@
 "use client";
 
-import { Space_Grotesk } from "next/font/google";
 import pageStyle from "../page.module.scss";
 import s from "./page.module.scss";
 import { useForm } from "react-hook-form";
@@ -16,8 +15,6 @@ import { useFetch } from "@/utils/hooks";
 import { Modal, Prompt } from "@/components/modal";
 import FullChat from "./FullChat";
 
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
-
 export default function Home() {
   const { control, handleSubmit } = useForm();
   const [filters, setFilters] = useState({});
@@ -26,7 +23,7 @@ export default function Home() {
   return (
     <main className={`${pageStyle.main} ${s.main}`}>
       <header>
-        <h1 className={space_grotesk.className}>Chats</h1>
+        <h1>Chats</h1>
         <p className={s.description}>
           Take full control of your chatbot interactions with Infin AI&apos;s
           comprehensive chat management tools.

@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@/components/formElements";
 import s from "./page.module.scss";
-import { Space_Grotesk } from "next/font/google";
 import { useForm } from "react-hook-form";
 import paths from "@/utils/paths";
 import Link from "next/link";
@@ -12,8 +11,6 @@ import endpoints from "@/utils/endpoints";
 import { Prompt } from "@/components/modal";
 import { useState } from "react";
 import { MdMarkEmailRead } from "react-icons/md";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const validationSchema = yup.object({
   email: yup
@@ -66,9 +63,7 @@ export default function Login() {
         >
           <section className={s.head}>
             <p>Forgot Password?</p>
-            <h1 className={space_grotesk.className}>
-              Generate Password reset link
-            </h1>
+            <h1>Generate Password reset link</h1>
           </section>
 
           {success ? (

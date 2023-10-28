@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@/components/formElements";
 import s from "./page.module.scss";
-import { Space_Grotesk } from "next/font/google";
 import { useForm } from "react-hook-form";
 import paths from "@/utils/paths";
 import Link from "next/link";
@@ -13,8 +12,6 @@ import endpoints from "@/utils/endpoints";
 import { Prompt } from "@/components/modal";
 import { SiteContext } from "@/app/context";
 import { useRouter } from "next/navigation";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const validationSchema = yup.object({
   name: yup.string().required("Field is required"),
@@ -80,7 +77,7 @@ export default function Register() {
         >
           <section className={s.head}>
             <p>Welcome to Infin AI</p>
-            <h1 className={space_grotesk.className}>Register to get started</h1>
+            <h1>Register to get started</h1>
           </section>
           <Input control={control} name="name" placeholder="Name" />
           <Input control={control} name="email" placeholder="Email" />

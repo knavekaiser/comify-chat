@@ -1,17 +1,17 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+// import { Inter, Space_Grotesk } from "next/font/google";
 import ClientLayout from "./components";
 import { Provider } from "./context";
 import "./globals.scss";
 import "react-multi-carousel/lib/styles.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
+// const inter = Inter({
+//   variable: "--font-inter",
+//   subsets: ["latin"],
+// });
+// const spaceGrotesk = Space_Grotesk({
+//   variable: "--font-space-grotesk",
+//   subsets: ["latin"],
+// });
 
 export const metadata = {
   title: "Infin AI",
@@ -21,8 +21,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body className={inter.className}>
+    <html
+      lang="en"
+      // className={`${inter.variable} ${spaceGrotesk.variable}`}
+    >
+      <body
+      // className={inter.className}
+      >
         <Provider>
           {children}
           <ClientLayout />

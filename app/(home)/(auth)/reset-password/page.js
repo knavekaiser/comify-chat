@@ -1,7 +1,6 @@
 "use client";
 import { PasswordInput } from "@/components/formElements";
 import s from "./page.module.scss";
-import { Space_Grotesk } from "next/font/google";
 import { useForm } from "react-hook-form";
 import paths from "@/utils/paths";
 import Link from "next/link";
@@ -14,8 +13,6 @@ import { useEffect, useState } from "react";
 import { MdPassword, MdOutlineVpnKeyOff } from "react-icons/md";
 import { useSearchParams } from "next/navigation";
 import { CgSpinner } from "react-icons/cg";
-
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const validationSchema = yup.object({
   password: yup
@@ -79,7 +76,7 @@ export default function Login() {
         >
           <section className={s.head}>
             <p>Reset Password</p>
-            <h1 className={space_grotesk.className}>Create a new Password</h1>
+            <h1>Create a new Password</h1>
           </section>
 
           {validating && (
@@ -133,10 +130,7 @@ export default function Login() {
             <>
               <section className={s.successMessage}>
                 <MdPassword className={s.icon} />
-                <p>
-                  Password reset link sent to your email. Please check your
-                  inbox, including the spam folder.
-                </p>
+                <p>Your password has been reset. Please Log in.</p>
               </section>
 
               <section className={s.signupLink}>

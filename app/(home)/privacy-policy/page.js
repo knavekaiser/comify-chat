@@ -1,6 +1,4 @@
-import { Space_Grotesk } from "next/font/google";
 import s from "./page.module.scss";
-const space_grotesk = Space_Grotesk({ width: "500", subsets: ["latin"] });
 
 const policies = [
   {
@@ -61,7 +59,7 @@ export default function Login() {
     <main className={`${s.main} body-min-1fr-min`}>
       <div className={s.innerWrapper}>
         <header>
-          <h1 className={space_grotesk.className}>Terms & Conditions</h1>
+          <h1>Terms & Conditions</h1>
           <p>
             Please read and agree to our privacy policy before using our
             services.
@@ -70,7 +68,7 @@ export default function Login() {
 
         {policies.map((item) => (
           <section key={item.title} className={s.section}>
-            <h3 className={space_grotesk.className}>{item.title}</h3>
+            <h3>{item.title}</h3>
             <p>{item.description}</p>
           </section>
         ))}
